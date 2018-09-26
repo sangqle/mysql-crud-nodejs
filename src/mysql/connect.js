@@ -1,19 +1,11 @@
 let mysql = require('mysql');
-let {config} = require('./config');
+let { config } = require('./config');
 
 let connection = mysql.createConnection(config);
 
 connection.connect((err) => {
-    if(err) {
-        return console.log(err.toString());
-    }
+    if (err) throw err.message;
     console.log('Connected to Mysql server');
 });
 
-module.exports = {connection};
-// connection.end(function(err) {
-//     if (err) {
-//       return console.log('error:' + err.message);
-//     }
-//     console.log('Close the database connection.');
-//   });
+module.exports = { connection };
