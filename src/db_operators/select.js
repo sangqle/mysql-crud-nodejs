@@ -1,6 +1,6 @@
-const { connection } = require('../mysql/connect');
+//const { connection } = require('../mysql/connect');
 
-const selectAll = (table_name) => new Promise((resolve, reject) => {
+const selectAll = (connection, table_name) => new Promise((resolve, reject) => {
   try {
     let sql = `SELECT * FROM ${table_name}`;
     connection.query(sql, (error, results, fields) => {
@@ -14,7 +14,7 @@ const selectAll = (table_name) => new Promise((resolve, reject) => {
   }
 });
 
-const selectAllJoin = (table_name1, table_name2, mave) => new Promise((resolve, reject) => {
+const selectAllJoin = (connection, table_name1, table_name2, mave) => new Promise((resolve, reject) => {
   try {
     let sql = `SELECT * 
                 FROM ${table_name1} a, ${table_name2} b

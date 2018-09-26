@@ -1,6 +1,6 @@
-const { connection } = require('../mysql/connect');
+//const { connection } = require('../mysql/connect');
 
-const insertOne = (table_name, data) => new Promise((resolve, reject) => {
+const insertOne = (connection, table_name, data) => new Promise((resolve, reject) => {
 	try {
 		let entity = Object.keys(data).map(key => { return [`"${data[key]}"`] }); // must '"property"'
 		let fields = Object.keys(data);
