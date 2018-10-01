@@ -6,6 +6,7 @@ const { selectAll, selectAllJoin } = require('./src/db_operators/select');
 const { insertOne } = require('./src/db_operators/insert');
 const { editTick, editBook } = require('./src/db_operators/edit');
 const { deleteOne, deleteBook } = require('./src/db_operators/delete');
+const {searchDb} = require('./src/db_operators/search');
 
 const App = express(); // create app by express.
 App.use(bodyParser.json());
@@ -85,6 +86,7 @@ App.post('/user/book', (req, res) => {
     });
 });
 
+// User updata your book
 App.patch('/user/update', (req, res) => {
   const { mave, new_mave, new_hoten, sdt, new_sdt, new_thoigian } = req.body;
   const data = { mave, new_mave, new_hoten, sdt, new_sdt, new_thoigian };
@@ -104,6 +106,7 @@ App.patch('/user/update', (req, res) => {
     });
 });
 
+// user delete book
 App.delete('/user/book/delete', (req, res) => {
   const { sdt, mave } = req.body;
   const data = { sdt, mave };
@@ -113,5 +116,23 @@ App.delete('/user/book/delete', (req, res) => {
     }).catch((err) => {
       res.status(400).send({ err });
     });
+});
+// serarch book for user.
+App.post('/admin/search/book', (req, res) => {
+  const query = {key, type} = req.body;
+  searchDb(connection, query, 'book').then((data) => {
+    res.status(200).send({data});
+  }).catch((err) =>{
+    res.status(400).send({err});
+  });
+});
+// srarch ticker for admin
+App.post('/admin/search', (req, res) => {
+  const query = {key, type} = req.body;
+  searchDb(connection, query, 've').then((data) => {
+    res.status(200).send({data});
+  }).catch((err) =>{
+    res.status(400).send({err});
+  });
 });
 module.exports = { App };
