@@ -1,138 +1,43 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { connection } = require('./src/mysql/connect');
 
-const { selectAll, selectAllJoin } = require('./src/db_operators/select');
-const { insertOne } = require('./src/db_operators/insert');
-const { editTick, editBook } = require('./src/db_operators/edit');
-const { deleteOne, deleteBook } = require('./src/db_operators/delete');
-const {searchDb} = require('./src/db_operators/search');
+const userController = require('./src/controller/user');
 
 const App = express(); // create app by express.
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extended: true }));
 
-// Xem tinh trang dat hang cua toan bo ve
-App.get('/admin/bookstatus', (req, res) => {
-  selectAll(connection, 've')
-    .then((data) => {
-      if (!data.length) {
-        return res.status(400).send({
-          message: 'Can not found'
-        });
-      }
-      res.send({ data }); // array
-    })
-    .catch((error) => {
-      res.status(400).send({ error });
-    });
+// Route
+App.get('/', (req, res) => {
+	res.send('hello world');
 });
-// Them mot ve vao trong co so du lieu
-App.post('/admin/add', (req, res) => {
-  const { mave, tenve, giave } = req.body;
-  const data = { mave, tenve, giave };
-  insertOne(connection, 've', data)
-    .then((result) => {
-      res.status(200).send({ result, data });
-    })
-    .catch((err) => {
-      res.status(400).send({ err });
-    });
-});
-// Sua thong tin ve xe cua admin 
-App.patch('/admin/update', (req, res) => {
-  const { mave, tenve, giave, where } = req.body;
-  const data = { mave, tenve, giave, where };
-  editTick(connection, 've', data)
-    .then((result) => {
-      res.status(200).send({ result, data });
-    })
-    .catch((err) => {
-      res.status(400).send({ err });
-    });
-});
-// Xoa ve onlline
-App.delete('/admin/delete', (req, res) => {
-  const { mave } = req.body;
-  deleteOne(connection, 've', 'mave', mave).then((result) => {
-    res.status(200).send({ result, mave });
-  }).catch((err) => {
-    res.status(400).send({ err });
-  });
+App.post('/add/user', userController.addAccount); // complete.
+App.get('/get/movie/all', userController.getAllMovie); // complete
+App.get('/get/date/:idmovie', userController.getAllDateOfMovie);
+// user get all the time of date of the moive;
+App.get('/get/time/:idmovie/:iddate', userController.getAllTimeOfDateInMovie);
+
+// user booking
+App.post('/booking', (req, res) => {
+	res.send('Booking');
 });
 
-// hien thi thong tin chi tiet cua mot loai ve, co bao nhieu khac hang dat va thong tin khach
-App.get('/admin/bookstatus/:mave', (req, res) => {
-  const mave = req.params.mave;
-  selectAllJoin(connection, 've', 'book', mave)
-    .then((data) => {
-      res.status(200).send({ data });
-    })
-    .catch((error) => {
-      res.status(400).send({ error });
-    });
+// user view thier order
+App.get('/user/view/order', (req, res) => {
+	res.send('History order');
 });
 
-// Khach hang tien hanh dat ve
-App.post('/user/book', (req, res) => {
-  const { mave, hoten, sdt, thoigian } = req.body;
-  const data = { mave, hoten, sdt, thoigian };
-  insertOne(connection, 'book', data)
-    .then((result) => {
-      res.status(200).send({ result, data });
-    })
-    .catch((err) => {
-      res.status(400).send({ err });
-    });
+// user update seat
+App.post('/user/update/booking', (req, res) => {
+	res.send('User update thier booking');
 });
 
-// User updata your book
-App.patch('/user/update', (req, res) => {
-  const { mave, new_mave, new_hoten, sdt, new_sdt, new_thoigian } = req.body;
-  const data = { mave, new_mave, new_hoten, sdt, new_sdt, new_thoigian };
-  //console.log(data);
-  editBook(connection, 'book', data)
-    .then((result) => {
-      res.status(200).send({
-        result, data: {
-          mave: new_mave,
-          hoten: new_hoten,
-          sdt: new_sdt,
-          thoigian: new_thoigian
-        }
-      });
-    }).catch((err) => {
-      res.status(400).send({ err });
-    });
+// User delete booking
+App.delete('/user/delete/booking', (req, res) => {
+	res.send('User delelte booking');
 });
 
-// user delete book
-App.delete('/user/book/delete', (req, res) => {
-  const { sdt, mave } = req.body;
-  const data = { sdt, mave };
-  deleteBook(connection, 'book', 'mave', mave, 'sdt', sdt)
-    .then((result) => {
-      res.status(200).send({ result, data });
-    }).catch((err) => {
-      res.status(400).send({ err });
-    });
-});
-// serarch book for user.
-App.post('/admin/search/book', (req, res) => {
-  const query = {key, type} = req.body;
-  searchDb(connection, query, 'book').then((data) => {
-    res.status(200).send({data});
-  }).catch((err) =>{
-    res.status(400).send({err});
-  });
-});
-// srarch ticker for admin
-App.post('/admin/search', (req, res) => {
-  const query = {key, type} = req.body;
-  searchDb(connection, query, 've').then((data) => {
-    res.status(200).send({data});
-  }).catch((err) =>{
-    res.status(400).send({err});
-  });
-});
+// User choose seat.
+
+
 module.exports = { App };
