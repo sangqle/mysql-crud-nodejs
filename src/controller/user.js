@@ -1,55 +1,203 @@
 const { connection } = require('../../src/mysql/connect');
 
+/**User register a account to booking */
 exports.addAccount = (req, res) => {
-	const dataPost2 = {
-		name: "le quang sang",
-		email: "sang.lequang@gmail.com",
-		password: "pass222",
-		sdt: "09899697979"
-	};
 	const dataPost = req.body;
 	let sql = `call themNguoiDung('${dataPost.name}', '${dataPost.email}', '${dataPost.password}', '${dataPost.sdt}');`;
-	
+
 	try {
 		connection.query(sql, (error, results, fields) => {
 			if (error) {
-				return res.status(400).send({error});
+				return res.status(400).send({ error });
 			}
-			res.status(200).send({ results: results, data: dataPost, fields: fields });
+			res.status(200).send({
+				results: results,
+				data: dataPost,
+				fields: fields
+			});
 		})
 	} catch (error) {
 		res.status(400).send({ error });
 	}
 }
-// user request all movie
+
+/**User get all the movies is avaible */
 exports.getAllMovie = (req, res) => {
 	let sql = `call chonPhim();`;
 	try {
 		connection.query(sql, (error, results, fields) => {
 			if (error) {
-				return res.status(400).send({error});
+				return res.status(400).send({ error });
 			}
-			res.status(200).send({results});
+			var movies = results[0];
+			res.status(200).send({
+				"instaces": movies.length,
+				"movies": movies
+			});
 		})
 	} catch (error) {
 		res.status(400).send({ error });
 	}
 };
 
+/**User get all the date of the movie */
 exports.getAllDateOfMovie = (req, res) => {
-    let sql = `call chonNgayXem(${id_movie});`;
+	var id_movie = req.body.id_movie;
+	let sql = `call chonNgayXem(${id_movie});`;
 	try {
 		connection.query(sql, (error, results, fields) => {
 			if (error) {
-				return res.status(400).send({error});
+				return res.status(400).send({ error });
 			}
-			res.status(200).send({results});
+			var dates = results[0];
+			res.status(200).send({
+				"instaces": dates.length,
+				"dates": dates
+			});
 		})
 	} catch (error) {
 		res.status(400).send({ error });
 	}
 };
 
+/* Get all the time of movie in the date*/
 exports.getAllTimeOfDateInMovie = (req, res) => {
-	res.send('All the time of date in this moive');
+	var { id_movie, id_date } = req.body;
+	let sql = `call chonGioXem(${id_movie}, ${id_date});`;
+	try {
+		connection.query(sql, (error, results, fields) => {
+			if (error) {
+				return res.status(400).send({ error });
+			}
+			var times = results[0];
+			res.status(200).send({
+				"instaces": times.length,
+				"times": times
+			});
+		})
+	} catch (error) {
+		res.status(400).send({ error });
+	}
 };
+
+/* API check seated*/
+exports.getChoNgoiDaDuocDat = (req, res) => {
+	var { id_movie, id_date, id_time } = req.body;
+
+	let sql = `call choNgoiDaDuocDat(${id_movie}, ${id_date}, ${id_time});
+			   select max(number_row) from seat;
+			   select max(number_col) from seat;
+			  `;
+	try {
+		connection.query(sql, (error, results, fields) => {
+			if (error) {
+				return res.status(400).send({ error });
+			}
+			var seated = results[0];
+			var max_numRow = results[2][0]["max(number_row)"];
+			var max_numCol = results[3][0]["max(number_col)"];
+			res.status(200).send({
+				"max_numRow": max_numRow,
+				"max_numCol": max_numCol,
+				"instaces": seated.length,
+				"seated": seated
+			});
+		})
+	} catch (error) {
+		res.status(400).send({ error });
+	}
+}
+
+/* User booking*/
+exports.userBooking = (req, res) => {
+	var { id_movie, id_date, id_time, id_user, id_seat } = req.body;
+
+	let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, ${id_seat});`;
+	try {
+		connection.query(sql, (error, results, fields) => {
+			if (error) {
+				return res.status(400).send({ error });
+			}
+			var order = results[0];
+			res.status(200).send({
+				"order": order[0]
+			});
+		})
+	} catch (error) {
+		res.status(400).send({ error });
+	}
+}
+
+/* User get all the order booking */
+exports.getAllOrder = (req, res) => {
+	var { id_user } = req.body;
+
+	let sql = `call xemVeDaDat(${id_user});`;
+	try {
+		connection.query(sql, (error, results, fields) => {
+			if (error) {
+				return res.status(400).send({ error });
+			}
+			var order = results[0];
+			res.status(200).send({
+				"instance": order.length,
+				"order": order
+			});
+		})
+	} catch (error) {
+		res.status(400).send({ error });
+	}
+}
+
+/* User delete order was booked */
+exports.deleteOrder = (req, res) => {
+	let { id_user, id_order } = req.body;
+	let sql = `call xoaVe(${id_user}, ${id_order});`;
+	try {
+		connection.query(sql, (error, results, fields) => {
+			if (error) {
+				return res.status(400).send({ error });
+			}
+			if (results.affectedRows) {
+				res.status(200).send({
+					"statusCode": 200,
+					"results": results
+				});
+			} else {
+				res.status(400).send({
+					"statusCode": 400,
+					"message": `The id order ${id_order} dose not exist`
+				});
+			}
+		})
+	} catch (error) {
+		res.status(400).send({ error });
+	}
+}
+
+/* User edit the seat after call function choNgoiDaDuocDat(id_movie, id_date, id_time) */
+exports.editBooking = (req, res) => {
+	let { id_order, id_newSeat } = req.body;
+	let sql = `call doiChoNgoi(${id_order}, ${id_newSeat});`;
+	try {
+		connection.query(sql, (error, results, fields) => {
+			if (error) {
+				return res.status(400).send({ error });
+			}
+			if (results.effectedRows) {
+				res.status(200).send({
+					"statusCode": 200,
+					"results": results
+				});
+			} else {
+				res.status(400).send({
+					"statusCode": 400,
+					"message": `The id order ${id_order} or id new seat ${id_newSeat} is invalid`
+				})
+			}
+
+		})
+	} catch (error) {
+		res.status(400).send({ error });
+	}
+}

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const userController = require('./src/controller/user');
+const adminController = require('./src/controller/admin');
 
 const App = express(); // create app by express.
 App.use(bodyParser.json());
@@ -11,33 +11,17 @@ App.use(bodyParser.urlencoded({ extended: true }));
 App.get('/', (req, res) => {
 	res.send('hello world');
 });
-App.post('/add/user', userController.addAccount); // complete.
-App.get('/get/movie/all', userController.getAllMovie); // complete
-App.get('/get/date/:idmovie', userController.getAllDateOfMovie);
-// user get all the time of date of the moive;
-App.get('/get/time/:idmovie/:iddate', userController.getAllTimeOfDateInMovie);
+App.post('/user/create/account', userController.addAccount); // ok.
+App.get('/user/get/all/movie', userController.getAllMovie); // ok
+App.post('/user/get/all/movie/date', userController.getAllDateOfMovie); // ok
+App.post('/user/get/all/movie/date/time', userController.getAllTimeOfDateInMovie); // ok
+App.post('/user/get/all/movie/date/time/seat', userController.getChoNgoiDaDuocDat); // ok
+App.post('/user/get/all/movie/date/time/seat/booking', userController.userBooking); // ok
 
-// user booking
-App.post('/booking', (req, res) => {
-	res.send('Booking');
-});
+App.post('/user/get/all/order', userController.getAllOrder); // ok
+App.post('/user/delete/order', userController.deleteOrder); // ok
+App.post('/user/update/seat', userController.editBooking); // ok
 
-// user view thier order
-App.get('/user/view/order', (req, res) => {
-	res.send('History order');
-});
-
-// user update seat
-App.post('/user/update/booking', (req, res) => {
-	res.send('User update thier booking');
-});
-
-// User delete booking
-App.delete('/user/delete/booking', (req, res) => {
-	res.send('User delelte booking');
-});
-
-// User choose seat.
-
-
+/*Administrator*/
+App.post('/admin/add/movie', adminController.addMovie);
 module.exports = { App };
