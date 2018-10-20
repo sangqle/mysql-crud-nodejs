@@ -2,7 +2,6 @@ import React from "react";
 
 import { Container, Row, Col } from "reactstrap";
 import Slide from "./components/slide";
-import LoginForm from "./components/Login";
 import "./app.css";
 
 class App extends React.Component {
@@ -20,7 +19,7 @@ class App extends React.Component {
           <Col sm="4">.col-6 .col-sm-4</Col>
         </Row>
       </Container>
-    );
+    ); 
   }
 }
 

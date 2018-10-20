@@ -12,6 +12,38 @@ import {
 import "./login.css";
 
 class LoginForm extends Component {
+  state = {
+    email: "",
+    password: ""
+  };
+
+  handleEmail = e => {
+    this.setState({ email: e.target.value });
+  };
+
+  handlePassword = e => {
+    this.setState({ password: e.target.value });
+  };
+
+  onClick = () => {
+    fetch("http://localhost:8080/user/create/account", {
+      method: "post",
+
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
+      }),
+
+      headers: {
+        Accept: "application/json"
+      },
+
+      credentials: "same-origin", // send cookies
+      credentials: "include" // send cookies, even in CORS
+    })
+    .then((r) => console(r));
+  };
+
   render() {
     return (
       <Container className="App">
@@ -21,6 +53,7 @@ class LoginForm extends Component {
             <FormGroup>
               <Label>Email</Label>
               <Input
+                onChange={this.handleEmail}
                 type="email"
                 name="email"
                 id="exampleEmail"
@@ -32,6 +65,7 @@ class LoginForm extends Component {
             <FormGroup>
               <Label for="examplePassword">Password</Label>
               <Input
+                onChange={this.handlePassword}
                 type="password"
                 name="password"
                 id="examplePassword"
@@ -39,7 +73,7 @@ class LoginForm extends Component {
               />
             </FormGroup>
           </Col>
-          <Button>Submit</Button>
+          <Button onClick={this.onClick}>Submit</Button>
         </Form>
       </Container>
     );
