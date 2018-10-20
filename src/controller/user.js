@@ -193,10 +193,9 @@ exports.editBooking = (req, res) => {
 				res.status(400).send({
 					"statusCode": 400,
 					"message": `The id order ${id_order} or id new seat ${id_newSeat} is invalid`
-				})
+				});
 			}
-
-		})
+		});
 	} catch (error) {
 		res.status(400).send({ error });
 	}
