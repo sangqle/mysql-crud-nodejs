@@ -1,12 +1,33 @@
-const { connection } = require('../../src/mysql/connect');
+const { pool } = require('../../src/mysql/connect');
 
 /**User register a account to booking */
+
+exports.userLogin = (req, res) => {
+	const { email, password} = req.body;
+
+	console.log(req.body);
+	let sql = `call userLogin('${email}', '${password}');`;
+	try {
+		pool.query(sql, (error, results, fields) => {
+			if (error) {
+				return res.status(400).send({ error });
+			}
+			res.status(201).send({
+				results: results
+			});
+		})
+	} catch (error) {
+		res.status(400).send({ error });
+	}
+
+};
+
 exports.addAccount = (req, res) => {
 	const dataPost = req.body;
 	let sql = `call themNguoiDung('${dataPost.name}', '${dataPost.email}', '${dataPost.password}', '${dataPost.sdt}');`;
 
 	try {
-		connection.query(sql, (error, results, fields) => {
+		pool.query(sql, (error, results, fields) => {
 			if (error) {
 				return res.status(400).send({ error });
 			}
@@ -25,7 +46,7 @@ exports.addAccount = (req, res) => {
 exports.getAllMovie = (req, res) => {
 	let sql = `call chonPhim();`;
 	try {
-		connection.query(sql, (error, results, fields) => {
+		pool.query(sql, (error, results, fields) => {
 			if (error) {
 				return res.status(400).send({ error });
 			}
@@ -45,7 +66,7 @@ exports.getAllDateOfMovie = (req, res) => {
 	var id_movie = req.body.id_movie;
 	let sql = `call chonNgayXem(${id_movie});`;
 	try {
-		connection.query(sql, (error, results, fields) => {
+		pool.query(sql, (error, results, fields) => {
 			if (error) {
 				return res.status(400).send({ error });
 			}
@@ -65,7 +86,7 @@ exports.getAllTimeOfDateInMovie = (req, res) => {
 	var { id_movie, id_date } = req.body;
 	let sql = `call chonGioXem(${id_movie}, ${id_date});`;
 	try {
-		connection.query(sql, (error, results, fields) => {
+		pool.query(sql, (error, results, fields) => {
 			if (error) {
 				return res.status(400).send({ error });
 			}
@@ -89,7 +110,7 @@ exports.getChoNgoiDaDuocDat = (req, res) => {
 			   select max(number_col) from seat;
 			  `;
 	try {
-		connection.query(sql, (error, results, fields) => {
+		pool.query(sql, (error, results, fields) => {
 			if (error) {
 				return res.status(400).send({ error });
 			}
@@ -114,7 +135,7 @@ exports.userBooking = (req, res) => {
 
 	let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, ${id_seat});`;
 	try {
-		connection.query(sql, (error, results, fields) => {
+		pool.query(sql, (error, results, fields) => {
 			if (error) {
 				return res.status(400).send({ error });
 			}
@@ -134,7 +155,7 @@ exports.getAllOrder = (req, res) => {
 
 	let sql = `call xemVeDaDat(${id_user});`;
 	try {
-		connection.query(sql, (error, results, fields) => {
+		pool.query(sql, (error, results, fields) => {
 			if (error) {
 				return res.status(400).send({ error });
 			}
@@ -154,7 +175,7 @@ exports.deleteOrder = (req, res) => {
 	let { id_user, id_order } = req.body;
 	let sql = `call xoaVe(${id_user}, ${id_order});`;
 	try {
-		connection.query(sql, (error, results, fields) => {
+		pool.query(sql, (error, results, fields) => {
 			if (error) {
 				return res.status(400).send({ error });
 			}
@@ -180,7 +201,7 @@ exports.editBooking = (req, res) => {
 	let { id_order, id_newSeat } = req.body;
 	let sql = `call doiChoNgoi(${id_order}, ${id_newSeat});`;
 	try {
-		connection.query(sql, (error, results, fields) => {
+		pool.query(sql, (error, results, fields) => {
 			if (error) {
 				return res.status(400).send({ error });
 			}

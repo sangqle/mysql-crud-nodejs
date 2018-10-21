@@ -1,4 +1,4 @@
-const { connection } = require('../../src/mysql/connect');
+const { pool } = require('../../src/mysql/connect');
 
 exports.addMovie = (req, res) => {
     const { title, director, released, length, price, data } = req.body;
@@ -7,7 +7,7 @@ exports.addMovie = (req, res) => {
     let sql = `call add_movie('${title}', '${director}', ${released}, ${length}, ${price}, '${dataString}');`;
 
     try {
-        connection.query(sql, (error, results, feilds) => {
+        pool.query(sql, (error, results, feilds) => {
             if (error) {
                 return res.status(400).send({ error });
             }
