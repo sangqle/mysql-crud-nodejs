@@ -13,10 +13,12 @@ class App extends React.Component {
     lenght: null
   };
 
-  componentDidMount() => {
+  componentDidMount() {
+    fetch("")
+      .then(result => result.json())
+      .then(data => {});
+  }
 
-  };
-  
   render() {
     return (
       <Container>
