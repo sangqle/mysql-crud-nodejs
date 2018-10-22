@@ -11,31 +11,19 @@ const items = [
   {
 
     src: 'http://comicbuzz.com/wp-content/uploads/2018/07/skyscraper.jpg',
-    altText: 'Slide 1',
-    caption: 'Slide 1'
   },
   {
     src: 'https://initiate.alphacoders.com/images/410/cropped-1920-1080-410956.jpg?2216',
-    altText: 'Slide 2',
-    caption: 'Slide 2'
   },
   {
     src: 'https://initiate.alphacoders.com/images/336/cropped-1920-1080-336484.jpg?4151',
-    altText: 'Slide 3',
-    caption: 'Slide 3'
 
   },
   {
     src: 'https://initiate.alphacoders.com/images/814/cropped-1920-1080-81446.jpg?5079',
-    altText: 'Slide 4',
-    caption: 'Slide 4'
-
   },
   {
     src: 'https://initiate.alphacoders.com/images/386/cropped-1920-1080-386994.jpg?3529',
-    altText: 'Slide 5',
-    caption: 'Slide 5'
-
   }
 ];
 
