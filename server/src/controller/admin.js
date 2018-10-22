@@ -26,3 +26,39 @@ exports.addMovie = (req, res) => {
         res.status(400).send({ error });
     }
 }
+
+exports.getAllOrder = (req, res) => {
+    let sql = `call admin_getAllOrder();`;
+    try {
+        pool.query(sql, (error, results, feilds) => {
+            if(error) return res.status(400).send({error});
+
+            let order = results[0];
+            res.status(200).send({
+                "instance": order.length,
+                "order": order
+            });
+        });
+    } catch (error) {
+        if(error) return res.status(400).send({error});
+    }
+}
+
+exports.getAllOrderByDate = (req, res) => {
+    let date = req.params.date;
+    let sql = `call admin_getAllOrderByDate(${date});`;
+
+    try {
+        pool.query(sql, (error, results, feilds) => {
+            if(error) return res.status(400).send({error});
+
+            let order = results[0];
+            res.status(200).send({
+                "instance": order.length,
+                "order": order
+            });
+        });
+    } catch (error) {
+        
+    }
+}

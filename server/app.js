@@ -29,8 +29,9 @@ App.use(function (req, res, next) {
 App.get('/', (req, res) => {
 	res.send('hello world');
 });
-App.post('/user/login', userController.userLogin)
+
 App.post('/user/create/account', userController.addAccount); // ok.
+App.post('/user/login', userController.userLogin)
 App.get('/user/get/all/movie', userController.getAllMovie); // ok
 App.post('/user/get/all/movie/date', userController.getAllDateOfMovie); // ok
 App.post('/user/get/all/movie/date/time', userController.getAllTimeOfDateInMovie); // ok
@@ -42,5 +43,8 @@ App.post('/user/delete/order', userController.deleteOrder); // ok
 App.post('/user/update/seat', userController.editBooking); // ok
 
 /*Administrator*/
-App.post('/admin/add/movie', adminController.addMovie);
+App.post('/admin/add/movie', adminController.addMovie); // ok
+App.get('/admin/get/all/order', adminController.getAllOrder); // ok
+App.get('/admin/get/all/order/:date', adminController.getAllOrderByDate); // ok
+
 module.exports = { App };

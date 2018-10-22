@@ -1,11 +1,9 @@
 let mysql = require('mysql');
 var util = require('util');
 
-let  {config}  = require('./config');
-
+let { config } = require('./config');
 
 let pool = mysql.createPool(config);
-
 
 pool.getConnection((err, connection) => {
     if (err) {
@@ -19,7 +17,10 @@ pool.getConnection((err, connection) => {
             console.error('Database connection was refused.')
         }
     }
-    if (connection) connection.release();
+    if (connection) {
+        console.log('Connected to database');
+        connection.release();
+    }
     return;
 });
 
