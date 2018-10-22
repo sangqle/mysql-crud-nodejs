@@ -2,6 +2,7 @@ import React from "react";
 
 import { Container, Row, Col } from "reactstrap";
 import Slide from "./container/slide";
+import Card from './container/card'
 import "./app.css";
 
 class App extends React.Component {
@@ -11,12 +12,12 @@ class App extends React.Component {
         <Slide />
         <Row>
           <Col xs="6" sm="4">
-            .col-6 .col-sm-4
+            <Card />
           </Col>
           <Col xs="6" sm="4">
-            .col-6 .col-sm-4
+          <Card />
           </Col>
-          <Col sm="4">.col-6 .col-sm-4</Col>
+          <Col sm="4"><Card /></Col>
         </Row>
       </Container>
     ); 
