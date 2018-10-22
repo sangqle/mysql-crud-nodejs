@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Container, Row, Col } from "reactstrap";
-import Slide from "./components/slide";
+import Slide from "./container/slide";
 import "./app.css";
 
 class App extends React.Component {

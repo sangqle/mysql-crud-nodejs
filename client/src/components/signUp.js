@@ -9,26 +9,34 @@ import {
   Input,
   Button
 } from "reactstrap";
-import "./login.css";
+import "./signUp.css";
 
 class LoginForm extends Component {
-  state = {
-    email: "",
-    password: ""
-  };
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+  constructor(props) {
+    super(props)
+    this.state = {
+      name: "",
+      email: "",
+      password: "",
+      sdt: ""
+    };
+    this.handleInputChange = this.handleInputChange.bind(this)
+  }
+    
+  handleInputChange = (event) => {
+      this.setState({
+          [event.target.name] : event.target.value
+      })
   }
 
   onClick = () => {
-    fetch("http://localhost:8080/user/login", {
+    fetch("http://localhost:8080/user/create/account", {
       method: "post",
       body: JSON.stringify({
         "email": this.state.email,
-        "password": this.state.password
+        "password": this.state.password,
+        "name": this.state.name,
+        "sdt": this.state.sdt
       })
       ,
       headers: {
@@ -48,12 +56,33 @@ class LoginForm extends Component {
         <Form className="form">
           <Col>
             <FormGroup>
+              <Label>Name</Label>
+              <Input
+                onChange={this.handleInputChange}
+                type="email"
+                name="name"              
+                placeholder="Your name ..."
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label>Phone Number</Label>
+              <Input
+                onChange={this.handleInputChange}
+                type="text"
+                name="sdt"
+                placeholder="........."
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
               <Label>Email</Label>
               <Input
-                onChange={this.handleChange}
+                onChange={this.handleInputChange}
                 type="email"
                 name="email"
-                id="exampleEmail"
                 placeholder="myemail@email.com"
               />
             </FormGroup>
@@ -62,15 +91,14 @@ class LoginForm extends Component {
             <FormGroup>
               <Label for="examplePassword">Password</Label>
               <Input
-                onChange={this.handleChange}
+                onChange={this.handleInputChange}
                 type="password"
                 name="password"
-                id="examplePassword"
                 placeholder="********"
               />
             </FormGroup>
           </Col>
-          <Button onClick={this.onClick}>Submit</Button>
+          <Button onClick={this.onClick}>Sign up</Button>
         </Form>
       </Container>
     );
