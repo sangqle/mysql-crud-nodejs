@@ -2,10 +2,21 @@ import React from "react";
 
 import { Container, Row, Col } from "reactstrap";
 import Slide from "./container/slide";
-import Card from './container/card'
+import Card from "./container/card";
 import "./app.css";
 
 class App extends React.Component {
+  state = {
+    title: "",
+    director: "",
+    imgURL: "",
+    lenght: null
+  };
+
+  componentDidMount() => {
+
+  };
+  
   render() {
     return (
       <Container>
@@ -15,12 +26,14 @@ class App extends React.Component {
             <Card />
           </Col>
           <Col xs="6" sm="4">
-          <Card />
+            <Card />
           </Col>
-          <Col sm="4"><Card /></Col>
+          <Col sm="4">
+            <Card />
+          </Col>
         </Row>
       </Container>
-    ); 
+    );
   }
 }
 
