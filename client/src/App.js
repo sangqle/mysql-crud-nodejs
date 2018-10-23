@@ -7,16 +7,17 @@ import "./app.css";
 
 class App extends React.Component {
   state = {
-    title: "",
-    director: "",
-    imgURL: "",
-    lenght: null
+    movie: null
   };
 
   componentDidMount() {
     fetch("")
-      .then(result => result.json())
-      .then(data => {});
+      .then(data => data.json())
+      .then(result =>
+        this.setState({
+          movie: result.data
+        })
+      );
   }
 
   render() {

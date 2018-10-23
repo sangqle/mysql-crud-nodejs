@@ -6,6 +6,7 @@ import {
   CarouselIndicators,
   CarouselCaption
 } from "reactstrap";
+import "./slide.css";
 
 const items = [
   {
@@ -96,7 +97,7 @@ class Slide extends Component {
     });
 
     return (
-      <div className={"move"}>
+      <div className="move">
         <Carousel
           activeIndex={activeIndex}
           next={this.next}

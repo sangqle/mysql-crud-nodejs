@@ -8,10 +8,11 @@ import {
   CardSubtitle,
   Button
 } from "reactstrap";
+import "./card.css";
 
 const Movie = props => {
   return (
-    <div>
+    <div className="move">
       <Card>
         <CardImg
           top
@@ -20,13 +21,10 @@ const Movie = props => {
           alt="Card image cap"
         />
         <CardBody>
-          <CardTitle>Card title</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </CardText>
-          <Button>Button</Button>
+          <CardTitle>{props.title}</CardTitle>
+          <CardSubtitle>{props.director}</CardSubtitle>
+          <CardText>{props.length}</CardText>
+          <Button>Book !</Button>
         </CardBody>
       </Card>
     </div>
