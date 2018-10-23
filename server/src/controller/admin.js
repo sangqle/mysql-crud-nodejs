@@ -1,10 +1,10 @@
 const { pool } = require('../../src/mysql/connect');
 
 exports.addMovie = (req, res) => {
-    const { title, director, released, length, price, data } = req.body;
+    const { title, director, released, length, price, data, imageUrl } = req.body;
     let dataString = JSON.stringify(data);
 
-    let sql = `call add_movie('${title}', '${director}', ${released}, ${length}, ${price}, '${dataString}');`;
+    let sql = `call add_movie('${title}', '${director}', ${released}, ${length}, ${price}, '${imageUrl}','${dataString}');`;
 
     try {
         pool.query(sql, (error, results, feilds) => {
