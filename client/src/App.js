@@ -11,7 +11,8 @@ const renderLoader = () => {
 
 class App extends React.Component {
   state = {
-    movies: null
+    movies: null,
+    modal: false
   };
 
   componentDidMount() {
@@ -25,8 +26,12 @@ class App extends React.Component {
       });
   }
 
+  onToggle = () => {
+    this.setState({ modal: !this.state.modal });
+  };
+
   render() {
-    const { movies } = this.state;
+    const { movies, modal } = this.state;
     return (
       <Container>
         <Slide />
@@ -39,6 +44,8 @@ class App extends React.Component {
                   title={movie.title}
                   director={movie.director}
                   length={movie.length}
+                  modal={modal}
+                  onToggle={this.onToggle}
                 />
               </Col>
             ))}

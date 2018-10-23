@@ -9,8 +9,9 @@ import {
   Button
 } from "reactstrap";
 import "./card.css";
+import ModalNewTask from "./order";
 
-const Movie = props => {
+const Movie = ({ image, title, director, length, modal, onToggle }) => {
   return (
     <div className="move">
       <Card>
@@ -18,16 +19,19 @@ const Movie = props => {
           top
           width="100%"
           height="60%"
-          src={props.image}
+          src={image}
           alt="Card image cap"
         />
         <CardBody>
-          <CardTitle>{props.title}</CardTitle>
-          <CardSubtitle>Director: {props.director}</CardSubtitle>
-          <CardText>Length: {props.length}</CardText>
-          <Button className="btn btn-success">Book now!</Button>
+          <CardTitle>{title}</CardTitle>
+          <CardSubtitle>Director: {director}</CardSubtitle>
+          <CardText>Length: {length}</CardText>
+          <Button className="btn btn-danger" onClick={onToggle}>
+            Book now!
+          </Button>
         </CardBody>
       </Card>
+      <ModalNewTask modal={modal} onToggle={onToggle} />
     </div>
   );
 };
