@@ -7,33 +7,35 @@ import "./app.css";
 
 class App extends React.Component {
   state = {
-    movie: null
+    movies: null
   };
 
   componentDidMount() {
-    fetch("")
+    fetch("http://localhost:8080/user/get/all/movie")
       .then(data => data.json())
       .then(result =>
         this.setState({
-          movie: result.data
+          movies: result.data
         })
       );
   }
 
   render() {
+    const { movies } = this.state;
     return (
       <Container>
         <Slide />
         <Row>
-          <Col xs="6" sm="4">
-            <Card />
-          </Col>
-          <Col xs="6" sm="4">
-            <Card />
-          </Col>
-          <Col sm="4">
-            <Card />
-          </Col>
+          {movies.map((movie, i) => {
+            <Col xs="6" sm="4" key={i}>
+              <Card
+                imageURL={movie.imageURL}
+                title={movie.title}
+                director={movie.director}
+                length={movie.length}
+              />
+            </Col>;
+          })}
         </Row>
       </Container>
     );
