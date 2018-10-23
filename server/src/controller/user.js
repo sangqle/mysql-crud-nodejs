@@ -1,31 +1,13 @@
 const { pool } = require("../../src/mysql/connect");
+const passport = require('passport');
 
 /**User register a account to booking */
-
-exports.userLogin = (req, res) => {
-  const { email, password } = req.body;
-
-  console.log(req.body);
-  let sql = `call userLogin('${email}', '${password}');`;
-  try {
-    pool.query(sql, (error, results, fields) => {
-      if (error) {
-        return res.status(400).send({ error });
-      }
-      res.status(201).send({
-        results: results
-      });
-    });
-  } catch (error) {
-    res.status(400).send({ error });
-  }
-};
 
 exports.addAccount = (req, res) => {
   const dataPost = req.body;
   let sql = `call themNguoiDung('${dataPost.name}', '${dataPost.email}', '${
     dataPost.password
-  }', '${dataPost.sdt}');`;
+    }', '${dataPost.sdt}');`;
 
   try {
     pool.query(sql, (error, results, fields) => {
@@ -45,6 +27,7 @@ exports.addAccount = (req, res) => {
 
 /**User get all the movies is avaible */
 exports.getAllMovie = (req, res) => {
+  console.log('Inside the GetAllTheMovie');
   let sql = `call chonPhim();`;
   try {
     pool.query(sql, (error, results, fields) => {
@@ -133,43 +116,56 @@ exports.getChoNgoiDaDuocDat = (req, res) => {
 /* User booking*/
 exports.userBooking = (req, res) => {
   var { id_movie, id_date, id_time, id_user, id_seat } = req.body;
-
-  let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, ${id_seat});`;
-  try {
-    pool.query(sql, (error, results, fields) => {
-      if (error) {
-        return res.status(400).send({ error });
-      }
-      var order = results[0];
-      res.status(200).send({
-        order: order[0]
+  console.log(`User authenticated? ${req.isAuthenticated()}`)
+  if (req.isAuthenticated()) {
+    let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, ${id_seat});`;
+    try {
+      pool.query(sql, (error, results, fields) => {
+        if (error) {
+          return res.status(400).send({ error });
+        }
+        var order = results[0];
+        res.status(200).send({
+          order: order[0]
+        });
       });
-    });
-  } catch (error) {
-    res.status(400).send({ error });
+    } catch (error) {
+      res.status(400).send({ error });
+    }
+  } else {
+    res.redirect('/login');
   }
+
 };
 
 /* User get all the order booking */
 exports.getAllOrder = (req, res) => {
   var { id_user } = req.body;
-
-  let sql = `call xemVeDaDat(${id_user});`;
-  try {
-    pool.query(sql, (error, results, fields) => {
-      if (error) {
-        return res.status(400).send({ error });
-      }
-      var order = results[0];
-      res.status(200).send({
-        instance: order.length,
-        order: order
+  console.log(`User authenticated? ${req.isAuthenticated()}`)
+  if (req.isAuthenticated()) {
+    let sql = `call xemVeDaDat(${id_user});`;
+    try {
+      pool.query(sql, (error, results, fields) => {
+        if (error) {
+          return res.status(400).send({ error });
+        }
+        var order = results[0];
+        res.status(200).send({
+          instance: order.length,
+          order: order
+        });
       });
-    });
-  } catch (error) {
-    res.status(400).send({ error });
+    } catch (error) {
+      res.status(400).send({ error });
+    }
+  } else {
+    res.redirect('/')
   }
 };
+
+
+// sua toi day roi. di ngu thoi ------------------ 
+
 
 /* User delete order was booked */
 exports.deleteOrder = (req, res) => {
