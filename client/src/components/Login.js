@@ -17,28 +17,31 @@ class LoginForm extends Component {
     password: ""
   };
 
-  handleChange = (e) => {
+  handleChange = e => {
+    e.preventDefault();
     this.setState({
       [e.target.name]: e.target.value
-    })
-  }
+    });
+  };
 
   onClick = () => {
     fetch("http://localhost:8080/user/login", {
       method: "post",
       body: JSON.stringify({
-        "email": this.state.email,
-        "password": this.state.password
-      })
-      ,
+        email: this.state.email,
+        password: this.state.password
+      }),
       headers: {
-        'Accept': "application/json",
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       credentials: "same-origin", // send cookies
       credentials: "include" // send cookies, even in CORS
     })
-      .then((res) => { return res.json()}).then((data) => console.log(data));
+      .then(res => {
+        return res.json();
+      })
+      .then(data => console.log(data));
   };
 
   render() {

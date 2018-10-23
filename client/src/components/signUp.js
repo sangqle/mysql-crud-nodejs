@@ -13,40 +13,42 @@ import "./signUp.css";
 
 class LoginForm extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       name: "",
       email: "",
       password: "",
       sdt: ""
     };
-    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
-    
-  handleInputChange = (event) => {
-      this.setState({
-          [event.target.name] : event.target.value
-      })
-  }
+
+  handleInputChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
 
   onClick = () => {
     fetch("http://localhost:8080/user/create/account", {
       method: "post",
       body: JSON.stringify({
-        "email": this.state.email,
-        "password": this.state.password,
-        "name": this.state.name,
-        "sdt": this.state.sdt
-      })
-      ,
+        email: this.state.email,
+        password: this.state.password,
+        name: this.state.name,
+        sdt: this.state.sdt
+      }),
       headers: {
-        'Accept': "application/json",
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       credentials: "same-origin", // send cookies
       credentials: "include" // send cookies, even in CORS
     })
-      .then((res) => { return res.json()}).then((data) => console.log(data));
+      .then(res => {
+        return res.json();
+      })
+      .then(data => console.log(data));
   };
 
   render() {
@@ -60,7 +62,7 @@ class LoginForm extends Component {
               <Input
                 onChange={this.handleInputChange}
                 type="email"
-                name="name"              
+                name="name"
                 placeholder="Your name ..."
               />
             </FormGroup>
