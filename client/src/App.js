@@ -5,7 +5,9 @@ import Slide from "./container/slide";
 import Card from "./container/card";
 import "./app.scss";
 import Loader from "react-loaders";
-let loader = <Loader type="pacman" />;
+const renderLoader = () => {
+  return <Loader type="pacman" active={true} />;
+};
 
 class App extends React.Component {
   state = {
@@ -29,9 +31,9 @@ class App extends React.Component {
       <Container>
         <Slide />
         <Row>
-          {movies /* this is  gonna render first */ &&
+          {movies /* this is  gonna checked first */ &&
             movies.map((movie, i) => (
-              <Col xs="6" sm="4" key={i}>
+              <Col sm="4" key={i}>
                 <Card
                   image={movie.image}
                   title={movie.title}
@@ -41,7 +43,6 @@ class App extends React.Component {
               </Col>
             ))}
         </Row>
-        {loader}
       </Container>
     );
   }
