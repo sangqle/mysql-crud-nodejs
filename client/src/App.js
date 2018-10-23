@@ -3,7 +3,9 @@ import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import Slide from "./container/slide";
 import Card from "./container/card";
-import "./app.css";
+import "./app.scss";
+import Loader from "react-loaders";
+let loader = <Loader type="pacman" />;
 
 class App extends React.Component {
   state = {
@@ -13,11 +15,12 @@ class App extends React.Component {
   componentDidMount() {
     fetch("http://localhost:8080/user/get/all/movie")
       .then(data => data.json())
-      .then(result =>
+      .then(result => {
+        console.log(result);
         this.setState({
-          movies: result.data
-        })
-      );
+          movies: result.movies
+        });
+      });
   }
 
   render() {
@@ -26,17 +29,19 @@ class App extends React.Component {
       <Container>
         <Slide />
         <Row>
-          {movies.map((movie, i) => {
-            <Col xs="6" sm="4" key={i}>
-              <Card
-                imageURL={movie.imageURL}
-                title={movie.title}
-                director={movie.director}
-                length={movie.length}
-              />
-            </Col>;
-          })}
+          {movies /* this is  gonna render first */ &&
+            movies.map((movie, i) => (
+              <Col xs="6" sm="4" key={i}>
+                <Card
+                  image={movie.image}
+                  title={movie.title}
+                  director={movie.director}
+                  length={movie.length}
+                />
+              </Col>
+            ))}
         </Row>
+        {loader}
       </Container>
     );
   }
