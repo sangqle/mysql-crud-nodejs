@@ -6,11 +6,11 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
 
 const { pool } = require('./src/mysql/connect');
 const userController = require("./src/controller/user");
 const adminController = require("./src/controller/admin");
-
 
 passport.use(new LocalStrategy(
   {
@@ -18,28 +18,32 @@ passport.use(new LocalStrategy(
     passwordField: 'password'
   },
   (email, password, done) => {
+    let passwordLogin = password + 'secure';
     console.log('Inside localStrategy call back');
-    let sql = `call userLogin('${email}', '${password}');`;
+    let sql = `call userLogin('${email}');`;
     try {
       pool.query(sql, (error, results, fields) => {
         if (error) {
           return done(null, false);
         }
-        const data = results[0][0];
-        const user = {
-          id_user: data.id_user,
-          name: data.name,
-          email: data.email,
-          sdt: data.sdt
-        }
-        if (user) {
-          return done(null, user);
+        const data = results[0][0];// return array
+        if (data) {
+          const user = {
+            id_user: data.id_user,
+            name: data.name,
+            email: data.email,
+            sdt: data.sdt
+          }
+          bcrypt.compare(passwordLogin, data.password, function (err, res) {
+            if (res) return done(null, user);
+            else return done(null, false);
+          });
         } else {
           return done(null, false);
         }
       });
     } catch (error) {
-      return done(null, error);
+      return done(null, false);
     }
   }
 ));
@@ -56,14 +60,16 @@ passport.deserializeUser((email, done) => {
         return done(null, false);
       }
       const data = results[0];
-      const user = {
-        id_user: data.id_user,
-        name: data.name,
-        email: data.email,
-        sdt: data.sdt
-      }
-      if (user) {
-        return done(null, user);
+      if (data) {
+        const user = {
+          id_user: data.id_user,
+          name: data.name,
+          email: data.email,
+          sdt: data.sdt
+        }
+        if (user) {
+          return done(null, user);
+        }
       } else {
         return done(null, false);
       }
@@ -115,10 +121,8 @@ App.post('/login', (req, res, next) => {
     if (info) { return res.send(info.message) }
     if (err) { return next(err); }
     if (!user) { return res.redirect('/login'); }
-    console.log('Inside passport.authenticate() Thanh');
+    console.log('Inside passport.authenticate() Thanh Cong');
     req.login(user, (err) => {
-      // console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
-      // console.log(`req.user: ${JSON.stringify(req.user)}`)
       return res.send(user);
     })
   })(req, res, next);

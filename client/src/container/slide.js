@@ -10,23 +10,19 @@ import "./slide.css";
 
 const items = [
   {
-    src: "http://comicbuzz.com/wp-content/uploads/2018/07/skyscraper.jpg"
+    src: "https://lh5.googleusercontent.com/En6uE9TDoOzjvroeRXnMRWe9LLHqSYEPFb8G0pjNRE9JBMkXAYN-Wfoi_BcPagxOTb45MFJNqmLAfwDKdmX_=w1280-h689-rw"
   },
   {
     src:
-      "https://initiate.alphacoders.com/images/410/cropped-1920-1080-410956.jpg?2216"
+      "https://lh5.googleusercontent.com/AQEm4WVORoCvHEaq8v03pz3zLJ5q3TS4y4wc5JxdxlIngp12FTpItFtvQ59KPLV_k2l51yxQjag16v5pUXf3=w1280-h689-rw"
   },
   {
     src:
-      "https://initiate.alphacoders.com/images/336/cropped-1920-1080-336484.jpg?4151"
+      "https://lh6.googleusercontent.com/TODNtrKGaIxkN1bIqHVk34CZA6-PouFr4JeUhq4ncTlo1xSbCjmjj-xLqs0-XUhK7uOIUzAtTf2qo-Q2xljQ=w1280-h689-rw"
   },
   {
     src:
-      "https://initiate.alphacoders.com/images/814/cropped-1920-1080-81446.jpg?5079"
-  },
-  {
-    src:
-      "https://initiate.alphacoders.com/images/386/cropped-1920-1080-386994.jpg?3529"
+      "https://lh6.googleusercontent.com/N7duMLV0CedhV3q4-8g6H2wGUsutwkEelpK4LbT4EYhXRtVxk5gUJptW4PHi0aa2iUeapT7p3J7estpIykcK=w1280-h689-rw"
   }
 ];
 

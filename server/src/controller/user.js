@@ -1,28 +1,39 @@
 const { pool } = require("../../src/mysql/connect");
-const passport = require('passport');
+const bcrypt = require('bcrypt');
 
 /**User register a account to booking */
 
-exports.addAccount = (req, res) => {
-  const dataPost = req.body;
-  let sql = `call themNguoiDung('${dataPost.name}', '${dataPost.email}', '${
-    dataPost.password
-    }', '${dataPost.sdt}');`;
+exports.addAccount = (req, res) => { // ok
 
-  try {
-    pool.query(sql, (error, results, fields) => {
-      if (error) {
-        return res.status(400).send({ error });
+  const { email, password, name, sdt } = req.body;
+  if (email && password && name && sdt) {
+    let passwordHash = password + 'secure';
+    bcrypt.hash(passwordHash, 10).then(function (hash) {
+      let sql = `call themNguoiDung('${name}', '${email}', '${hash}', '${sdt}');`
+      try {
+        pool.query(sql, (error, results, fields) => {
+          if (error) {
+            return res.status(400).send({
+              code: error.code,
+              errno: error.errno,
+              sqlMessage: error.sqlMessage,
+              sqlState: error.sqlState,
+              index: error.index
+            });
+          }
+          res.status(200).send({ name, email, sdt });
+        });
+      } catch (error) {
+        res.status(400).send({ error });
       }
-      res.status(200).send({
-        results: results,
-        data: dataPost,
-        fields: fields
-      });
     });
-  } catch (error) {
-    res.status(400).send({ error });
+  } else {
+    return res.status(400).send({
+      Message: 'Require {name, email, password, sdt}',
+      YourBody: Object.keys(req.body)
+    })
   }
+
 };
 
 /**User get all the movies is avaible */
