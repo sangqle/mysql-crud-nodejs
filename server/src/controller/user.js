@@ -144,7 +144,7 @@ exports.userBooking = (req, res) => {
       res.status(400).send({ error });
     }
   } else {
-    res.redirect('/login');
+    res.redirect('/user/login');
   }
 
 };
@@ -170,7 +170,7 @@ exports.getAllOrder = (req, res) => {
       res.status(400).send({ error });
     }
   } else {
-    res.redirect('/')
+    res.redirect('/user/login')
   }
 };
 
@@ -181,51 +181,59 @@ exports.getAllOrder = (req, res) => {
 /* User delete order was booked */
 exports.deleteOrder = (req, res) => {
   let { id_user, id_order } = req.body;
-  let sql = `call xoaVe(${id_user}, ${id_order});`;
-  try {
-    pool.query(sql, (error, results, fields) => {
-      if (error) {
-        return res.status(400).send({ error });
-      }
-      if (results.affectedRows) {
-        res.status(200).send({
-          statusCode: 200,
-          results: results
-        });
-      } else {
-        res.status(400).send({
-          statusCode: 400,
-          message: `The id order ${id_order} dose not exist`
-        });
-      }
-    });
-  } catch (error) {
-    res.status(400).send({ error });
+  if (req.isAuthenticated()) {
+    try {
+      let sql = `call xoaVe(${id_user}, ${id_order});`;
+      pool.query(sql, (error, results, fields) => {
+        if (error) {
+          return res.status(400).send({ error });
+        }
+        if (results.affectedRows) {
+          res.status(200).send({
+            statusCode: 200,
+            results: results
+          });
+        } else {
+          res.status(400).send({
+            statusCode: 400,
+            message: `The id order ${id_order} dose not exist`
+          });
+        }
+      });
+    } catch (error) {
+      res.status(400).send({ error });
+    }
+  } else {
+    res.redirect('/user/login')
   }
 };
 
 /* User edit the seat after call function choNgoiDaDuocDat(id_movie, id_date, id_time) */
 exports.editBooking = (req, res) => {
   let { id_order, id_newSeat } = req.body;
-  let sql = `call doiChoNgoi(${id_order}, ${id_newSeat});`;
-  try {
-    pool.query(sql, (error, results, fields) => {
-      if (error) {
-        return res.status(400).send({ error });
-      }
-      if (results.effectedRows) {
-        res.status(200).send({
-          statusCode: 200,
-          results: results
-        });
-      } else {
-        res.status(400).send({
-          statusCode: 400,
-          message: `The id order ${id_order} or id new seat ${id_newSeat} is invalid`
-        });
-      }
-    });
-  } catch (error) {
-    res.status(400).send({ error });
+  if (req.isAuthenticated()) {
+    try {
+      let sql = `call doiChoNgoi(${id_order}, ${id_newSeat});`;
+      pool.query(sql, (error, results, fields) => {
+        if (error) {
+          return res.status(400).send({ error });
+        }
+        if (results.effectedRows) {
+          res.status(200).send({
+            statusCode: 200,
+            results: results
+          });
+        } else {
+          res.status(400).send({
+            statusCode: 400,
+            message: `The id order ${id_order} or id new seat ${id_newSeat} is invalid`
+          });
+        }
+      });
+    } catch (error) {
+      res.status(400).send({ error });
+    }
+  } else {
+    res.redirect('/user/login');
   }
 };

@@ -7,6 +7,7 @@ const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const { pool } = require('./src/mysql/connect');
 const userController = require("./src/controller/user");
@@ -49,35 +50,28 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser((user, done) => {
-  console.log('Inside serializeUser callback. User id is save to the session file store here')
-  done(null, user.email);
+  console.log('Inside serializeUser callback. User id is save to the session file store here');
+  let token = jwt.sign(user, 'secureKey');
+  done(null, token);
 });
-passport.deserializeUser((email, done) => {
-  let sql = `select * from user where email = '${email}';`;
+passport.deserializeUser((token, done) => {
   try {
+    let userDecode = jwt.verify(token, 'secureKey');
+    let sql = `select * from user where email = '${userDecode.email}';`;
     pool.query(sql, (error, results, fields) => {
-      if (error) {
-        return done(null, false);
-      }
+      if (error) { return done(null, false); }
       const data = results[0];
       if (data) {
         const user = {
-          id_user: data.id_user,
-          name: data.name,
-          email: data.email,
-          sdt: data.sdt
+          id_user: data.id_user, name: data.name, email: data.email, sdt: data.sdt
         }
-        if (user) {
+        if (user.email === userDecode.email && user.sdt === userDecode.sdt && user.id_user === userDecode.id_user)
           return done(null, user);
-        }
-      } else {
-        return done(null, false);
-      }
+        else return done(null, false);
+      } else { return done(null, false); }
     });
-  } catch (error) {
-    return done(null, error);
-  }
-})
+  } catch (error) { return done(null, false); }
+});
 const App = express();
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extended: true }));
