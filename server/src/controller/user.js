@@ -173,11 +173,6 @@ exports.getAllOrder = (req, res) => {
     res.redirect('/user/login')
   }
 };
-
-
-// sua toi day roi. di ngu thoi ------------------ 
-
-
 /* User delete order was booked */
 exports.deleteOrder = (req, res) => {
   let { id_user, id_order } = req.body;

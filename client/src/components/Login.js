@@ -41,7 +41,9 @@ class LoginForm extends Component {
       .then(res => {
         return res.json();
       })
-      .then(data => console.log(data));
+      .then(data => console.log(data), (error) => {
+        console.log('error');
+      });
   };
 
   render() {
