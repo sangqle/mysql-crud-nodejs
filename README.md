@@ -7,7 +7,41 @@
 > [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) </br>
 ## API
 * User
-    * [localhost:8080/user/get/all/movie/date](localhost:8080/user/get/all/movie) <br>
+    * [http://localhost:8080/user/create/account](http://localhost:8080/user/create/account) <br>
+        Request:
+        ```javascript
+        {
+            "name": "Nguyen Phuoc Thanh",
+            "email": "thanhnguyen@gmail.com",
+            "password": "pass",
+            "sdt": "11111"
+        }
+        ```
+        Response:
+        ```javascript
+        {
+            "name": "Nguyen Phuoc Thanh",
+            "email": "thanhnguyen@gmail.com",
+            "sdt": "11111"
+        }
+        ```
+    * [http://localhost:8080/user/login](http://localhost:8080/user/login) <br>
+        Request:
+        ```javascript
+        {
+            "email": "thanhnguyen@gmail.com",
+            "password": "pass",
+        }
+        ```
+        Response:
+        ```javascript
+        {
+            "id_user": 35,
+            "name": "Nguyen Phuoc Thanh",
+            "email": "thanhnguyen@gmail.com"
+        }
+        ```
+    * [http://localhost:8080/user/get/all/movie/date](http://localhost:8080/user/get/all/movie) <br>
         Response:
         ```javascript
         {
@@ -21,20 +55,11 @@
                     "length": 110,
                     "price": 120,
                     "image": "https://lottecinemavn.com/Lotte/files/44/4427ab16-6b3e-45c8-9dee-58c8ad84304b.png"
-                },
-                {
-                    "id_movie": 2,
-                    "title": "VeNom",
-                    "director": "Tom Hardy",
-                    "released": 2018,
-                    "length": 126,
-                    "price": 100,
-                    "image": "https://lottecinemavn.com/Lotte/files/43/43a08870-459f-48e5-8cad-c8342755aa4c.jpg"
                 }
             ]
         }
         ```
-    * [localhost:8080/user/get/all/date/time](localhost:8080/user/get/all/movie/date/time) <br>
+    * [http://localhost:8080/user/get/all/date/time](http://localhost:8080/user/get/all/movie/date/time) <br>
         Request:
         ```javascript
         body: {
@@ -61,7 +86,7 @@
             ]
         }
         ```
-    * [localhost:8080/user/get/all/date/time](localhost:8080/user/get/all/movie/date/time) <br>
+    * [http://localhost:8080/user/get/all/date/time](http://localhost:8080/user/get/all/movie/date/time) <br>
         Request:
         ```javascript
         body: {
@@ -81,7 +106,7 @@
             ]
         }
         ```
-    * [localhost:8080/user/get/all/date/time/seat](localhost:8080/user/get/all/movie/date/time/seat) <br>
+    * [http://localhost:8080/user/get/all/date/time/seat](http://localhost:8080/user/get/all/movie/date/time/seat) <br>
         Request:
         ```javascript
         body: {
@@ -99,7 +124,7 @@
             "seated": []
         }
         ```
-    * [localhost:8080/user/get/all/date/time/seat/booking](localhost:8080/user/get/all/movie/date/time/seat/booking) <br>
+    * [http://localhost:8080/user/get/all/date/time/seat/booking](http://localhost:8080/user/get/all/movie/date/time/seat/booking) <br>
         Request:
         ```javascript
         body: {
@@ -122,8 +147,79 @@
                 "id_seat": 1
             }
         }
-        
         ```
+    * [http://localhost:8080/user/get/all/order](http://localhost:8080/user/get/all/order) <br>
+        Request:
+        ```javascript
+        body: {
+            "id_user": "35"
+        }
+        ```
+        Response:
+        ```javascript
+        {
+            "instance": 1,
+            "order": [
+                {
+                    "id_order": 8,
+                    "title": "Bad Times At The El Royale",
+                    "date": 19,
+                    "time": 1140,
+                    "price": 120,
+                    "id_seat": 2
+                }
+            ]
+        }
+        ```
+    * [http://localhost:8080/user/delete/order](http://localhost:8080/user/delete/order) <br>
+        Request:
+        ```javascript
+        body: {
+            "id_user": "35",
+            "id_order" : "8"
+        }
+        ```
+        Response:
+        ```javascript
+        {
+            "statusCode": 200,
+            "results": {
+                "fieldCount": 0,
+                "affectedRows": 1,
+                "insertId": 0,
+                "serverStatus": 2,
+                "warningCount": 0,
+                "message": "",
+                "protocol41": true,
+                "changedRows": 0
+            }
+        }
+        ```
+       * [http://localhost:8080/user/update/seat](http://localhost:8080/user/update/seat) <br>
+        Request:
+        ```javascript
+        body: {
+            "id_order": "2",
+            "id_newSeat" : "3"
+        }
+        ```
+        Response:
+        ```javascript
+        {
+            "statusCode": 200,
+            "results": {
+                "fieldCount": 0,
+                "affectedRows": 1,
+                "insertId": 0,
+                "serverStatus": 2,
+                "warningCount": 0,
+                "message": "",
+                "protocol41": true,
+                "changedRows": 0
+            }
+        }
+        ```
+    
 * Administrator
   * Item 2a
   * Item 2b
