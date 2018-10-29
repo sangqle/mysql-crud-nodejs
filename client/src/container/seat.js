@@ -3,7 +3,7 @@ import styled from "styled-components";
 import "./seat.scss";
 
 const Grid = styled.div`
-  display: inline-grid;
+  display: grid;
   grid-template-columns: repeat(4, 1fr);
   background-color: whitesmoke;
   padding: 10px;
@@ -24,23 +24,29 @@ const Item = styled.div`
   }
 `;
 
-const Seat = () => {
-  return (
-    <Grid>
-      <Item>1</Item>
-      <Item>2</Item>
-      <Item>3</Item>
-      <Item>4</Item>
-      <Item>5</Item>
-      <Item>6</Item>
-      <Item>7</Item>
-      <Item>8</Item>
-      <Item>9</Item>
-      <Item>10</Item>
-      <Item>11</Item>
-      <Item>12</Item>
-    </Grid>
-  );
-};
+class Seat extends React.Component {
+  state = {
+    seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  };
+
+  onClick = e => {
+    alert(e.target.textContent);
+  };
+
+  render() {
+    const { seats } = this.state;
+    return (
+      <Grid>
+        {seats.map((seat, i) => {
+          return (
+            <Item key={i} onClick={this.onClick}>
+              {seat}
+            </Item>
+          );
+        })}
+      </Grid>
+    );
+  }
+}
 
 export default Seat;
