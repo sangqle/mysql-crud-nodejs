@@ -1,13 +1,14 @@
-# This is project of Database management.
-## Booking  online movie in cinema.
+# :stuck_out_tongue_winking_eye: This is project of Database management.
+:+1: This PR looks great <br>
+## :blush: Booking  online movie in cinema.
 [![Build Status](https://vscode.visualstudio.com/_apis/public/build/definitions/a4cdce18-a05c-4bb8-9476-5d07e63bfd76/1/badge?branchName=master)](https://aka.ms/vscode-builds)
-## Requirement
+## :smiley: Requirement
 > [Nodejs](https://nodejs.org/en/) </br>
 > [Mysql Server](https://dev.mysql.com/downloads/mysql/) </br>
 > [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) </br>
-## API
+## :ok_hand: API
 * User
-    - [x] [http://localhost:8080/user/create/account](http://localhost:8080/user/create/account) <br>
+    - [x] POST: [http://localhost:8080/user/create/account](http://localhost:8080/user/create/account) <br>
         Request:
         ```javascript
         {
@@ -25,7 +26,7 @@
             "sdt": "11111"
         }
         ```
-    - [x] [http://localhost:8080/user/login](http://localhost:8080/user/login) <br>
+    - [x] POST: [http://localhost:8080/user/login](http://localhost:8080/user/login) <br>
         Request:
         ```javascript
         {
@@ -41,7 +42,7 @@
             "email": "thanhnguyen@gmail.com"
         }
         ```
-    - [x] [http://localhost:8080/user/get/all/movie](http://localhost:8080/user/get/all/movie) <br>
+    - [x] GET: [http://localhost:8080/user/get/all/movie](http://localhost:8080/user/get/all/movie) <br>
         ```javascript
         {
             "instaces": 6,
@@ -58,8 +59,8 @@
             ]
         }
         ```
-    - [x] [http://localhost:8080/user/get/date/:id_movie](http://localhost:8080/user/get/date/1) <br>
-        >Ex: http://localhost:8080/user/get/date/1 <br>
+    - [x] GET: [http://localhost:8080/user/get/date/:id_movie](http://localhost:8080/user/get/date/1) <br>
+        >Ex: http://localhost:8080/user/get/date/1<br>
         Response:
         ```javascript
         {
@@ -76,7 +77,7 @@
             ]
         }
         ```
-    - [x] [http://localhost:8080/user/get/time/:id_movie/:id_date](http://localhost:8080/user/get/time/1/2) <br>
+    - [x] GET: [http://localhost:8080/user/get/time/:id_movie/:id_date](http://localhost:8080/user/get/time/1/2) <br>
         >Ex: http://localhost:8080/user/get/time/1/1 <br>
         Response:
         ```javascript
@@ -90,7 +91,7 @@
             ]
         }
         ```
-    - [x] [http://localhost:8080/user/get/seated/:id_movie/:id_date/:id_time](http://localhost:8080//user/get/seated/1/2/1) <br>
+    - [x] GET: [http://localhost:8080/user/get/seated/:id_movie/:id_date/:id_time](http://localhost:8080//user/get/seated/1/2/1) <br>
         >Ex: http://localhost:8080/user/get/time/1/1/2 <br>
         Response:
         ```javascript
@@ -101,7 +102,7 @@
             "seated": []
         }
         ```
-    - [x] [http://localhost:8080/user/booking](http://localhost:8080/user/booking) <br>
+    - [x] POST: [http://localhost:8080/user/booking](http://localhost:8080/user/booking) <br>
         Request:
         ```javascript
         body: {
@@ -125,7 +126,7 @@
             }
         }
         ```
-    - [x] [http://localhost:8080/user/get/all/order](http://localhost:8080/user/get/all/order) <br>
+    - [x] GET: [http://localhost:8080/user/get/all/order](http://localhost:8080/user/get/all/order) <br>
         Request:
         ```javascript
         body: {
@@ -148,7 +149,7 @@
             ]
         }
         ```
-    - [x] [http://localhost:8080/user/delete/order](http://localhost:8080/user/delete/order) <br>
+    - [x] POST: [http://localhost:8080/user/delete/order](http://localhost:8080/user/delete/order) <br>
         Request:
         ```javascript
         body: {
@@ -172,7 +173,7 @@
             }
         }
         ```
-    - [x] [http://localhost:8080/user/update/seat](http://localhost:8080/user/update/seat) <br>
+    - [x] POST: [http://localhost:8080/user/update/seat](http://localhost:8080/user/update/seat) <br>
         Request:
         ```javascript
         body: {
@@ -196,9 +197,9 @@
             }
         }
         ```
-    - [x] [http://localhost:8080/logout](http://localhost:8080/logout) <br>    
+    - [x] GET: [http://localhost:8080/logout](http://localhost:8080/logout) <br><br> 
 * Administrator
-    - [x] [http://localhost:8080/admin/add/movie](http://localhost:8080/admin/add/movie) <br>
+    - [x] POST: [http://localhost:8080/admin/add/movie](http://localhost:8080/admin/add/movie) <br>
         Request:
         ```javascript
         body: {
@@ -235,7 +236,7 @@
             }
         }
         ```
-    - [x] [http://localhost:8080/admin/get/all/order/:date](http://localhost:8080/admin/get/all/order/21) <br>
+    - [x] GET: [http://localhost:8080/admin/get/all/order/:date](http://localhost:8080/admin/get/all/order/21) <br>
         ```javascript
         {
             "instance": 1,
