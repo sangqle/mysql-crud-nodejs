@@ -56,7 +56,7 @@ passport.deserializeUser((token, done) => {
       const data = results[0];
       if (data) {
         const user = {
-          id_user: data.id_user, name: data.name, email: data.email, sdt: data.sdt
+          id_user: data.id_user, name: data.name, email: data.email, sdt: data.sdt, role: data.role
         }
         if (user.email === userDecode.email && user.sdt === userDecode.sdt && user.id_user === userDecode.id_user)
           return done(null, user);
@@ -65,11 +65,10 @@ passport.deserializeUser((token, done) => {
     });
   } catch (error) { return done(null, false); }
 });
+
 const App = express();
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extended: true }));
-
-
 App.use(session({
   genid: (req) => {
     console.log('Inside the session middleware');
@@ -100,7 +99,7 @@ App.use(function (req, res, next) {
 App.get('/user/login', (req, res) => {
   console.log('Inside GET /user/login callback function')
   console.log(req.sessionID);
-  res.send(`You got the login page!\n`)
+  res.send(`You got the User login page!\n`)
 });
 
 App.post('/user/login', (req, res, next) => {
@@ -115,7 +114,7 @@ App.post('/user/login', (req, res, next) => {
   })(req, res, next);
 });
 
-App.get('/logout', function(req, res){
+App.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');
 });
@@ -135,10 +134,10 @@ App.post("/user/create/account", userController.addAccount); // ok.
 App.get("/user/get/all/movie", userController.getAllMovie); // ok
 App.post("/user/get/all/movie/date", userController.getAllDateOfMovie); // ok
 App.post("/user/get/all/movie/date/time", userController.getAllTimeOfDateInMovie); // ok
-App.post("/user/get/all/movie/date/time/seat", userController.getChoNgoiDaDuocDat); // ok
+App.post("/user/get/all/movie/date/time/seated", userController.getChoNgoiDaDuocDat); // ok
 App.post("/user/get/all/movie/date/time/seat/booking", userController.userBooking); // ok
 
-App.post("/user/get/all/order", userController.getAllOrder); // ok
+App.get("/user/get/all/order", userController.getAllOrder); // ok
 App.post("/user/delete/order", userController.deleteOrder); // ok
 App.post("/user/update/seat", userController.editBooking); // ok
 
@@ -148,9 +147,36 @@ App.get("/admin/get/all/order", adminController.getAllOrder); // ok
 App.get("/admin/get/all/order/:date", adminController.getAllOrderByDate); // ok
 
 
+
 App.get('/', (req, res) => {
   console.log('Inside the homepage callback function')
   console.log(req.sessionID)
   res.send(`You hit home page!\n`)
+})
+
+App.get('/user', (req, res) => {
+  if (req.isAuthenticated() && req.user.role === 'user') {
+
+    console.log('Inside the User homepage')
+    console.log(req.sessionID)
+    res.send(req.user)
+  } else {
+    res.send('you do not have permission')
+  }
+
+});
+
+App.get('/admin', (req, res) => {
+  if (req.isAuthenticated() && req.user.role === 'admin') {
+    console.log('Inside the Admin homepage')
+    console.log(req.sessionID)
+    res.send(`You hit Admin page!\n`)
+  } else {
+    res.send('You do not have permission')
+  }
+});
+
+App.get('/admin/login', (req, res) => {
+  res.send('You Got Administrator login')
 })
 module.exports = { App };

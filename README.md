@@ -41,8 +41,7 @@
             "email": "thanhnguyen@gmail.com"
         }
         ```
-    * [http://localhost:8080/user/get/all/movie/date](http://localhost:8080/user/get/all/movie) <br>
-        Response:
+    * [http://localhost:8080/user/get/all/movie](http://localhost:8080/user/get/all/movie) <br>
         ```javascript
         {
             "instaces": 6,
@@ -59,7 +58,7 @@
             ]
         }
         ```
-    * [http://localhost:8080/user/get/all/date/time](http://localhost:8080/user/get/all/movie/date/time) <br>
+    * [http://localhost:8080/user/get/all/movie/date](http://localhost:8080/user/get/all/movie/date) <br>
         Request:
         ```javascript
         body: {
@@ -78,10 +77,6 @@
                 {
                     "id_date": 2,
                     "date": 20
-                },
-                {
-                    "id_date": 3,
-                    "date": 21
                 }
             ]
         }
@@ -106,7 +101,7 @@
             ]
         }
         ```
-    * [http://localhost:8080/user/get/all/date/time/seat](http://localhost:8080/user/get/all/movie/date/time/seat) <br>
+    * [http://localhost:8080/user/get/all/date/time/seated](http://localhost:8080/user/get/all/movie/date/time/seated) <br>
         Request:
         ```javascript
         body: {
@@ -195,7 +190,7 @@
             }
         }
         ```
-       * [http://localhost:8080/user/update/seat](http://localhost:8080/user/update/seat) <br>
+    * [http://localhost:8080/user/update/seat](http://localhost:8080/user/update/seat) <br>
         Request:
         ```javascript
         body: {
@@ -219,9 +214,61 @@
             }
         }
         ```
-    
+    * [http://localhost:8080/logout](http://localhost:8080/logout) <br>    
 * Administrator
-  * Item 2a
+    * [http://localhost:8080/admin/add/movie](http://localhost:8080/admin/add/movie) <br>
+        Request:
+        ```javascript
+        body: {
+            "title": "Oh Joy, Coming Soon",
+            "director": "Joy jobs",
+            "released": 2016,
+            "length": 85,
+            "price": 90,
+            "imageUrl": "https://lottecinemavn.com/Lotte/files/85/85c6c0b3-a951-4802-9f94-d7b4819ca493.jpg",
+            "data": [{
+                "date": 20,
+                "time": [1020, 1140]
+            }]
+        }
+        ```
+        Response:
+        ```javascript
+        {
+            "query": {
+                "title": "Jonny English",
+                "director": "Joy jobs",
+                "released": 2016,
+                "length": 126,
+                "price": 100,
+                "data": [
+                    {
+                        "date": 20,
+                        "time": [
+                            1020,
+                            1140
+                        ]
+                    }
+                ]
+            }
+        }
+        ```
+    * [http://localhost:8080/admin/get/all/order/:date](http://localhost:8080/admin/get/all/order/21) <br>
+        ```javascript
+        {
+            "instance": 1,
+            "order": [
+                {
+                    "id_order": 2,
+                    "name": "tran cong an",
+                    "title": "Bad Times At The El Royale",
+                    "date": 21,
+                    "time": 1140,
+                    "price": 120,
+                    "id_seat": 3
+                }
+            ]
+        }
   * Item 2b
 
 

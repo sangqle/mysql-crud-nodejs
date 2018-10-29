@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 /**User register a account to booking */
 
 exports.addAccount = (req, res) => { // ok
-
   const { email, password, name, sdt } = req.body;
   if (email && password && name && sdt) {
     let passwordHash = password + 'secure';
@@ -99,7 +98,6 @@ exports.getAllTimeOfDateInMovie = (req, res) => {
 /* API check seated*/
 exports.getChoNgoiDaDuocDat = (req, res) => {
   var { id_movie, id_date, id_time } = req.body;
-
   let sql = `call choNgoiDaDuocDat(${id_movie}, ${id_date}, ${id_time});
 			   select max(number_row) from seat;
 			   select max(number_col) from seat;
@@ -126,9 +124,9 @@ exports.getChoNgoiDaDuocDat = (req, res) => {
 
 /* User booking*/
 exports.userBooking = (req, res) => {
-  var { id_movie, id_date, id_time, id_user, id_seat } = req.body;
   console.log(`User authenticated? ${req.isAuthenticated()}`)
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && req.user.role === 'user') {
+    var { id_movie, id_date, id_time, id_user, id_seat } = req.body;
     let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, ${id_seat});`;
     try {
       pool.query(sql, (error, results, fields) => {
@@ -151,10 +149,9 @@ exports.userBooking = (req, res) => {
 
 /* User get all the order booking */
 exports.getAllOrder = (req, res) => {
-  var { id_user } = req.body;
   console.log(`User authenticated? ${req.isAuthenticated()}`)
-  if (req.isAuthenticated()) {
-    let sql = `call xemVeDaDat(${id_user});`;
+  if (req.isAuthenticated() && req.user.role === 'user') {
+    let sql = `call xemVeDaDat(${req.user.id_user});`;
     try {
       pool.query(sql, (error, results, fields) => {
         if (error) {
@@ -175,8 +172,8 @@ exports.getAllOrder = (req, res) => {
 };
 /* User delete order was booked */
 exports.deleteOrder = (req, res) => {
-  let { id_user, id_order } = req.body;
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && req.user.role === 'user') {
+    let { id_user, id_order } = req.body;
     try {
       let sql = `call xoaVe(${id_user}, ${id_order});`;
       pool.query(sql, (error, results, fields) => {
@@ -205,8 +202,8 @@ exports.deleteOrder = (req, res) => {
 
 /* User edit the seat after call function choNgoiDaDuocDat(id_movie, id_date, id_time) */
 exports.editBooking = (req, res) => {
-  let { id_order, id_newSeat } = req.body;
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && req.user.role === 'user') {
+    let { id_order, id_newSeat } = req.body;
     try {
       let sql = `call doiChoNgoi(${id_order}, ${id_newSeat});`;
       pool.query(sql, (error, results, fields) => {
