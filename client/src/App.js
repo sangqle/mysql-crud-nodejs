@@ -5,6 +5,7 @@ import Slide from "./container/slide";
 import Card from "./container/card";
 import "./app.scss";
 import Loader from "react-loaders";
+import Seat from "./container/seat";
 const renderLoader = () => {
   return <Loader type="pacman" active={true} />;
 };
@@ -34,6 +35,7 @@ class App extends React.Component {
     const { movies, modal } = this.state;
     return (
       <Container>
+        <Seat />
         <Slide />
         <Row>
           {movies /* this is  gonna checked first */ &&
@@ -46,6 +48,7 @@ class App extends React.Component {
                   length={movie.length}
                   modal={modal}
                   onToggle={this.onToggle}
+                  header={movie.title}
                 />
               </Col>
             ))}

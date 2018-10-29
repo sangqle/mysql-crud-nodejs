@@ -11,7 +11,7 @@ import {
 import "./card.css";
 import ModalNewTask from "./order";
 
-const Movie = ({ image, title, director, length, modal, onToggle }) => {
+const Movie = ({ image, title, director, length, modal, onToggle, header }) => {
   return (
     <div className="move">
       <Card>
@@ -31,7 +31,7 @@ const Movie = ({ image, title, director, length, modal, onToggle }) => {
           </Button>
         </CardBody>
       </Card>
-      <ModalNewTask modal={modal} onToggle={onToggle} />
+      <ModalNewTask modal={modal} onToggle={onToggle} header={header} />
     </div>
   );
 };
