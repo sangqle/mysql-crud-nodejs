@@ -213,7 +213,7 @@ exports.editBooking = (req, res) => {
         if (error) {
           return res.status(400).send({ error });
         }
-        if (results.effectedRows) {
+        if (results) {
           res.status(200).send({
             statusCode: 200,
             results: results
