@@ -57,7 +57,7 @@ exports.getAllMovie = (req, res) => {
 
 /**User get all the date of the movie */
 exports.getAllDateOfMovie = (req, res) => {
-  var id_movie = req.body.id_movie;
+  var id_movie = req.params.id_movie;
   let sql = `call chonNgayXem(${id_movie});`;
   try {
     pool.query(sql, (error, results, fields) => {
@@ -77,7 +77,7 @@ exports.getAllDateOfMovie = (req, res) => {
 
 /* Get all the time of movie in the date*/
 exports.getAllTimeOfDateInMovie = (req, res) => {
-  var { id_movie, id_date } = req.body;
+  var {id_movie, id_date} = req.params;
   let sql = `call chonGioXem(${id_movie}, ${id_date});`;
   try {
     pool.query(sql, (error, results, fields) => {
@@ -97,7 +97,7 @@ exports.getAllTimeOfDateInMovie = (req, res) => {
 
 /* API check seated*/
 exports.getChoNgoiDaDuocDat = (req, res) => {
-  var { id_movie, id_date, id_time } = req.body;
+  var { id_movie, id_date, id_time } = req.params;
   let sql = `call choNgoiDaDuocDat(${id_movie}, ${id_date}, ${id_time});
 			   select max(number_row) from seat;
 			   select max(number_col) from seat;

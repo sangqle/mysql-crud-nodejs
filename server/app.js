@@ -132,10 +132,10 @@ App.get('/authrequired', (req, res) => {
 // Route
 App.post("/user/create/account", userController.addAccount); // ok.
 App.get("/user/get/all/movie", userController.getAllMovie); // ok
-App.post("/user/get/all/movie/date", userController.getAllDateOfMovie); // ok
-App.post("/user/get/all/movie/date/time", userController.getAllTimeOfDateInMovie); // ok
-App.post("/user/get/all/movie/date/time/seated", userController.getChoNgoiDaDuocDat); // ok
-App.post("/user/get/all/movie/date/time/seat/booking", userController.userBooking); // ok
+App.get("/user/get/date/:id_movie", userController.getAllDateOfMovie); // ok
+App.get("/user/get/time/:id_movie/:id_date", userController.getAllTimeOfDateInMovie); // ok
+App.get("/user/get/seated/:id_movie/:id_date/:id_time", userController.getChoNgoiDaDuocDat); // ok
+App.post("/user/booking", userController.userBooking); // ok
 
 App.get("/user/get/all/order", userController.getAllOrder); // ok
 App.post("/user/delete/order", userController.deleteOrder); // ok

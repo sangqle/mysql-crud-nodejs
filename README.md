@@ -1,13 +1,13 @@
 # This is project of Database management.
 ## Booking  online movie in cinema.
-
+[![Build Status](https://vscode.visualstudio.com/_apis/public/build/definitions/a4cdce18-a05c-4bb8-9476-5d07e63bfd76/1/badge?branchName=master)](https://aka.ms/vscode-builds)
 ## Requirement
 > [Nodejs](https://nodejs.org/en/) </br>
 > [Mysql Server](https://dev.mysql.com/downloads/mysql/) </br>
 > [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) </br>
 ## API
 * User
-    * [http://localhost:8080/user/create/account](http://localhost:8080/user/create/account) <br>
+    - [x] [http://localhost:8080/user/create/account](http://localhost:8080/user/create/account) <br>
         Request:
         ```javascript
         {
@@ -25,7 +25,7 @@
             "sdt": "11111"
         }
         ```
-    * [http://localhost:8080/user/login](http://localhost:8080/user/login) <br>
+    - [x] [http://localhost:8080/user/login](http://localhost:8080/user/login) <br>
         Request:
         ```javascript
         {
@@ -41,7 +41,7 @@
             "email": "thanhnguyen@gmail.com"
         }
         ```
-    * [http://localhost:8080/user/get/all/movie](http://localhost:8080/user/get/all/movie) <br>
+    - [x] [http://localhost:8080/user/get/all/movie](http://localhost:8080/user/get/all/movie) <br>
         ```javascript
         {
             "instaces": 6,
@@ -58,13 +58,8 @@
             ]
         }
         ```
-    * [http://localhost:8080/user/get/all/movie/date](http://localhost:8080/user/get/all/movie/date) <br>
-        Request:
-        ```javascript
-        body: {
-            "id_movie": "1"
-        }
-        ```
+    - [x] [http://localhost:8080/user/get/date/:id_movie](http://localhost:8080/user/get/date/1) <br>
+        >Ex: http://localhost:8080/user/get/date/1 <br>
         Response:
         ```javascript
         {
@@ -81,14 +76,8 @@
             ]
         }
         ```
-    * [http://localhost:8080/user/get/all/date/time](http://localhost:8080/user/get/all/movie/date/time) <br>
-        Request:
-        ```javascript
-        body: {
-            "id_movie": "1",
-            "id_date": "1"
-        }
-        ```
+    - [x] [http://localhost:8080/user/get/time/:id_movie/:id_date](http://localhost:8080/user/get/time/1/2) <br>
+        >Ex: http://localhost:8080/user/get/time/1/1 <br>
         Response:
         ```javascript
         {
@@ -101,15 +90,8 @@
             ]
         }
         ```
-    * [http://localhost:8080/user/get/all/date/time/seated](http://localhost:8080/user/get/all/movie/date/time/seated) <br>
-        Request:
-        ```javascript
-        body: {
-            "id_movie": "1",
-            "id_date": "1",
-            "id_time": "1"
-        }
-        ```
+    - [x] [http://localhost:8080/user/get/seated/:id_movie/:id_date/:id_time](http://localhost:8080//user/get/seated/1/2/1) <br>
+        >Ex: http://localhost:8080/user/get/time/1/1/2 <br>
         Response:
         ```javascript
         {
@@ -119,7 +101,7 @@
             "seated": []
         }
         ```
-    * [http://localhost:8080/user/get/all/date/time/seat/booking](http://localhost:8080/user/get/all/movie/date/time/seat/booking) <br>
+    - [x] [http://localhost:8080/user/booking](http://localhost:8080/user/booking) <br>
         Request:
         ```javascript
         body: {
@@ -143,7 +125,7 @@
             }
         }
         ```
-    * [http://localhost:8080/user/get/all/order](http://localhost:8080/user/get/all/order) <br>
+    - [x] [http://localhost:8080/user/get/all/order](http://localhost:8080/user/get/all/order) <br>
         Request:
         ```javascript
         body: {
@@ -166,7 +148,7 @@
             ]
         }
         ```
-    * [http://localhost:8080/user/delete/order](http://localhost:8080/user/delete/order) <br>
+    - [x] [http://localhost:8080/user/delete/order](http://localhost:8080/user/delete/order) <br>
         Request:
         ```javascript
         body: {
@@ -190,7 +172,7 @@
             }
         }
         ```
-    * [http://localhost:8080/user/update/seat](http://localhost:8080/user/update/seat) <br>
+    - [x] [http://localhost:8080/user/update/seat](http://localhost:8080/user/update/seat) <br>
         Request:
         ```javascript
         body: {
@@ -214,9 +196,9 @@
             }
         }
         ```
-    * [http://localhost:8080/logout](http://localhost:8080/logout) <br>    
+    - [x] [http://localhost:8080/logout](http://localhost:8080/logout) <br>    
 * Administrator
-    * [http://localhost:8080/admin/add/movie](http://localhost:8080/admin/add/movie) <br>
+    - [x] [http://localhost:8080/admin/add/movie](http://localhost:8080/admin/add/movie) <br>
         Request:
         ```javascript
         body: {
@@ -253,7 +235,7 @@
             }
         }
         ```
-    * [http://localhost:8080/admin/get/all/order/:date](http://localhost:8080/admin/get/all/order/21) <br>
+    - [x] [http://localhost:8080/admin/get/all/order/:date](http://localhost:8080/admin/get/all/order/21) <br>
         ```javascript
         {
             "instance": 1,

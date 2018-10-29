@@ -1,3 +1,3 @@
 server/node_modules
 config.js
-server/sessions
+server/sessions/
