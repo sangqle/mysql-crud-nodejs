@@ -9,12 +9,14 @@ import {
   Input,
   Button
 } from "reactstrap";
+import { Redirect } from "react-router-dom";
 import "./login.css";
 
 class LoginForm extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    redirect: false
   };
 
   handleChange = e => {
@@ -41,42 +43,50 @@ class LoginForm extends Component {
       .then(res => {
         return res.json();
       })
-      .then(data => console.log(data), (error) => {
-        console.log('error');
-      });
+      .then(() => this.setState({ logined: !this.state.logined }))
+      .then(
+        data => console.log(data),
+        error => {
+          console.log("error");
+        }
+      );
   };
 
   render() {
+    const { logined } = this.state;
+
     return (
       <Container className="App">
         <h2>Sign In</h2>
-        <Form className="form">
-          <Col>
-            <FormGroup>
-              <Label>Email</Label>
-              <Input
-                onChange={this.handleChange}
-                type="email"
-                name="email"
-                id="exampleEmail"
-                placeholder="myemail@email.com"
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input
-                onChange={this.handleChange}
-                type="password"
-                name="password"
-                id="examplePassword"
-                placeholder="********"
-              />
-            </FormGroup>
-          </Col>
-          <Button onClick={this.onClick}>Submit</Button>
-        </Form>
+        {logined && (
+          <Form className="form">
+            <Col>
+              <FormGroup>
+                <Label>Email</Label>
+                <Input
+                  onChange={this.handleChange}
+                  type="email"
+                  name="email"
+                  id="exampleEmail"
+                  placeholder="myemail@email.com"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="examplePassword">Password</Label>
+                <Input
+                  onChange={this.handleChange}
+                  type="password"
+                  name="password"
+                  id="examplePassword"
+                  placeholder="********"
+                />
+              </FormGroup>
+            </Col>
+            <Button onClick={this.onClick}>Submit</Button>
+          </Form>
+        )}
       </Container>
     );
   }
