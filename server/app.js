@@ -45,9 +45,11 @@ passport.use(new LocalStrategy(
 passport.serializeUser((user, done) => {
   console.log('Inside serializeUser callback. User id is save to the session file store here');
   let token = jwt.sign(user, 'secureKey');
+  console.log(token);
   done(null, token);
 });
 passport.deserializeUser((token, done) => {
+  console.log(token);
   try {
     let userDecode = jwt.verify(token, 'secureKey');
     let sql = `select * from user where email = '${userDecode.email}';`;
@@ -167,6 +169,7 @@ App.get('/user', (req, res) => {
 });
 
 App.get('/admin', (req, res) => {
+  console.log(req.user);
   if (req.isAuthenticated() && req.user.role === 'admin') {
     console.log('Inside the Admin homepage')
     console.log(req.sessionID)
@@ -180,3 +183,6 @@ App.get('/admin/login', (req, res) => {
   res.send('You Got Administrator login')
 })
 module.exports = { App };
+
+// this is test-auth branch
+// you can editable everything
