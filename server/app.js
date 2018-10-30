@@ -2,10 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const uuid = require('uuid/v4');
-const session = require('express-session');
-const FileStore = require('session-file-store')(session);
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -13,78 +9,6 @@ const { pool } = require('./src/mysql/connect');
 const userController = require("./src/controller/user");
 const adminController = require("./src/controller/admin");
 
-passport.use(new LocalStrategy(
-  {
-    usernameField: 'email',
-    passwordField: 'password'
-  },
-  (email, password, done) => {
-    let passwordLogin = password + 'secure';
-    console.log('Inside localStrategy call back');
-    let sql = `call userLogin('${email}');`;
-    try {
-      pool.query(sql, (error, results, fields) => {
-        if (error) {
-          return done(null, false);
-        }
-        const data = results[0][0];// return array
-        if (data) {
-          const user = {
-            id_user: data.id_user, name: data.name, email: data.email, sdt: data.sdt
-          }
-          bcrypt.compare(passwordLogin, data.password, function (err, res) {
-            if (res) return done(null, user);
-            else return done(null, false);
-          });
-        } else { return done(null, false); }
-      });
-    } catch (error) { return done(null, false); }
-  }
-));
-
-passport.serializeUser((user, done) => {
-  console.log('Inside serializeUser callback. User id is save to the session file store here');
-  let token = jwt.sign(user, 'secureKey');
-  console.log(token);
-  done(null, token);
-});
-passport.deserializeUser((token, done) => {
-  console.log(token);
-  try {
-    let userDecode = jwt.verify(token, 'secureKey');
-    let sql = `select * from user where email = '${userDecode.email}';`;
-    pool.query(sql, (error, results, fields) => {
-      if (error) { return done(null, false); }
-      const data = results[0];
-      if (data) {
-        const user = {
-          id_user: data.id_user, name: data.name, email: data.email, sdt: data.sdt, role: data.role
-        }
-        if (user.email === userDecode.email && user.sdt === userDecode.sdt && user.id_user === userDecode.id_user)
-          return done(null, user);
-        else return done(null, false);
-      } else { return done(null, false); }
-    });
-  } catch (error) { return done(null, false); }
-});
-
-const App = express();
-App.use(bodyParser.json());
-App.use(bodyParser.urlencoded({ extended: true }));
-App.use(session({
-  genid: (req) => {
-    console.log('Inside the session middleware');
-    console.log(`Request object sessionID from client: ${req.sessionId}`);
-    return uuid(); // Use UUIDs for session Ids
-  },
-  store: new FileStore(),
-  secret: 'Keyboard cat',
-  resave: false,
-  saveUninitialized: true
-}));
-
-App.use(passport.initialize());
-App.use(passport.session());
 // Add headers
 App.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -156,7 +80,7 @@ App.get('/', (req, res) => {
   res.send(`You hit home page!\n`)
 })
 
-App.get('/user', (req, res) => {
+App.get('/`345`', (req, res) => {
   if (req.isAuthenticated() && req.user.role === 'user') {
 
     console.log('Inside the User homepage')
