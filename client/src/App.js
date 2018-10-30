@@ -1,58 +1,45 @@
 import React from "react";
 
-import { Container, Row, Col } from "reactstrap";
-import Slide from "./container/slide";
-import Card from "./container/card";
+import { Container } from "reactstrap";
+
 import "./app.scss";
 import Loader from "react-loaders";
-import Seat from "./container/seat";
+
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import Login from "./components/Login";
+import signUp from "./components/signUp";
+import Home from "./components/Home";
+
 const renderLoader = () => {
   return <Loader type="pacman" active={true} />;
 };
 
 class App extends React.Component {
-  state = {
-    movies: null,
-    modal: false
-  };
-
-  componentDidMount() {
-    fetch("http://localhost:8080/user/get/all/movie")
-      .then(data => data.json())
-      .then(result => {
-        console.log(result);
-        this.setState({
-          movies: result.movies
-        });
-      });
-  }
-
-  onToggle = () => {
-    this.setState({ modal: !this.state.modal });
-  };
-
   render() {
-    const { movies, modal } = this.state;
     return (
       <Container>
-        <Seat />
-        <Slide />
-        <Row>
-          {movies /* this is  gonna checked first */ &&
-            movies.map((movie, i) => (
-              <Col sm="4" key={i}>
-                <Card
-                  image={movie.image}
-                  title={movie.title}
-                  director={movie.director}
-                  length={movie.length}
-                  modal={modal}
-                  onToggle={this.onToggle}
-                  header={movie.title}
-                />
-              </Col>
-            ))}
-        </Row>
+        <Router>
+          <div>
+            <ul>
+              <li>
+                <Link to="/">Home Page</Link>
+              </li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/signUp">SignUp</Link>
+              </li>
+            </ul>
+
+            <hr />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/login" component={Login} />
+              <Route path="/signUp" component={signUp} />
+            </Switch>
+          </div>
+        </Router>
       </Container>
     );
   }
