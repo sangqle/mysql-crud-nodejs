@@ -7,3 +7,7 @@ $primary-color: $my-brand-color;
 .loader-active {
   display: block;
 }
+
+.col-sm-4 {
+  max-width: max-content;
+}

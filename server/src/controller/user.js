@@ -1,7 +1,13 @@
 const { pool } = require("../../src/mysql/connect");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 
 /**User register a account to booking */
+exports.userGetLogin = (req, res) => {
+  console.log(req.header('x-auth'));
+  res.send('you are get login page')
+}
 
 exports.addAccount = (req, res) => { // ok
   const { email, password, name, sdt } = req.body;
@@ -20,7 +26,7 @@ exports.addAccount = (req, res) => { // ok
               index: error.index
             });
           }
-          res.status(200).send({ name, email, sdt });
+          res.status(201).send({ name, email, sdt });
         });
       } catch (error) {
         res.status(400).send({ error });
@@ -32,8 +38,36 @@ exports.addAccount = (req, res) => { // ok
       YourBody: Object.keys(req.body)
     })
   }
-
 };
+
+exports.userPostLogin = (req, res) => {
+  const { email } = req.body;
+  let sql = `call userLogin('${email}')`;
+  try {
+    pool.query(sql, (error, results, fields) => {
+      if (error) {
+        return res.status(400).send({
+          code: error.code,
+          errno: error.errno,
+          sqlMessage: error.sqlMessage,
+          sqlState: error.sqlState,
+          index: error.index
+        });
+      }
+      const user = results[0][0];
+      if (!user) {
+        return res.send({ message: `Email:  '${email}' is not exist` })
+      }
+      bcrypt.compare(req.body.password + 'secure', user.password).then((check) => {
+        const token = jwt.sign({ id_user: user.id_user, name: user.name, email: user.email, role: user.role }, 'secure');
+        console.log(token);
+        return res.status(200).header('x-auth', token).send({ id_user: user.id_user, name: user.name, email: user.email, role: user.role });
+      });
+    });
+  } catch (error) {
+    res.status(400).send({ error });
+  }
+}
 
 /**User get all the movies is avaible */
 exports.getAllMovie = (req, res) => {
@@ -77,7 +111,7 @@ exports.getAllDateOfMovie = (req, res) => {
 
 /* Get all the time of movie in the date*/
 exports.getAllTimeOfDateInMovie = (req, res) => {
-  var {id_movie, id_date} = req.params;
+  var { id_movie, id_date } = req.params;
   let sql = `call chonGioXem(${id_movie}, ${id_date});`;
   try {
     pool.query(sql, (error, results, fields) => {
@@ -124,108 +158,96 @@ exports.getChoNgoiDaDuocDat = (req, res) => {
 
 /* User booking*/
 exports.userBooking = (req, res) => {
-  console.log(`User authenticated? ${req.isAuthenticated()}`)
-  if (req.isAuthenticated() && req.user.role === 'user') {
-    var { id_movie, id_date, id_time, id_user, id_seat } = req.body;
-    let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, ${id_seat});`;
-    try {
-      pool.query(sql, (error, results, fields) => {
-        if (error) {
-          return res.status(400).send({ error });
-        }
-        var order = results[0];
-        res.status(200).send({
-          order: order[0]
-        });
+  if (req.user.role !== 'user') return res.send({ message: 'Please login as customer' });
+  var { id_movie, id_date, id_time, id_seat } = req.body;
+  var id_user = req.user.id_user;
+  let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, ${id_seat});`;
+  try {
+    pool.query(sql, (error, results, fields) => {
+      if (error) {
+        return res.status(400).send({ error });
+      }
+      var order = results[0];
+      res.status(200).send({
+        order: order[0]
       });
-    } catch (error) {
-      res.status(400).send({ error });
-    }
-  } else {
-    res.redirect('/user/login');
+    });
+  } catch (error) {
+    res.status(400).send({ error });
   }
-
 };
 
 /* User get all the order booking */
 exports.getAllOrder = (req, res) => {
-  console.log(`User authenticated? ${req.isAuthenticated()}`)
-  if (req.isAuthenticated() && req.user.role === 'user') {
-    let sql = `call xemVeDaDat(${req.user.id_user});`;
-    try {
-      pool.query(sql, (error, results, fields) => {
-        if (error) {
-          return res.status(400).send({ error });
-        }
-        var order = results[0];
-        res.status(200).send({
-          instance: order.length,
-          order: order
-        });
+  if (req.user.role !== 'user') return res.send({ message: 'Please login as customer' });
+  let sql = `call xemVeDaDat(${req.user.id_user});`;
+  try {
+    pool.query(sql, (error, results, fields) => {
+      if (error) {
+        return res.status(400).send({ error });
+      }
+      var order = results[0];
+      res.status(200).send({
+        id_user: req.user.id_user,
+        name: req.user.name,
+        instance: order.length,
+        order: order
       });
-    } catch (error) {
-      res.status(400).send({ error });
-    }
-  } else {
-    res.redirect('/user/login')
+    });
+  } catch (error) {
+    res.status(400).send({ error });
   }
 };
 /* User delete order was booked */
 exports.deleteOrder = (req, res) => {
-  if (req.isAuthenticated() && req.user.role === 'user') {
-    let { id_user, id_order } = req.body;
-    try {
-      let sql = `call xoaVe(${id_user}, ${id_order});`;
-      pool.query(sql, (error, results, fields) => {
-        if (error) {
-          return res.status(400).send({ error });
-        }
-        if (results.affectedRows) {
-          res.status(200).send({
-            statusCode: 200,
-            results: results
-          });
-        } else {
-          res.status(400).send({
-            statusCode: 400,
-            message: `The id order ${id_order} dose not exist`
-          });
-        }
-      });
-    } catch (error) {
-      res.status(400).send({ error });
-    }
-  } else {
-    res.redirect('/user/login')
+  if (req.user.role !== 'user') return res.send({ message: 'Please login as customer' });
+  let { id_order } = req.body;
+  try {
+    let sql = `call xoaVe(${req.user.id_user}, ${id_order});`;
+    pool.query(sql, (error, results, fields) => {
+      if (error) {
+        return res.status(400).send({ error });
+      }
+      if (results.affectedRows) {
+        res.status(200).send({
+          statusCode: 200,
+          results: `The order '${id_order}' was deleted.`
+        });
+      } else {
+        res.status(400).send({
+          statusCode: 400,
+          message: `The id order ${id_order} dose not exist`
+        });
+      }
+    });
+  } catch (error) {
+    res.status(400).send({ error });
   }
 };
 
 /* User edit the seat after call function choNgoiDaDuocDat(id_movie, id_date, id_time) */
 exports.editBooking = (req, res) => {
-  if (req.isAuthenticated() && req.user.role === 'user') {
-    let { id_order, id_newSeat } = req.body;
-    try {
-      let sql = `call doiChoNgoi(${id_order}, ${id_newSeat});`;
-      pool.query(sql, (error, results, fields) => {
-        if (error) {
-          return res.status(400).send({ error });
-        }
-        if (results) {
-          res.status(200).send({
-            statusCode: 200,
-            results: results
-          });
-        } else {
-          res.status(400).send({
-            statusCode: 400,
-            message: `The id order ${id_order} or id new seat ${id_newSeat} is invalid`
-          });
-        }
-      });
-    } catch (error) {
-      res.status(400).send({ error });
-    }
-  } else {
-    res.redirect('/user/login');
+  if (req.user.role !== 'user') return res.send({ message: 'Please login as customer' });
+  let { id_order, id_newSeat } = req.body;
+  try {
+    let sql = `call doiChoNgoi(${id_order}, ${id_newSeat});`;
+    pool.query(sql, (error, results, fields) => {
+      if (error) {
+        return res.status(400).send({ error });
+      }
+      if (results) {
+        res.status(200).send({
+          statusCode: 200,
+          results: results
+        });
+      } else {
+        res.status(400).send({
+          statusCode: 400,
+          message: `The id order ${id_order} or id new seat ${id_newSeat} is invalid`
+        });
+      }
+    });
+  } catch (error) {
+    res.status(400).send({ error });
   }
 };
