@@ -35,7 +35,7 @@ class LoginForm extends Component {
       }),
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
 
       credentials: "include" // send cookies, even in CORS
