@@ -9,14 +9,14 @@ import {
   Input,
   Button
 } from "reactstrap";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import "./login.css";
 
 class LoginForm extends Component {
   state = {
     email: "",
-    password: "",
-    redirect: false
+    password: ""
   };
 
   handleChange = e => {
@@ -43,7 +43,6 @@ class LoginForm extends Component {
       .then(res => {
         return res.json();
       })
-      .then(() => this.setState({ logined: !this.state.logined }))
       .then(
         data => console.log(data),
         error => {
@@ -53,40 +52,38 @@ class LoginForm extends Component {
   };
 
   render() {
-    const { logined } = this.state;
-
     return (
       <Container className="App">
+        <Link to="/signUp">SignUp</Link>
         <h2>Sign In</h2>
-        {logined && (
-          <Form className="form">
-            <Col>
-              <FormGroup>
-                <Label>Email</Label>
-                <Input
-                  onChange={this.handleChange}
-                  type="email"
-                  name="email"
-                  id="exampleEmail"
-                  placeholder="myemail@email.com"
-                />
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label for="examplePassword">Password</Label>
-                <Input
-                  onChange={this.handleChange}
-                  type="password"
-                  name="password"
-                  id="examplePassword"
-                  placeholder="********"
-                />
-              </FormGroup>
-            </Col>
-            <Button onClick={this.onClick}>Submit</Button>
-          </Form>
-        )}
+
+        <Form className="form">
+          <Col>
+            <FormGroup>
+              <Label>Email</Label>
+              <Input
+                onChange={this.handleChange}
+                type="email"
+                name="email"
+                id="exampleEmail"
+                placeholder="myemail@email.com"
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label for="examplePassword">Password</Label>
+              <Input
+                onChange={this.handleChange}
+                type="password"
+                name="password"
+                id="examplePassword"
+                placeholder="********"
+              />
+            </FormGroup>
+          </Col>
+          <Button onClick={this.onClick}>Submit</Button>
+        </Form>
       </Container>
     );
   }

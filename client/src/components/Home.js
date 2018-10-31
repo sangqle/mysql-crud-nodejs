@@ -19,10 +19,6 @@ export default class Home extends Component {
       });
   }
 
-  onToggle = () => {
-    this.setState({ modal: !this.state.modal });
-  };
-
   render() {
     const { movies } = this.state;
     return (
