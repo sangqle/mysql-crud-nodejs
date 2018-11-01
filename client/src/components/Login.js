@@ -43,8 +43,11 @@ class LoginForm extends Component {
       .then(res => {
         return res.json();
       })
-      .then(
-        data => console.log(data),
+      .then((user) => {
+        console.log(user);
+         if(user.email) this.props.history.push('/home');
+        data => console.log(data);
+      },
         error => {
           console.log("error");
         }
