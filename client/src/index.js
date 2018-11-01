@@ -15,9 +15,10 @@ const Page = () => {
   return (
     <React.Fragment>
       <Route exact path="/" component={App} />
-      <Route path="/home" component={Home} />
       <Route path="/login" component={Login} />
       <Route path="/signUp" component={signUp} />
+
+      <Route path="/home" component={Home} />
       <Route path="/admin" component={Admin} />
     </React.Fragment>
   );

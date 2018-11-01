@@ -52,55 +52,66 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <Container className="App">
-        <h2>Sign In</h2>
-        <Form className="form">
-          <Col>
-            <FormGroup>
-              <Label>Name</Label>
-              <Input
-                onChange={this.handleInputChange}
-                type="email"
-                name="name"
-                placeholder="Your name ..."
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label>Phone Number</Label>
-              <Input
-                onChange={this.handleInputChange}
-                type="text"
-                name="sdt"
-                placeholder="........."
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label>Email</Label>
-              <Input
-                onChange={this.handleInputChange}
-                type="email"
-                name="email"
-                placeholder="myemail@email.com"
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input
-                onChange={this.handleInputChange}
-                type="password"
-                name="password"
-                placeholder="********"
-              />
-            </FormGroup>
-          </Col>
-          <Button onClick={this.onClick}>Sign up</Button>
-        </Form>
+      <Container>
+        <div className="button">
+          <Button className="btn btn-success">Login</Button>
+        </div>
+
+        <div className="App">
+          <h2>Sign In</h2>
+          <Form className="form">
+            <Col>
+              <FormGroup>
+                <Label>Name</Label>
+                <Input
+                  onChange={this.handleInputChange}
+                  type="email"
+                  name="name"
+                  placeholder="Your name ..."
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label>Phone Number</Label>
+                <Input
+                  onChange={this.handleInputChange}
+                  type="text"
+                  name="sdt"
+                  placeholder="........."
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label>Email</Label>
+                <Input
+                  onChange={this.handleInputChange}
+                  type="email"
+                  name="email"
+                  placeholder="myemail@email.com"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="examplePassword">Password</Label>
+                <Input
+                  onChange={this.handleInputChange}
+                  type="password"
+                  name="password"
+                  placeholder="********"
+                />
+              </FormGroup>
+            </Col>
+            <Button
+              onClick={this.onClick}
+              className="btn btn-block btn-outline-danger"
+            >
+              Sign up
+            </Button>
+          </Form>
+        </div>
       </Container>
     );
   }

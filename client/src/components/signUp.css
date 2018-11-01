@@ -1,3 +1,7 @@
+.container {
+  margin-top: 40px;
+}
+
 .App {
   text-align: left;
   padding: 1em;
@@ -8,7 +12,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 600px;
-  margin-top: 100px;
+  margin-top: 40px;
 }
 
 .form {
@@ -21,6 +25,7 @@ label {
 }
 
 button {
+  display: flex;
   justify-content: flex-end;
 }
 

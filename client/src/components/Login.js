@@ -27,7 +27,7 @@ class LoginForm extends Component {
   };
 
   onClick = () => {
-    fetch("http://localhost:8080/user/login", {
+    return fetch("http://localhost:8080/user/login", {
       method: "post",
       body: JSON.stringify({
         email: this.state.email,
@@ -35,7 +35,7 @@ class LoginForm extends Component {
       }),
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
 
       credentials: "include" // send cookies, even in CORS
@@ -44,46 +44,50 @@ class LoginForm extends Component {
         return res.json();
       })
       .then(
-        data => console.log(data),
+        data => {
+          console.log(data);
+          !data.error && this.props.history.push("/home");
+        },
         error => {
-          console.log("error");
+          console.log(error);
         }
       );
   };
 
   render() {
     return (
-      <Container className="App">
-        <Link to="/signUp">SignUp</Link>
-        <h2>Sign In</h2>
+      <Container>
+        <div className="App">
+          <h2>Sign In</h2>
 
-        <Form className="form">
-          <Col>
-            <FormGroup>
-              <Label>Email</Label>
-              <Input
-                onChange={this.handleChange}
-                type="email"
-                name="email"
-                id="exampleEmail"
-                placeholder="myemail@email.com"
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input
-                onChange={this.handleChange}
-                type="password"
-                name="password"
-                id="examplePassword"
-                placeholder="********"
-              />
-            </FormGroup>
-          </Col>
-          <Button onClick={this.onClick}>Submit</Button>
-        </Form>
+          <Form className="form">
+            <Col>
+              <FormGroup>
+                <Label>Email</Label>
+                <Input
+                  onChange={this.handleChange}
+                  type="email"
+                  name="email"
+                  id="exampleEmail"
+                  placeholder="myemail@email.com"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="examplePassword">Password</Label>
+                <Input
+                  onChange={this.handleChange}
+                  type="password"
+                  name="password"
+                  id="examplePassword"
+                  placeholder="********"
+                />
+              </FormGroup>
+            </Col>
+            <Button onClick={this.onClick}>Submit</Button>
+          </Form>
+        </div>
       </Container>
     );
   }

@@ -19,6 +19,7 @@ class App extends React.Component {
           </li>
         </ul>
         <hr />
+        {this.props.children}
       </Container>
     );
   }
