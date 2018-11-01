@@ -43,11 +43,13 @@ class LoginForm extends Component {
       .then(res => {
         return res.json();
       })
+
       .then(
         data => {
           console.log(data);
           !data.error && this.props.history.push("/home");
         },
+
         error => {
           console.log(error);
         }
