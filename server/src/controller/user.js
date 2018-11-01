@@ -55,7 +55,10 @@ exports.userPostLogin = (req, res) => {
       }
       const user = results[0][0];
       if (!user) {
-        return res.send({ message: `Email:  '${email}' is not exist` })
+        return res.send({ 
+          error: 404,
+          message: `Email:  '${email}' is not exist`
+         })
       }
       bcrypt.compare(req.body.password + 'secure', user.password).then((check) => {
         const token = jwt.sign({ id_user: user.id_user, name: user.name, email: user.email, role: user.role }, 'secure');
