@@ -1,16 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require("cors");
-const uuid = require('uuid/v4');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const morgan = require('morgan');
 
 const {authentication} = require('./src/middleware/authentication');
-const { pool } = require('./src/mysql/connect');
+//const getLog = require('./src/middleware/getlog');
 const userController = require("./src/controller/user");
 const adminController = require("./src/controller/admin");
 
 const App = express();
+
+//App.use(getLog.getTime);
+//App.use(morgan('short'));
+App.use(morgan({ format: 'dev', skip: function(req, res){ return res.statusCode === 304; }}));
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extended: true }));
 // Add headers

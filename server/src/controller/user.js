@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 
 /**User register a account to booking */
 exports.userGetLogin = (req, res) => {
-  console.log(req.header('x-auth'));
   res.send('you are get login page')
 }
 
@@ -60,7 +59,6 @@ exports.userPostLogin = (req, res) => {
       }
       bcrypt.compare(req.body.password + 'secure', user.password).then((check) => {
         const token = jwt.sign({ id_user: user.id_user, name: user.name, email: user.email, role: user.role }, 'secure');
-        console.log(token);
         return res.status(200).header('x-auth', token).send({ id_user: user.id_user, name: user.name, email: user.email, role: user.role, token: token });
       });
     });

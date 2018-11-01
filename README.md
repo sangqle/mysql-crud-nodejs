@@ -39,7 +39,9 @@
         {
             "id_user": 35,
             "name": "Nguyen Phuoc Thanh",
-            "email": "thanhnguyen@gmail.com"
+            "email": "thanhnguyen@gmail.com",
+            "role": "user",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozMywibmFtZSI6IkxlIFF1YW5nIFNhbmciLCJlbWFpbCI6InNhbmcubGVxdWFuZ0BnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTU0MTA0NTIwMH0.0b_pHp5e49SVP-Mod8SVr0oRzizPKcpSy07yaCgTbn4"
         }
         ```
     - [x] GET: [http://localhost:8080/user/get/all/movie](http://localhost:8080/user/get/all/movie) <br>
@@ -110,7 +112,6 @@
             "id_date": "1",
             "id_time": "1",
             "id_seat": "1",
-            "id_user": "33"
         }
         ```
         Response:
@@ -128,11 +129,6 @@
         ```
     - [x] GET: [http://localhost:8080/user/get/all/order](http://localhost:8080/user/get/all/order) <br>
         Request:
-        ```javascript
-        body: {
-            "id_user": "35"
-        }
-        ```
         Response:
         ```javascript
         {
@@ -154,7 +150,6 @@
         ```javascript
         body: {
             "id_user": "35",
-            "id_order" : "8"
         }
         ```
         Response:

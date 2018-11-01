@@ -4,7 +4,8 @@ const authentication = (req, res, next) => {
 	const token = req.header('x-auth');
 	jwt.verify(token, 'secure', (err, tokenDecode) => {
 		if (err) {
-			return res.send({ err })
+			err.announced = 'Please login to try again'
+			return res.send({err});
 		}
 		let sql = `call userLogin('${tokenDecode.email}')`;
 		try {
@@ -29,7 +30,7 @@ const authentication = (req, res, next) => {
 				}
 			});
 		} catch (error) {
-			res.status(400).send({ error });
+			res.status(400).send({ "error": error });
 		}
 	})
 }

@@ -2,8 +2,9 @@ const { pool } = require("../../src/mysql/connect");
 
 exports.addMovie = (req, res) => {
   if (req.user.role !== 'admin') return res.send({ message: 'Please try to login as Admin' });
-  const { title, director, released, length, price, data, imageUrl } = req.body;
-  let sql = `call add_movie('${title}', '${director}', ${released}, ${length}, ${price}, '${imageUrl}','${dataString}');`;
+  const { title, director, released, length, price, imageUrl, data } = req.body;
+  const dataJson = JSON.stringify(data);
+  let sql = `call add_movie('${title}', '${director}', ${released}, ${length}, ${price}, '${imageUrl}','${dataJson}');`;
   try {
     pool.query(sql, (error, results, feilds) => {
       if (error) {
