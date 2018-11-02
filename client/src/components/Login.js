@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router-dom";
 
 import "./login.css";
+import auth from "../container/auth";
 
 class LoginForm extends Component {
   state = {
@@ -45,9 +46,17 @@ class LoginForm extends Component {
       })
 
       .then(
-        data => {
-          console.log(data);
-          !data.error && this.props.history.push("/home");
+        user => {
+          console.log(user);
+          if (!user.error) {
+            if (user.role === "admin") {
+              auth.login(() => {
+                this.props.history.push("/admin");
+              });
+            } else {
+              this.props.history.push("/");
+            }
+          }
         },
 
         error => {
@@ -59,6 +68,9 @@ class LoginForm extends Component {
   render() {
     return (
       <Container>
+        <Button className="btn-outline-info">
+          <Link to="/">{"<<--"}</Link>
+        </Button>
         <div className="App">
           <h2>Sign In</h2>
 

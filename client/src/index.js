@@ -2,11 +2,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { ProtectedRoute } from "../src/container/protectedRoute";
 import App from "./App";
 import Login from "../src/components/Login";
 import signUp from "../src/components/signUp";
-import Home from "../src/components/Home";
+
 import Admin from "../src/components/Admin";
 
 import "./styles.css";
@@ -14,12 +15,14 @@ import "./styles.css";
 const Page = () => {
   return (
     <React.Fragment>
-      <Route exact path="/" component={App} />
-      <Route path="/login" component={Login} />
-      <Route path="/signUp" component={signUp} />
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route path="/login" component={Login} />
+        <Route path="/signUp" component={signUp} />
 
-      <Route path="/home" component={Home} />
-      <Route path="/admin" component={Admin} />
+        <ProtectedRoute exact path="/admin" component={Admin} />
+        <Route path="*" component={() => "404 Page Not Found !!"} />
+      </Switch>
     </React.Fragment>
   );
 };

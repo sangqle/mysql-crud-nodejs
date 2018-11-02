@@ -26,7 +26,8 @@ label {
 
 button {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
 }
 
 .App-title {
