@@ -55,10 +55,10 @@ exports.userPostLogin = (req, res) => {
       }
       const user = results[0][0];
       if (!user) {
-        return res.send({ 
+        return res.send({
           error: 404,
           message: `Email:  '${email}' is not exist`
-         })
+        })
       }
       bcrypt.compare(req.body.password + 'secure', user.password).then((check) => {
         const token = jwt.sign({ id_user: user.id_user, name: user.name, email: user.email, role: user.role }, 'secure');
@@ -73,22 +73,24 @@ exports.userPostLogin = (req, res) => {
 /**User get all the movies is avaible */
 exports.getAllMovie = (req, res) => {
   console.log('Inside the GetAllTheMovie');
-  let sql = `call chonPhim();`;
-  try {
-    pool.query(sql, (error, results, fields) => {
-      if (error) {
-        return res.status(400).send({ error });
-      }
-      var movies = results[0];
-      res.status(200).send({
-        instaces: movies.length,
-        movies: movies
+    let sql = `call chonPhim();`;
+    try {
+      pool.query(sql, (error, results, fields) => {
+        if (error) {
+          return res.status(400).send({ error });
+        }
+        var movies = results[0];
+        cacheMovies = movies;
+        return res.status(200).send({
+          instaces: movies.length,
+          movies: movies
+        });
       });
-    });
-  } catch (error) {
-    res.status(400).send({ error });
-  }
-};
+    } catch (error) {
+      return res.status(400).send({ error });
+    }
+}
+
 
 /**User get all the date of the movie */
 exports.getAllDateOfMovie = (req, res) => {

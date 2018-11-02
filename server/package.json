@@ -14,6 +14,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "firebase-admin": "^6.1.0",
+    "googleapis": "^27.0.0",
     "json2xls": "^0.1.2",
     "jsonwebtoken": "^8.3.0",
     "morgan": "^1.9.1",

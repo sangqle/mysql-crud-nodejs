@@ -11,7 +11,12 @@ export default class Home extends Component {
 
   logOut = () => {
     auth.logout(() => {
-      this.props.history.push("/");
+      this.props.history.push("/login");
+    });
+  };
+  logIn = () => {
+    auth.login(() => {
+      this.props.history.push("/login");
     });
   };
   componentDidMount() {
@@ -30,7 +35,7 @@ export default class Home extends Component {
     //const isAuth = auth.isAuthenticated;
     return (
       <Container>
-        <Button onClick={this.logOut}>Log Out</Button>
+        <Button onClick={this.logIn}>Login</Button>
 
         <Slide />
         <Row>
