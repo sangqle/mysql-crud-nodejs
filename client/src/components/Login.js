@@ -59,6 +59,9 @@ class LoginForm extends Component {
   render() {
     return (
       <Container>
+        <Button className="btn-outline-info">
+          <Link to="/">{"<<--"}</Link>
+        </Button>
         <div className="App">
           <h2>Sign In</h2>
 
