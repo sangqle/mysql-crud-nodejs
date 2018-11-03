@@ -7,6 +7,7 @@ import App from "./App";
 import Login from "../src/components/Login";
 import SignUp from "../src/components/signUp";
 import Admin from "../src/components/Admin";
+import PageNotFound from "../src/components/404";
 
 import "./styles.css";
 
@@ -17,6 +18,7 @@ const Page = () => {
       <Login path="login" />
       <SignUp path="signUp" />
       <Admin path="admin" />
+      <PageNotFound path="*" />
     </Router>
   );
 };
