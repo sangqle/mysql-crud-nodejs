@@ -9,7 +9,6 @@ import {
   Button
 } from "reactstrap";
 import "./card.css";
-import ModalNewTask from "./order";
 
 const Movie = ({ image, title, director, length, modal, onToggle, header }) => {
   return (
@@ -31,7 +30,6 @@ const Movie = ({ image, title, director, length, modal, onToggle, header }) => {
           </Button>
         </CardBody>
       </Card>
-      <ModalNewTask modal={modal} onToggle={onToggle} header={header} />
     </div>
   );
 };

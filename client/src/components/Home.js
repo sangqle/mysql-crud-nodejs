@@ -2,18 +2,13 @@ import React, { Component } from "react";
 import Slide from "../container/slide";
 import Card from "../container/card";
 import { Container, Row, Col, Button } from "reactstrap";
-import auth from "../container/auth";
+import { Link } from "@reach/router";
 
 export default class Home extends Component {
   state = {
     movies: null
   };
 
-  logOut = () => {
-    auth.logout(() => {
-      this.props.history.push("/");
-    });
-  };
   componentDidMount() {
     fetch("http://localhost:8080/user/get/all/movie")
       .then(data => data.json())
@@ -25,12 +20,27 @@ export default class Home extends Component {
       });
   }
 
+  handleLogout = e => {
+    e.preventDefault();
+    localStorage.removeItem("user");
+    console.log(localStorage.getItem("user"));
+  };
+
   render() {
     const { movies } = this.state;
-    //const isAuth = auth.isAuthenticated;
+    const isAuth = localStorage.getItem("user");
+    console.log(isAuth);
     return (
       <Container>
-        <Button onClick={this.logOut}>Log Out</Button>
+        {isAuth ? (
+          <Button onClick={this.handleLogout}>LOG OUT</Button>
+        ) : (
+          <React.Fragment>
+            <nav>
+              |<Link to="signUp">SIGN UP</Link> |<Link to="login">LOG IN</Link>
+            </nav>
+          </React.Fragment>
+        )}
 
         <Slide />
         <Row>
