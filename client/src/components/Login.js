@@ -9,10 +9,8 @@ import {
   Input,
   Button
 } from "reactstrap";
-import { Link } from "react-router-dom";
-
+import { navigate, Link } from "@reach/router";
 import "./login.css";
-import auth from "../container/auth";
 
 class LoginForm extends Component {
   state = {
@@ -26,6 +24,11 @@ class LoginForm extends Component {
       [e.target.name]: e.target.value
     });
   };
+
+  componentWillMount() {
+    localStorage.getItem("user") && navigate("/");
+    localStorage.getItem("admin") && navigate("/admin");
+  }
 
   onClick = () => {
     return fetch("http://localhost:8080/user/login", {
@@ -50,11 +53,11 @@ class LoginForm extends Component {
           console.log(user);
           if (!user.error) {
             if (user.role === "admin") {
-              auth.login(() => {
-                this.props.history.push("/admin");
-              });
+              localStorage.setItem("admin", true);
+              navigate("/admin");
             } else {
-              this.props.history.push("/");
+              localStorage.setItem("user", true);
+              navigate("/");
             }
           }
         },
