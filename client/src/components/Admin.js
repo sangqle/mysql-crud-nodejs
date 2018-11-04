@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Container, Button, Row } from "reactstrap";
 import { Redirect, navigate } from "@reach/router";
-import Movie from "../container/movie";
+import MovieList from "../container/movieList";
 
 import "./admin.css";
 export default class Admin extends Component {
   state = {
     auth: false,
-    movies: null
+    movies: null,
+    search: ""
   };
 
   componentDidMount() {
@@ -36,8 +37,13 @@ export default class Admin extends Component {
     navigate("/");
   };
 
+  handleOnChange = e => {
+    this.setState({ search: e.target.value.substr(0, 20) });
+    console.log(this.state.search);
+  };
+
   render() {
-    const { movies } = this.state;
+    const { movies, search } = this.state;
     return (
       <Container>
         <h1>Admin </h1>
@@ -45,19 +51,15 @@ export default class Admin extends Component {
           <React.Fragment>
             <Button onClick={this.handleLogout}>Logout</Button>
             <div className="input">
-              <input type="text" placeholder="Search ..." />
+              <input
+                type="text"
+                placeholder="Search ..."
+                onChange={this.handleOnChange}
+              />
               <Button className="btn btn-success">+ ADD MOIVE</Button>
             </div>
             <Row>
-              {movies &&
-                movies.map((movie, i) => (
-                  <Movie
-                    image={movie.image}
-                    title={movie.title}
-                    director={movie.director}
-                    length={movie.length}
-                  />
-                ))}
+              <MovieList movies={movies} search={search} />
             </Row>
           </React.Fragment>
         ) : (
