@@ -10,6 +10,7 @@ import {
   Button
 } from "reactstrap";
 import "./signUp.css";
+import { Link } from "@reach/router";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -53,9 +54,9 @@ class LoginForm extends Component {
   render() {
     return (
       <Container>
-        <div className="button">
-          <Button className="btn btn-light">{"<<--"}</Button>
-        </div>
+        <Button className="btn-outline-info">
+          <Link to="/">{"<<--"}</Link>
+        </Button>
 
         <div className="App">
           <h2>Sign In</h2>
