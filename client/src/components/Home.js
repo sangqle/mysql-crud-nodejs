@@ -23,7 +23,7 @@ export default class Home extends Component {
   handleLogout = e => {
     e.preventDefault();
     localStorage.removeItem("user");
-    console.log(localStorage.getItem("user"));
+    localStorage.setItem("user", false);
   };
 
   render() {
