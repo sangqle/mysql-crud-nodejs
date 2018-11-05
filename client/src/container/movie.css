@@ -1,0 +1,22 @@
+.media-left {
+  width: 30%;
+}
+
+.media-left img {
+  width: 94%;
+}
+
+.media {
+  margin-top: 1em;
+  box-shadow: 4px 7px lightblue;
+  border-radius: 0 0 22px 0;
+}
+
+.col-2 {
+  margin-top: 1em;
+}
+
+.media-heading {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2831a7;
+}

@@ -1,0 +1,15 @@
+.input {
+  text-align: center;
+  margin: 1em 1em 1em 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+input {
+  width: 50%;
+  padding: 5px;
+  font-size: 20px;
+  border-radius: 10px;
+  color: tomato;
+  margin-right: 10px;
+}

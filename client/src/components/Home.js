@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Slide from "../container/slide";
 import Card from "../container/card";
 import { Container, Row, Col, Button } from "reactstrap";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 
 export default class Home extends Component {
   state = {
@@ -24,6 +24,7 @@ export default class Home extends Component {
     e.preventDefault();
     localStorage.removeItem("user");
     console.log(localStorage.getItem("user"));
+    navigate("/");
   };
 
   render() {
