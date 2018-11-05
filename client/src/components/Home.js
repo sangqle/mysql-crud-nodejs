@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import Slide from "../container/slide";
-import Card from "../container/card";
-import { Container, Row, Col, Button } from "reactstrap";
+
+import { Container, Row, Button } from "reactstrap";
 import { Link, navigate } from "@reach/router";
+import MovieCards from "../container/movieCards";
+import "./home.css";
 
 export default class Home extends Component {
   state = {
-    movies: null
+    movies: null,
+    search: ""
   };
 
   componentDidMount() {
@@ -20,6 +23,10 @@ export default class Home extends Component {
       });
   }
 
+  handleOnChange = e => {
+    this.setState({ search: e.target.value.substr(0, 20) });
+  };
+
   handleLogout = e => {
     e.preventDefault();
     localStorage.removeItem("user");
@@ -28,7 +35,7 @@ export default class Home extends Component {
   };
 
   render() {
-    const { movies } = this.state;
+    const { movies, search } = this.state;
     const isAuth = localStorage.getItem("user");
     console.log(isAuth);
     return (
@@ -42,22 +49,14 @@ export default class Home extends Component {
             </nav>
           </React.Fragment>
         )}
-
+        <input
+          type="text"
+          placeholder="Search ..."
+          onChange={this.handleOnChange}
+        />
         <Slide />
         <Row>
-          {movies &&
-            movies.map((movie, i) => (
-              <Col sm="4" key={i}>
-                <Card
-                  image={movie.image}
-                  title={movie.title}
-                  director={movie.director}
-                  length={movie.length}
-                  onToggle={this.onToggle}
-                  header={movie.title}
-                />
-              </Col>
-            ))}
+          <MovieCards movies={movies} search={search} />
         </Row>
       </Container>
     );

@@ -42,6 +42,25 @@ export default class Admin extends Component {
     console.log(this.state.search);
   };
 
+  viewOrder = e => {
+    e.preventDefault();
+    return fetch("http://localhost:8080/admin/get/all/order", {
+      method: "GET",
+
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNSwibmFtZSI6Ik5ndXllbiBQaHVvYyBUaGFuaCIsImVtYWlsIjoidGhhbmhuZ3V5ZW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTQxNDAzNTI1fQ.SaybRll6NXcl0uRZJoYdT23rmXL27PKcEIXxyaqQhz4"
+      },
+
+      credentials: "same-origin", // send cookies
+      credentials: "include" // send cookies, even in CORS
+    })
+      .then(res => res.json())
+      .then(result => console.log(result));
+  };
+
   render() {
     const { movies, search } = this.state;
     return (
@@ -49,6 +68,7 @@ export default class Admin extends Component {
         <h1>Admin </h1>
         {this.state.auth ? (
           <React.Fragment>
+            <Button onClick={this.viewOrder}>View order</Button>
             <Button onClick={this.handleLogout}>Logout</Button>
             <div className="input">
               <input
