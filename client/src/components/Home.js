@@ -34,6 +34,11 @@ export default class Home extends Component {
     navigate("/");
   };
 
+  onToggle = e => {
+    e.preventDefault();
+    alert(this.state.movies.id);
+  };
+
   render() {
     const { movies, search } = this.state;
     const isAuth = localStorage.getItem("user");
@@ -56,7 +61,11 @@ export default class Home extends Component {
         />
         <Slide />
         <Row>
-          <MovieCards movies={movies} search={search} />
+          <MovieCards
+            movies={movies}
+            search={search}
+            onToggle={this.onToggle}
+          />
         </Row>
       </Container>
     );
