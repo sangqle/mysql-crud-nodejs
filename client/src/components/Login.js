@@ -53,6 +53,7 @@ class LoginForm extends Component {
         user => {
           console.log(user);
           if (!user.error) {
+            localStorage.setItem("token", user.token);
             if (user.role === "admin") {
               localStorage.setItem("admin", true);
               navigate("/admin");
@@ -83,6 +84,7 @@ class LoginForm extends Component {
               <FormGroup>
                 <Label>Email</Label>
                 <Input
+                  autoFocus
                   onChange={this.handleChange}
                   type="email"
                   name="email"
