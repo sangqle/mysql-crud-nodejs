@@ -9,8 +9,9 @@ import {
   Button
 } from "reactstrap";
 import "./card.css";
+import { Link } from "@reach/router";
 
-const Movie = ({ image, title, director, length, modal, onToggle, header }) => {
+const Movie = ({ image, title, director, length, onToggle, id }) => {
   return (
     <div className="move">
       <Card>
@@ -25,9 +26,10 @@ const Movie = ({ image, title, director, length, modal, onToggle, header }) => {
           <CardTitle>{title}</CardTitle>
           <CardSubtitle>Director: {director}</CardSubtitle>
           <CardText>Length: {length}</CardText>
-          <Button className="btn btn-danger" onClick={onToggle}>
+          {/* <Button className="btn btn-danger" onClick={() onToggle}>
             Book now!
-          </Button>
+          </Button> */}
+          <Link to={`/order/${id}`}>Book now</Link>
         </CardBody>
       </Card>
     </div>

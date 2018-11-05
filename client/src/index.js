@@ -8,7 +8,7 @@ import Login from "../src/components/Login";
 import SignUp from "../src/components/signUp";
 import Admin from "../src/components/Admin";
 import PageNotFound from "../src/components/404";
-
+import Order from "../src/container/order";
 import "./styles.css";
 
 const Page = () => {
@@ -18,6 +18,7 @@ const Page = () => {
       <Login path="login" />
       <SignUp path="signUp" />
       <Admin path="admin" />
+      <Order path="order/:order_id" />
       <PageNotFound path="*" />
     </Router>
   );
