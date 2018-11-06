@@ -1,6 +1,8 @@
 # :stuck_out_tongue_winking_eye: This is project of Database management.
 :+1: This PR looks great <br>
 ## :blush: Booking  online movie in cinema.
+![alt text](https://s3-ap-southeast-1.amazonaws.com/dbms-photo-movies/gitui.jpeg)
+
 [![Build Status](https://vscode.visualstudio.com/_apis/public/build/definitions/a4cdce18-a05c-4bb8-9476-5d07e63bfd76/1/badge?branchName=master)](https://aka.ms/vscode-builds)
 ## :smiley: Requirement
 > [![Build Status]](https://nodejs.org/en/) </br>
