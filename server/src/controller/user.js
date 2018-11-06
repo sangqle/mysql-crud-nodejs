@@ -135,21 +135,14 @@ exports.getAllTimeOfDateInMovie = (req, res) => {
 /* API check seated*/
 exports.getChoNgoiDaDuocDat = (req, res) => {
   var { id_movie, id_date, id_time } = req.params;
-  let sql = `call choNgoiDaDuocDat(${id_movie}, ${id_date}, ${id_time});
-			   select max(number_row) from seat;
-			   select max(number_col) from seat;
-			  `;
+  let sql = `call choNgoiDaDuocDat(${id_movie}, ${id_date}, ${id_time});`;
   try {
     pool.query(sql, (error, results, fields) => {
       if (error) {
         return res.status(400).send({ error });
       }
       var seated = results[0];
-      var max_numRow = results[2][0]["max(number_row)"];
-      var max_numCol = results[3][0]["max(number_col)"];
       res.status(200).send({
-        max_numRow: max_numRow,
-        max_numCol: max_numCol,
         instaces: seated.length,
         seated: seated
       });

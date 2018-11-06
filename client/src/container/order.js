@@ -1,12 +1,13 @@
 import React from "react";
-import { FormGroup, Label, Input, Container } from "reactstrap";
+import { FormGroup, Label, Input, Container, Button } from "reactstrap";
 
 class Order extends React.Component {
   state = {
     showDay: null,
     times: null,
     days: null,
-    seats: null
+    seated: null,
+    seatWanted: null
   };
 
   componentDidMount() {
@@ -53,12 +54,19 @@ class Order extends React.Component {
       }
     )
       .then(res => res.json())
-      .then(data => this.setState({ seats: data }));
+      .then(data => this.setState({ seated: data }));
   };
 
+  getOrder = (e) => {
+    this.setState({[e.target.name]: e.target.checked})
+    // console.log(this.state.seatWanted)
+    
+  }
+
   render() {
-    console.log(this.state.seats);
-    const { showDay, times, seats } = this.state;
+    const seats = [1,2,3,4,5,6,7,8,9,10,11,12]
+    console.log(this.state.seated)
+    const { showDay, times, seated } = this.state;
     return (
       <Container>
         <FormGroup>
@@ -68,7 +76,7 @@ class Order extends React.Component {
             name="select"
             id="exampleSelect"
             onChange={this.handleOnChange}
-          >
+          ><option>Chon ngay</option>
             {showDay &&
               showDay.map((day, i) => (
                 <option key={i} value={day.id_date}>
@@ -87,6 +95,7 @@ class Order extends React.Component {
               id="exampleSelect"
               onChange={this.getSeat}
             >
+            <option>Chon gios</option>
               {times &&
                 times.map((time, i) => (
                   <option key={i} value={time.id_time}>
@@ -96,6 +105,15 @@ class Order extends React.Component {
             </Input>
           </FormGroup>
         )}
+        <FormGroup check >
+        {seated && seats.map((seat, i) => (
+              <Label check onChange={this.getOrder} value={seat}>
+                <Input name={i} type="checkbox" id="checkbox2" />{' '}
+                {seat}
+              </Label>
+            ))}
+            <Button>Order</Button>
+            </FormGroup>
       </Container>
     );
   }
