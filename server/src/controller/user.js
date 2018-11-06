@@ -1,19 +1,19 @@
 const { pool } = require("../../src/mysql/connect");
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 /**User register a account to booking */
 exports.userGetLogin = (req, res) => {
-  res.send('you are get login page')
-}
+  res.send("you are get login page");
+};
 
-exports.addAccount = (req, res) => { // ok
+exports.addAccount = (req, res) => {
+  // ok
   const { email, password, name, sdt } = req.body;
   if (email && password && name && sdt) {
-    let passwordHash = password + 'secure';
-    bcrypt.hash(passwordHash, 10).then(function (hash) {
-      let sql = `call themNguoiDung('${name}', '${email}', '${hash}', '${sdt}');`
+    let passwordHash = password + "secure";
+    bcrypt.hash(passwordHash, 10).then(function(hash) {
+      let sql = `call themNguoiDung('${name}', '${email}', '${hash}', '${sdt}');`;
       try {
         pool.query(sql, (error, results, fields) => {
           if (error) {
@@ -33,9 +33,9 @@ exports.addAccount = (req, res) => { // ok
     });
   } else {
     return res.status(400).send({
-      Message: 'Require {name, email, password, sdt}',
+      Message: "Require {name, email, password, sdt}",
       YourBody: Object.keys(req.body)
-    })
+    });
   }
 };
 
@@ -58,39 +58,58 @@ exports.userPostLogin = (req, res) => {
         return res.send({
           error: 404,
           message: `Email:  '${email}' is not exist`
-        })
+        });
       }
-      bcrypt.compare(req.body.password + 'secure', user.password).then((check) => {
-        const token = jwt.sign({ id_user: user.id_user, name: user.name, email: user.email, role: user.role }, 'secure', { expiresIn: '10m' });
-        return res.status(200).header('x-auth', token).send({ id_user: user.id_user, name: user.name, email: user.email, role: user.role, token: token });
-      });
+      bcrypt
+        .compare(req.body.password + "secure", user.password)
+        .then(check => {
+          const token = jwt.sign(
+            {
+              id_user: user.id_user,
+              name: user.name,
+              email: user.email,
+              role: user.role
+            },
+            "secure",
+            { expiresIn: "10m" }
+          );
+          return res
+            .status(200)
+            .header("x-auth", token)
+            .send({
+              id_user: user.id_user,
+              name: user.name,
+              email: user.email,
+              role: user.role,
+              token: token
+            });
+        });
     });
   } catch (error) {
     res.status(400).send({ error });
   }
-}
+};
 
 /**User get all the movies is avaible */
 exports.getAllMovie = (req, res) => {
-  console.log('Inside the GetAllTheMovie');
-    let sql = `call chonPhim();`;
-    try {
-      pool.query(sql, (error, results, fields) => {
-        if (error) {
-          return res.status(400).send({ error });
-        }
-        var movies = results[0];
-        cacheMovies = movies;
-        return res.status(200).send({
-          instaces: movies.length,
-          movies: movies
-        });
+  console.log("Inside the GetAllTheMovie");
+  let sql = `call chonPhim();`;
+  try {
+    pool.query(sql, (error, results, fields) => {
+      if (error) {
+        return res.status(400).send({ error });
+      }
+      var movies = results[0];
+      cacheMovies = movies;
+      return res.status(200).send({
+        instaces: movies.length,
+        movies: movies
       });
-    } catch (error) {
-      return res.status(400).send({ error });
-    }
-}
-
+    });
+  } catch (error) {
+    return res.status(400).send({ error });
+  }
+};
 
 /**User get all the date of the movie */
 exports.getAllDateOfMovie = (req, res) => {
@@ -134,22 +153,16 @@ exports.getAllTimeOfDateInMovie = (req, res) => {
 
 /* API check seated*/
 exports.getChoNgoiDaDuocDat = (req, res) => {
+  console.log(req.params);
   var { id_movie, id_date, id_time } = req.params;
-  let sql = `call choNgoiDaDuocDat(${id_movie}, ${id_date}, ${id_time});
-			   select max(number_row) from seat;
-			   select max(number_col) from seat;
-			  `;
+  let sql = `call choNgoiDaDuocDat(${id_movie},${id_date},${id_time});`;
   try {
     pool.query(sql, (error, results, fields) => {
       if (error) {
         return res.status(400).send({ error });
       }
       var seated = results[0];
-      var max_numRow = results[2][0]["max(number_row)"];
-      var max_numCol = results[3][0]["max(number_col)"];
       res.status(200).send({
-        max_numRow: max_numRow,
-        max_numCol: max_numCol,
         instaces: seated.length,
         seated: seated
       });
@@ -161,7 +174,8 @@ exports.getChoNgoiDaDuocDat = (req, res) => {
 
 /* User booking*/
 exports.userBooking = (req, res) => {
-  if (req.user.role !== 'user') return res.send({ message: 'Please login as customer' });
+  if (req.user.role !== "user")
+    return res.send({ message: "Please login as customer" });
   var { id_movie, id_date, id_time, id_seat } = req.body;
   var id_user = req.user.id_user;
   let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, ${id_seat});`;
@@ -182,7 +196,8 @@ exports.userBooking = (req, res) => {
 
 /* User get all the order booking */
 exports.getAllOrder = (req, res) => {
-  if (req.user.role !== 'user') return res.send({ message: 'Please login as customer' });
+  if (req.user.role !== "user")
+    return res.send({ message: "Please login as customer" });
   let sql = `call xemVeDaDat(${req.user.id_user});`;
   try {
     pool.query(sql, (error, results, fields) => {
@@ -203,7 +218,8 @@ exports.getAllOrder = (req, res) => {
 };
 /* User delete order was booked */
 exports.deleteOrder = (req, res) => {
-  if (req.user.role !== 'user') return res.send({ message: 'Please login as customer' });
+  if (req.user.role !== "user")
+    return res.send({ message: "Please login as customer" });
   let { id_order } = req.body;
   try {
     let sql = `call xoaVe(${req.user.id_user}, ${id_order});`;
@@ -230,7 +246,8 @@ exports.deleteOrder = (req, res) => {
 
 /* User edit the seat after call function choNgoiDaDuocDat(id_movie, id_date, id_time) */
 exports.editBooking = (req, res) => {
-  if (req.user.role !== 'user') return res.send({ message: 'Please login as customer' });
+  if (req.user.role !== "user")
+    return res.send({ message: "Please login as customer" });
   let { id_order, id_newSeat } = req.body;
   try {
     let sql = `call doiChoNgoi(${id_order}, ${id_newSeat});`;
