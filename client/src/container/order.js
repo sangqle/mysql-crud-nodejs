@@ -4,7 +4,9 @@ import { FormGroup, Label, Input, Container } from "reactstrap";
 class Order extends React.Component {
   state = {
     showDay: null,
-    times: null
+    times: null,
+    days: null,
+    seats: null
   };
 
   componentDidMount() {
@@ -20,6 +22,7 @@ class Order extends React.Component {
   }
 
   handleOnChange = e => {
+    this.setState({ days: e.target.value });
     fetch(
       `http://localhost:8080/user/get/time/${this.props.order_id}/${
         e.target.value
@@ -36,9 +39,26 @@ class Order extends React.Component {
       .then(data => this.setState({ times: data.times }));
   };
 
+  getSeat = e => {
+    fetch(
+      `http://localhost:8080/user/get/seated/${this.props.order_id}/${
+        this.state.days
+      }/${e.target.value}`,
+      {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "x-auth": localStorage.getItem("token")
+        }
+      }
+    )
+      .then(res => res.json())
+      .then(data => this.setState({ seats: data }));
+  };
+
   render() {
-    console.log(this.state.times);
-    const { showDay, times } = this.state;
+    console.log(this.state.seats);
+    const { showDay, times, seats } = this.state;
     return (
       <Container>
         <FormGroup>
@@ -61,11 +81,16 @@ class Order extends React.Component {
         {times && (
           <FormGroup>
             <Label for="exampleSelect">Select Time</Label>
-            <Input type="select" name="select" id="exampleSelect">
+            <Input
+              type="select"
+              name="select"
+              id="exampleSelect"
+              onChange={this.getSeat}
+            >
               {times &&
                 times.map((time, i) => (
                   <option key={i} value={time.id_time}>
-                    {time.time}
+                    {time.time} minutes
                   </option>
                 ))}
             </Input>

@@ -1,11 +1,10 @@
-import React, { Component } from "react";
-import Slide from "../container/slide";
-
+import React, { Component, lazy, Suspense } from "react";
 import { Container, Row, Button } from "reactstrap";
 import { Link, navigate } from "@reach/router";
 import MovieCards from "../container/movieCards";
 import "./home.css";
 
+const Slide = lazy(() => import("../container/slide"));
 export default class Home extends Component {
   state = {
     movies: null,
@@ -54,12 +53,14 @@ export default class Home extends Component {
             </nav>
           </React.Fragment>
         )}
+        <Suspense fallback={<div>Loading...</div>}>
+          <Slide />
+        </Suspense>
         <input
           type="text"
           placeholder="Search ..."
           onChange={this.handleOnChange}
         />
-        <Slide />
         <Row>
           <MovieCards
             movies={movies}
