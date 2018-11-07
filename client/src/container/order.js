@@ -25,7 +25,7 @@ class Order extends React.Component {
   }
 
   handleSelectDay = e => {
-    this.setState({ id_date: e.target.value });
+    this.setState({ id_day: e.target.value });
     fetch(
       `http://localhost:8080/user/get/time/${this.props.order_id}/${
         e.target.value
@@ -44,11 +44,11 @@ class Order extends React.Component {
 
   hadleSelectTime = e => {
     this.setState({ id_time: e.target.value });
-    const { id_date } = this.state;
+    const { id_day } = this.state;
     fetch(
-      `http://localhost:8080/user/get/seated/${
-        this.props.order_id
-      }/${id_date}/${e.target.value}`,
+      `http://localhost:8080/user/get/seated/${this.props.order_id}/${id_day}/${
+        e.target.value
+      }`,
       {
         method: "get",
         headers: {
@@ -58,13 +58,41 @@ class Order extends React.Component {
       }
     )
       .then(res => res.json())
+      .then(data => this.setState({ seated: data.seated }));
+  };
+
+  getCheck = e => {
+    this.setState({ seatWanted: [...this.state.seatWanted, [e.target.name]] });
+  };
+
+  sendOrder = e => {
+    const seats = [].concat.apply([], this.state.seatWanted);
+
+    console.log(seats);
+    e.preventDefault();
+    fetch("http://localhost:8080/user/booking", {
+      method: "post",
+      body: JSON.stringify({
+        id_movie: this.props.order_id,
+        id_date: this.state.id_day,
+        id_time: this.state.id_time,
+        id_seat: seats.toString()
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth": localStorage.getItem("token")
+      },
+      credentials: "include" // send cookies, even in CORS
+    })
+      .then(res => res.json())
       .then(data => console.log(data));
   };
 
   render() {
     const seats = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    console.log(this.state.id_day);
     const { showDay, times, seated } = this.state;
+    //console.log(seated);
     return (
       <Container>
         <FormGroup>
@@ -104,17 +132,32 @@ class Order extends React.Component {
             </Input>
           </FormGroup>
         )}
-        {/*  <Form onSubmit={this.setFinal}>
+        <Form onSubmit={this.sendOrder}>
           <FormGroup check>
             {seated &&
-              seats.map((seat, i) => (
-                <Label check onChange={this.getOrder} value={seat}>
-                  <Input name={i} type="checkbox" id="checkbox2" /> {seat}
-                </Label>
-              ))}
+              seats.map((seat, i) => {
+                const arraySeated = seated.map(item => item.id_seat);
+                // console.log(arraySeated);
+                return arraySeated.indexOf(seat) !== -1 ? (
+                  <Label check onChange={this.getCheck} value={seat}>
+                    <Input
+                      color="pimary"
+                      name={i}
+                      type="checkbox"
+                      id="checkbox2"
+                      disabled
+                    />{" "}
+                    {seat}
+                  </Label>
+                ) : (
+                  <Label check onChange={this.getCheck} value={seat}>
+                    <Input name={i} type="checkbox" id="checkbox2" /> {seat}
+                  </Label>
+                );
+              })}
           </FormGroup>
           <Button>Order</Button>
-        </Form> */}
+        </Form>
       </Container>
     );
   }

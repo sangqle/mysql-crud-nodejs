@@ -1,6 +1,5 @@
 import React from "react";
 import Movie from "./movie";
-import Moives from "./movie";
 
 const MovieList = ({ movies, search }) => {
   return (
@@ -16,9 +15,9 @@ const MovieList = ({ movies, search }) => {
           title={movie.title}
           director={movie.director}
           length={movie.length}
-          released = {movie.released}
-          price = {movie.price}
-          description = {movie.discription}
+          released={movie.released}
+          price={movie.price}
+          description={movie.discription}
         />
       ))
   );
