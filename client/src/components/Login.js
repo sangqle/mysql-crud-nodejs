@@ -55,10 +55,12 @@ class LoginForm extends Component {
           if (!user.error) {
             localStorage.setItem("token", user.token);
             if (user.role === "admin") {
+              localStorage.setItem("adminName", user.name);
               localStorage.setItem("admin", true);
               navigate("/admin");
             } else {
               localStorage.setItem("user", true);
+              localStorage.setItem("userName", user.name);
               navigate("/");
             }
           }
