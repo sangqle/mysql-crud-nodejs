@@ -1,5 +1,5 @@
 import React from "react";
-import { FormGroup, Label, Input, Container, Button } from "reactstrap";
+import { FormGroup, Label, Input, Container, Button, Form } from "reactstrap";
 
 class Order extends React.Component {
   state = {
@@ -7,12 +7,13 @@ class Order extends React.Component {
     times: null,
     days: null,
     seated: null,
-    seatWanted: null
+    seatWanted: []
   };
 
   componentDidMount() {
     fetch(`http://localhost:8080/user/get/date/${this.props.order_id}`, {
       method: "get",
+
       headers: {
         Accept: "application/json",
         "x-auth": localStorage.getItem("token")
@@ -41,31 +42,48 @@ class Order extends React.Component {
   };
 
   getSeat = e => {
-    fetch(
-      `http://localhost:8080/user/get/seated/${this.props.order_id}/${
-        this.state.days
-      }/${e.target.value}`,
-      {
-        method: "get",
-        headers: {
-          Accept: "application/json",
-          "x-auth": localStorage.getItem("token")
-        }
+    e.preventDefault();
+    return fetch("http://localhost:8080/user/booking", {
+      method: "post",
+      body: JSON.stringify({
+        id_movie: this.props.order_id,
+        id_date: this.state.showDay,
+        id_time: this.state.times,
+        id_seat: this.state.seatWanted
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth": localStorage.getItem("token")
+      },
+
+      credentials: "include" // send cookies, even in CORS
+    })
+      .then(res => res.json())
+      .then(data => console.log(data));
+  };
+
+  getOrder = e => {
+    this.setState({
+      seatWanted: [...this.state.seatWanted, [e.target.name]]
+    });
+  };
+
+  setFinal = e => {
+    fetch(`http://localhost:8080/user/booking/`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "x-auth": localStorage.getItem("token")
       }
-    )
+    })
       .then(res => res.json())
       .then(data => this.setState({ seated: data }));
   };
 
-  getOrder = (e) => {
-    this.setState({[e.target.name]: e.target.checked})
-    // console.log(this.state.seatWanted)
-    
-  }
-
   render() {
-    const seats = [1,2,3,4,5,6,7,8,9,10,11,12]
-    console.log(this.state.seated)
+    const seats = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    console.log(this.state.seated);
     const { showDay, times, seated } = this.state;
     return (
       <Container>
@@ -76,7 +94,8 @@ class Order extends React.Component {
             name="select"
             id="exampleSelect"
             onChange={this.handleOnChange}
-          ><option>Chon ngay</option>
+          >
+            <option>Chon ngay</option>
             {showDay &&
               showDay.map((day, i) => (
                 <option key={i} value={day.id_date}>
@@ -95,7 +114,7 @@ class Order extends React.Component {
               id="exampleSelect"
               onChange={this.getSeat}
             >
-            <option>Chon gios</option>
+              <option>Chon gios</option>
               {times &&
                 times.map((time, i) => (
                   <option key={i} value={time.id_time}>
@@ -105,15 +124,17 @@ class Order extends React.Component {
             </Input>
           </FormGroup>
         )}
-        <FormGroup check >
-        {seated && seats.map((seat, i) => (
-              <Label check onChange={this.getOrder} value={seat}>
-                <Input name={i} type="checkbox" id="checkbox2" />{' '}
-                {seat}
-              </Label>
-            ))}
-            <Button>Order</Button>
-            </FormGroup>
+        <Form onSubmit={this.setFinal}>
+          <FormGroup check>
+            {seated &&
+              seats.map((seat, i) => (
+                <Label check onChange={this.getOrder} value={seat}>
+                  <Input name={i} type="checkbox" id="checkbox2" /> {seat}
+                </Label>
+              ))}
+          </FormGroup>
+          <Button>Order</Button>
+        </Form>
       </Container>
     );
   }
