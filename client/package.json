@@ -6,6 +6,7 @@
   "main": "src/index.js",
   "dependencies": {
     "@reach/router": "^1.2.1",
+    "@sweetalert/with-react": "^0.1.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
@@ -19,7 +20,8 @@
     "react-router": "^4.3.1",
     "react-scripts": "1.1.4",
     "reactstrap": "6.4.0",
-    "styled-components": "^4.0.3"
+    "styled-components": "^4.0.3",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {},
   "scripts": {

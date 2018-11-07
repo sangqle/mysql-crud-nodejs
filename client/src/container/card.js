@@ -10,10 +10,14 @@ import {
 } from "reactstrap";
 import "./card.css";
 import { Link } from "@reach/router";
+import swal from "sweetalert";
 
 const onToggle = e => {
   e.preventDefault();
-  alert("You are not login yet !!!");
+  swal({
+    title: "You're not logined!",
+    icon: "warning"
+  });
 };
 
 const Movie = ({ image, title, director, length, id }) => {
