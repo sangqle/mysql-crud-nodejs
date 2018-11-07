@@ -29,13 +29,8 @@ export default class Home extends Component {
   handleLogout = e => {
     e.preventDefault();
     localStorage.removeItem("user");
-    console.log(localStorage.getItem("user"));
+    localStorage.removeItem("token");
     navigate("/");
-  };
-
-  onToggle = e => {
-    e.preventDefault();
-    alert(this.state.movies.id);
   };
 
   render() {
@@ -62,11 +57,7 @@ export default class Home extends Component {
           onChange={this.handleOnChange}
         />
         <Row>
-          <MovieCards
-            movies={movies}
-            search={search}
-            onToggle={this.onToggle}
-          />
+          <MovieCards movies={movies} search={search} />
         </Row>
       </Container>
     );

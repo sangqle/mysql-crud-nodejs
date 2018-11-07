@@ -11,7 +11,14 @@ import {
 import "./card.css";
 import { Link } from "@reach/router";
 
-const Movie = ({ image, title, director, length, onToggle, id }) => {
+const onToggle = e => {
+  e.preventDefault();
+  alert("You are not login yet !!!");
+};
+
+const Movie = ({ image, title, director, length, id }) => {
+  const isLoged = localStorage.getItem("token");
+
   return (
     <div className="move">
       <Card>
@@ -26,10 +33,17 @@ const Movie = ({ image, title, director, length, onToggle, id }) => {
           <CardTitle>{title}</CardTitle>
           <CardSubtitle>Director: {director}</CardSubtitle>
           <CardText>Length: {length}</CardText>
-          {/* <Button className="btn btn-danger" onClick={() onToggle}>
-            Book now!
-          </Button> */}
-          <Link to={`/order/${id}`}>Book now</Link>
+          {isLoged !== null ? (
+            <Button className="bnt btn-info">
+              <Link className="link-btn" to={`/order/${id}`}>
+                Book now
+              </Link>
+            </Button>
+          ) : (
+            <Button className="btn btn-info" onClick={onToggle}>
+              Book now!
+            </Button>
+          )}
         </CardBody>
       </Card>
     </div>

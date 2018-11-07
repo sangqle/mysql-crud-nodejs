@@ -2,7 +2,7 @@ import React from "react";
 import Card from "./card";
 import { Col } from "reactstrap";
 
-const movieCard = ({ movies, search, onToggle }) => {
+const movieCard = ({ movies, search }) => {
   return (
     movies &&
     movies
@@ -19,7 +19,6 @@ const movieCard = ({ movies, search, onToggle }) => {
               title={movie.title}
               director={movie.director}
               length={movie.length}
-              onToggle={onToggle}
               id={movie.id_movie}
             />
           </Col>
