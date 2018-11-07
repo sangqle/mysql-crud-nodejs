@@ -3,6 +3,7 @@ import { Container, Row, Button } from "reactstrap";
 import { Link, navigate } from "@reach/router";
 import MovieCards from "../container/movieCards";
 import "./home.css";
+//import { userBooking } from "../../../server/src/controller/user";
 
 const Slide = lazy(() => import("../container/slide"));
 export default class Home extends Component {
@@ -40,7 +41,10 @@ export default class Home extends Component {
     return (
       <Container>
         {isAuth ? (
-          <Button onClick={this.handleLogout}>LOG OUT</Button>
+          <div>
+            <Button>{localStorage.getItem("userName")}</Button>
+            <Button onClick={this.handleLogout}>LOG OUT</Button>
+          </div>
         ) : (
           <React.Fragment>
             <nav>

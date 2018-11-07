@@ -67,6 +67,7 @@ export default class Admin extends Component {
         <h1>Admin </h1>
         {this.state.auth ? (
           <React.Fragment>
+            <Button>{localStorage.getItem("adminName")}</Button>
             <Button onClick={this.viewOrder}>View order</Button>
             <Button onClick={this.handleLogout}>Logout</Button>
             <div className="input">
