@@ -176,9 +176,10 @@ exports.getChoNgoiDaDuocDat = (req, res) => {
 exports.userBooking = (req, res) => {
   if (req.user.role !== "user")
     return res.send({ message: "Please login as customer" });
-  var { id_movie, id_date, id_time, id_seat } = req.body;
+  var { id_movie, id_date, id_time,id_seat } = req.body;
   var id_user = req.user.id_user;
-  let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, ${id_seat});`;
+  const seatedJson = JSON.stringify(id_seat);
+  let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, '${seatedJson}');`;
   try {
     pool.query(sql, (error, results, fields) => {
       if (error) {
@@ -186,7 +187,7 @@ exports.userBooking = (req, res) => {
       }
       var order = results[0];
       res.status(200).send({
-        order: order[0]
+        order: order
       });
     });
   } catch (error) {
