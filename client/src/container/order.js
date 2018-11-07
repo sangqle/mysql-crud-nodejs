@@ -1,5 +1,6 @@
 import React from "react";
 import { FormGroup, Label, Input, Container, Button, Form } from "reactstrap";
+import { navigate } from "@reach/router";
 
 class Order extends React.Component {
   state = {
@@ -12,7 +13,7 @@ class Order extends React.Component {
   };
 
   componentDidMount() {
-    fetch(`http://localhost:8080/user/get/date/${this.props.order_id}`, {
+    fetch(`http://localhost:8080/user/get/date/${this.props.id_movie}`, {
       method: "get",
 
       headers: {
@@ -27,7 +28,7 @@ class Order extends React.Component {
   handleSelectDay = e => {
     this.setState({ id_day: e.target.value });
     fetch(
-      `http://localhost:8080/user/get/time/${this.props.order_id}/${
+      `http://localhost:8080/user/get/time/${this.props.id_movie}/${
         e.target.value
       }`,
       {
@@ -46,7 +47,7 @@ class Order extends React.Component {
     this.setState({ id_time: e.target.value });
     const { id_day } = this.state;
     fetch(
-      `http://localhost:8080/user/get/seated/${this.props.order_id}/${id_day}/${
+      `http://localhost:8080/user/get/seated/${this.props.id_movie}/${id_day}/${
         e.target.value
       }`,
       {
@@ -73,10 +74,10 @@ class Order extends React.Component {
     fetch("http://localhost:8080/user/booking", {
       method: "post",
       body: JSON.stringify({
-        id_movie: this.props.order_id,
+        id_movie: this.props.id_movie,
         id_date: this.state.id_day,
         id_time: this.state.id_time,
-        id_seat: seats.toString()
+        id_seat: seats
       }),
       headers: {
         Accept: "application/json",
@@ -86,7 +87,9 @@ class Order extends React.Component {
       credentials: "include" // send cookies, even in CORS
     })
       .then(res => res.json())
-      .then(data => console.log(data));
+      .then(data => {
+        !data.error && navigate(`oder/success/${data.id_order}`);
+      });
   };
 
   render() {
