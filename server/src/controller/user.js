@@ -155,7 +155,7 @@ exports.getAllTimeOfDateInMovie = (req, res) => {
 exports.getChoNgoiDaDuocDat = (req, res) => {
   console.log(req.params);
   var { id_movie, id_date, id_time } = req.params;
-  let sql = `call choNgoiDaDuocDat(${id_movie},${id_date},${id_time});`;
+  let sql = `call choNgoiDaDuocDat(${id_movie}, ${id_date}, ${id_time});`;
   try {
     pool.query(sql, (error, results, fields) => {
       if (error) {
