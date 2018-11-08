@@ -20,7 +20,7 @@ const Page = () => {
       <SignUp path="signUp" />
       <Admin path="admin" />
       <Order path="order/:id_movie" />
-      <VerifyOrder path="oder/success/:id_order" />
+      <VerifyOrder path="order/success/:id_order" />
       <PageNotFound path="*" />
     </Router>
   );

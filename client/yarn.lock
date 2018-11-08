@@ -1834,7 +1834,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.26.0, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@6.26.0, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -8019,7 +8019,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
@@ -8086,6 +8086,11 @@ q@^1.1.2:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
+
+qr.js@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
+  integrity sha1-ys6GOG9ZoNuAUPqQ2baw6IoeNk8=
 
 qs@6.5.2, qs@~6.5.2:
   version "6.5.2"
@@ -8180,6 +8185,16 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-art-svg-renderer@0.0.1-rc.8:
+  version "0.0.1-rc.8"
+  resolved "https://registry.yarnpkg.com/react-art-svg-renderer/-/react-art-svg-renderer-0.0.1-rc.8.tgz#b2ccf6c158cdd773f7312860f7083b2113bbd3d6"
+  integrity sha1-ssz2wVjN13P3MShg9wg7IRO709Y=
+  dependencies:
+    babel-runtime "^6.23.0"
+    lodash "^4.17.4"
+    prop-types "^15.5.9"
+    uuid "^3.0.1"
+
 react-dev-utils@^5.0.1:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-5.0.3.tgz#92f97668f03deb09d7fa11ea288832a8c756e35e"
@@ -8243,6 +8258,22 @@ react-popper@^0.10.4:
   dependencies:
     popper.js "^1.14.1"
     prop-types "^15.6.1"
+
+react-qr-code@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-qr-code/-/react-qr-code-0.1.2.tgz#3e8172aa5296ff37be82e45408c90d70517681fe"
+  integrity sha1-PoFyqlKW/ze+guRUCMkNcFF2gf4=
+  dependencies:
+    prop-types "^15.5.10"
+    qr.js "0.0.0"
+
+react-qr-svg@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-qr-svg/-/react-qr-svg-2.1.0.tgz#fceaf0e8bd367f714d89ae46e46b87c5201a99e9"
+  integrity sha512-TJILjRxt62d/TWI8vovGRtJUkoS/4MdH0Miy/uCS++AXE6M8/F0nqdp9QMMvgOLM25QX538oed42mHzrKhDwUQ==
+  dependencies:
+    prop-types "^15.5.8"
+    qr.js "0.0.0"
 
 react-router@^4.3.1:
   version "4.3.1"
@@ -9992,7 +10023,7 @@ uuid@^2.0.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
   integrity sha1-Z+LoY3lyFVMN/zGOW/nc6/1Hsho=
 
-uuid@^3.3.2:
+uuid@^3.0.1, uuid@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==

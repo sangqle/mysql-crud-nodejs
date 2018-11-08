@@ -67,7 +67,8 @@ class Order extends React.Component {
   };
 
   sendOrder = e => {
-    const seats = [].concat.apply([], this.state.seatWanted);
+    const { seatWanted } = this.state;
+    const seats = seatWanted.flat().map(v => parseInt(v));
 
     console.log(seats);
     e.preventDefault();
@@ -88,14 +89,18 @@ class Order extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        !data.error && navigate(`oder/success/${data.id_order}`);
-      });
+        console.log(data.order);
+        const id_order = data.order.map(value => value.id_order).join("-");
+        console.log(id_order);
+        navigate(`/order/success/${id_order}`);
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
     const seats = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    const { showDay, times, seated } = this.state;
-    //console.log(seated);
+    const { showDay, times, seated, seatWanted } = this.state;
+    console.log(seatWanted);
     return (
       <Container>
         <FormGroup>
