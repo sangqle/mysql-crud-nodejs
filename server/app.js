@@ -83,7 +83,5 @@ App.get(
   adminController.getAllOrderByDate
 ); // ok
 
-App.get("/admin/login", (req, res) => {
-  res.send("You Got Administrator login");
-});
+App.get("/checkOrder/:id_order", adminController.checkOrderUser);
 module.exports = { App };
