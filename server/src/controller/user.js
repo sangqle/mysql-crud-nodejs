@@ -1,7 +1,6 @@
 const { pool } = require("../../src/mysql/connect");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
 /**User register a account to booking */
 exports.userGetLogin = (req, res) => {
   res.send("you are get login page");
@@ -91,6 +90,8 @@ exports.userPostLogin = (req, res) => {
 
 /**User get all the movies is avaible */
 exports.getAllMovie = (req, res) => {
+console.log('le quang sang');
+
   console.log("Inside the GetAllTheMovie");
   let sql = `call chonPhim();`;
   try {
