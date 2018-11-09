@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require('cors');
-app.use(cors());
 
 const { authentication } = require("./src/middleware/authentication");
 //const getLog = require('./src/middleware/getlog');
@@ -10,6 +9,7 @@ const userController = require("./src/controller/user");
 const adminController = require("./src/controller/admin");
 
 const App = express();
+App.use(cors());
 
 //App.use(getLog.getTime);
 //App.use(morgan('short'));
