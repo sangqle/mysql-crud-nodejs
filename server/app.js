@@ -1,11 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-<<<<<<< HEAD
-const CORS = require("cors");
-=======
-const cors = require("cors");
->>>>>>> 7e2d40d45728a467d7968ddcbbfa4c72b918bc25
+//const cors = require("cors");
 
 const { authentication } = require("./src/middleware/authentication");
 //const getLog = require('./src/middleware/getlog');
@@ -30,12 +26,8 @@ const { userUpdateSeat } = require("./src/controller/user/userUpdateSeat");
 const adminController = require("./src/controller/admin");
 
 const App = express();
-<<<<<<< HEAD
-App.use(CORS());
-=======
 //App.use(cors());
 
->>>>>>> 7e2d40d45728a467d7968ddcbbfa4c72b918bc25
 //App.use(getLog.getTime);
 //App.use(morgan('short'));
 App.use(
