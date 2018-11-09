@@ -10,6 +10,7 @@ import Admin from "../src/components/Admin";
 import PageNotFound from "../src/components/404";
 import Order from "../src/container/order";
 import VerifyOrder from "../src/container/orderSuccess";
+import AddMovie from "../src/container/addmovie";
 import "./styles.css";
 
 const Page = () => {
@@ -21,6 +22,7 @@ const Page = () => {
       <Admin path="admin" />
       <Order path="order/:id_movie" />
       <VerifyOrder path="order/success/:id_order" />
+      <AddMovie path="admin/add_movie" />
       <PageNotFound path="*" />
     </Router>
   );

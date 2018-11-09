@@ -40,7 +40,7 @@ const Movie = ({ image, title, director, length, id }) => {
           {isLoged !== null ? (
             <Button className="bnt btn-info">
               <Link className="link-btn" to={`/order/${id}`}>
-                Book now
+                Book now!
               </Link>
             </Button>
           ) : (
