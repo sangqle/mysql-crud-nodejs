@@ -30,7 +30,8 @@ class LoginForm extends Component {
     localStorage.getItem("admin") && navigate("/admin");
   }
 
-  onClick = () => {
+  handleSubmit = e => {
+    e.preventDefault();
     return fetch("http://localhost:8080/user/login", {
       method: "post",
       body: JSON.stringify({
@@ -52,11 +53,14 @@ class LoginForm extends Component {
         user => {
           console.log(user);
           if (!user.error) {
+            localStorage.setItem("token", user.token);
             if (user.role === "admin") {
+              localStorage.setItem("adminName", user.name);
               localStorage.setItem("admin", true);
               navigate("/admin");
             } else {
               localStorage.setItem("user", true);
+              localStorage.setItem("userName", user.name);
               navigate("/");
             }
           }
@@ -77,11 +81,12 @@ class LoginForm extends Component {
         <div className="App">
           <h2>Sign In</h2>
 
-          <Form className="form">
+          <Form className="form" onSubmit={this.handleSubmit}>
             <Col>
               <FormGroup>
                 <Label>Email</Label>
                 <Input
+                  autoFocus
                   onChange={this.handleChange}
                   type="email"
                   name="email"
@@ -102,7 +107,7 @@ class LoginForm extends Component {
                 />
               </FormGroup>
             </Col>
-            <Button onClick={this.onClick}>Submit</Button>
+            <Button className="btn btn-secondary">Submit</Button>
           </Form>
         </div>
       </Container>

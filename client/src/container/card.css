@@ -7,3 +7,12 @@
   width: 100%;
   height: auto;
 }
+
+.link-btn {
+  color: white;
+}
+
+.link-btn:hover {
+  text-decoration: none;
+  color: yellow;
+}

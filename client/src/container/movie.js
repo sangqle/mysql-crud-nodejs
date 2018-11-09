@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Media, Col } from "reactstrap";
 import "./movie.css";
 
-const Moives = ({ title, image, length, director }) => (
+const Moives = ({ title, image, length, director, price, released, description }) => (
   <React.Fragment>
     <Col xs="10">
       <Media>
@@ -18,6 +18,15 @@ const Moives = ({ title, image, length, director }) => (
             <strong>Length: </strong>
             {length} minutes
           </p>
+          <p>
+            <strong>Reased: </strong>
+            {released}
+          </p>
+          <p>
+            <strong>Price: </strong>
+            {price},000 VND
+          </p>
+          <p><strong>Description: </strong>{description}</p>
         </Media>
       </Media>
     </Col>

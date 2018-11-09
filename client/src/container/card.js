@@ -9,8 +9,20 @@ import {
   Button
 } from "reactstrap";
 import "./card.css";
+import { Link } from "@reach/router";
+import swal from "sweetalert";
 
-const Movie = ({ image, title, director, length, modal, onToggle, header }) => {
+const onToggle = e => {
+  e.preventDefault();
+  swal({
+    title: "You're not logined!",
+    icon: "warning"
+  });
+};
+
+const Movie = ({ image, title, director, length, id }) => {
+  const isLoged = localStorage.getItem("token");
+
   return (
     <div className="move">
       <Card>
@@ -25,9 +37,17 @@ const Movie = ({ image, title, director, length, modal, onToggle, header }) => {
           <CardTitle>{title}</CardTitle>
           <CardSubtitle>Director: {director}</CardSubtitle>
           <CardText>Length: {length}</CardText>
-          <Button className="btn btn-danger" onClick={onToggle}>
-            Book now!
-          </Button>
+          {isLoged !== null ? (
+            <Button className="bnt btn-info">
+              <Link className="link-btn" to={`/order/${id}`}>
+                Book now
+              </Link>
+            </Button>
+          ) : (
+            <Button className="btn btn-info" onClick={onToggle}>
+              Book now!
+            </Button>
+          )}
         </CardBody>
       </Card>
     </div>
