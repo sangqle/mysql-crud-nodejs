@@ -23,7 +23,9 @@ const { userDeleteOrder } = require("./src/controller/user/userDeleteOrder");
 const { userUpdateSeat } = require("./src/controller/user/userUpdateSeat");
 
 const { adminAddMovie } = require("./src/controller/admin/adminAddMovie");
-const { adminCheckOrderUser } = require("./src/controller/admin/adminCheckOrderUser");
+const {
+  adminCheckOrderUser
+} = require("./src/controller/admin/adminCheckOrderUser");
 const { adminDeleteMovie } = require("./src/controller/admin/adminDeleteMovie");
 const { adminGetAllOrder } = require("./src/controller/admin/adminGetAllOrder");
 const {
