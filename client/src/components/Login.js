@@ -61,10 +61,13 @@ class LoginForm extends Component {
               localStorage.setItem("userName", user.name);
               navigate("/");
             }
+          } else {
+            console.log("Handle Error Login Here");
+            navigate("/login");
           }
         },
-
         error => {
+          navigate("/login");
           console.log(error);
         }
       );
