@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Button, Row } from "reactstrap";
-import { Redirect, navigate } from "@reach/router";
+import { Redirect, navigate, Link } from "@reach/router";
 import MovieList from "../container/movieList";
 
 import "./admin.css";
@@ -76,7 +76,9 @@ export default class Admin extends Component {
                 placeholder="Search ..."
                 onChange={this.handleOnChange}
               />
-              <Button className="btn btn-success">+ ADD MOIVE</Button>
+              <Button className="btn btn-success">
+                <Link to="admin/add_movie">+ ADD MOIVE</Link>
+              </Button>
             </div>
             <Row>
               <MovieList movies={movies} search={search} />
