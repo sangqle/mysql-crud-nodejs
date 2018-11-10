@@ -59,7 +59,10 @@ class Order extends React.Component {
       }
     )
       .then(res => res.json())
-      .then(data => this.setState({ seated: data.seated }));
+      .then(data => {
+        this.setState({ seated: data.seated })
+        console.log(data);
+      });
   };
 
   getCheck = e => {
