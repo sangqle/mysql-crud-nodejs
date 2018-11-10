@@ -13,3 +13,12 @@ input {
   color: tomato;
   margin-right: 10px;
 }
+
+a {
+  color: white;
+}
+
+a:hover {
+  color: white;
+  text-decoration: none;
+}

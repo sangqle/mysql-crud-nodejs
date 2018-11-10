@@ -12,7 +12,7 @@ export default class Admin extends Component {
   };
 
   componentDidMount() {
-    fetch("http://localhost:8080/user/get/all/movie")
+    fetch("http://128.199.77.102:7777/user/get/all/movie")
       .then(data => data.json())
       .then(result => {
         console.log(result);
@@ -44,7 +44,7 @@ export default class Admin extends Component {
 
   viewOrder = e => {
     e.preventDefault();
-    return fetch("http://localhost:8080/admin/get/all/order", {
+    return fetch("http://128.199.77.102:7777/admin/get/all/order", {
       method: "GET",
 
       headers: {
@@ -77,7 +77,7 @@ export default class Admin extends Component {
                 onChange={this.handleOnChange}
               />
               <Button className="btn btn-success">
-                <Link to="admin/add_movie">+ ADD MOIVE</Link>
+                <Link to="/admin/add_movie">+ ADD MOIVE</Link>
               </Button>
             </div>
             <Row>
