@@ -68,7 +68,9 @@ class Order extends React.Component {
 
   sendOrder = e => {
     const { seatWanted } = this.state;
-    const seats = seatWanted.flat().map(v => parseInt(v));
+    const seats = seatWanted
+      .flat()
+      .map(v => parseInt(v)); /* Really powerful features */
 
     console.log(seats);
     e.preventDefault();

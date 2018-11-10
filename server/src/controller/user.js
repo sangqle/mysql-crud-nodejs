@@ -1,6 +1,8 @@
 const { pool } = require("../../src/mysql/connect");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cache_system = require("../cache_system/cache_movies");
+
 /**User register a account to booking */
 exports.userGetLogin = (req, res) => {
   res.send("you are get login page");
@@ -90,9 +92,13 @@ exports.userPostLogin = (req, res) => {
 
 /**User get all the movies is avaible */
 exports.getAllMovie = (req, res) => {
-console.log('le quang sang');
-
-  console.log("Inside the GetAllTheMovie");
+  if (cache_system.movies.length) {
+    console.log("Get Movie from cache");
+    return res.status(200).send({
+      instaces: cache_system.movies.length,
+      movies: cache_system.movies
+    });
+  }
   let sql = `call chonPhim();`;
   try {
     pool.query(sql, (error, results, fields) => {
@@ -100,7 +106,10 @@ console.log('le quang sang');
         return res.status(400).send({ error });
       }
       var movies = results[0];
-      cacheMovies = movies;
+      for (movie of movies) {
+        cache_system.movies.push(movie);
+      }
+      console.log("Get Movie from MSYQL");
       return res.status(200).send({
         instaces: movies.length,
         movies: movies

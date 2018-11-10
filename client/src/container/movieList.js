@@ -18,6 +18,7 @@ const MovieList = ({ movies, search }) => {
           released={movie.released}
           price={movie.price}
           description={movie.discription}
+          id={movie.id_movie}
         />
       ))
   );

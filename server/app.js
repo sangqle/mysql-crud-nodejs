@@ -1,13 +1,49 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+<<<<<<< HEAD
+//const cors = require("cors");
+=======
+const cors = require("cors");
+>>>>>>> b041db5c3265f2fbc094e248d9292661e07940f7
 
 const { authentication } = require("./src/middleware/authentication");
 //const getLog = require('./src/middleware/getlog');
-const userController = require("./src/controller/user");
-const adminController = require("./src/controller/admin");
+const { userGetMovies } = require("./src/controller/user/userGetMovies");
+const { userPostLogin } = require("./src/controller/user/userPostLogin");
+const {
+  userPostCreateAccount
+} = require("./src/controller/user/userPostCreateAccount");
+const { getDateOfMovie } = require("./src/controller/user/getDateOfMovie");
+const {
+  getTimeOfDateByMovie
+} = require("./src/controller/user/getTimeOfDateByMovie");
+const {
+  userGetSeatedOfMovie
+} = require("./src/controller/user/userGetSeatedOfMovie");
+const { userBooking } = require("./src/controller/user/userBooking");
+const { userGetOrder } = require("./src/controller/user/userGetOrder");
+const { userDeleteOrder } = require("./src/controller/user/userDeleteOrder");
+const { userUpdateSeat } = require("./src/controller/user/userUpdateSeat");
+
+const { adminAddMovie } = require("./src/controller/admin/adminAddMovie");
+const {
+  adminCheckOrderUser
+} = require("./src/controller/admin/adminCheckOrderUser");
+const { adminDeleteMovie } = require("./src/controller/admin/adminDeleteMovie");
+const { adminGetAllOrder } = require("./src/controller/admin/adminGetAllOrder");
+const {
+  adminGetAllOrderByDate
+} = require("./src/controller/admin/adminGetAllOrderByDate");
+const {
+  adminGetAllOrderByMovie
+} = require("./src/controller/admin/adminGetAllOrderByMovie");
+const {
+  adminGetAllOrderByTime
+} = require("./src/controller/admin/adminGetAllOrderByTime");
 
 const App = express();
+//App.use(cors());
 
 //App.use(getLog.getTime);
 //App.use(morgan('short'));
@@ -21,6 +57,7 @@ App.use(
 );
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extended: true }));
+
 // Add headers
 App.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -42,46 +79,37 @@ App.use(function(req, res, next) {
   next();
 });
 
-App.get("/logout", function(req, res) {
-  res.redirect("you hit logout page");
-});
+App.post("/user/create/account", userPostCreateAccount);
+App.post("/user/login", userPostLogin);
+App.get("/user/get/all/movie", userGetMovies);
+App.get("/user/get/date/:id_movie", getDateOfMovie);
+App.get("/user/get/time/:id_movie/:id_date", getTimeOfDateByMovie);
+App.get("/user/get/seated/:id_movie/:id_date/:id_time", userGetSeatedOfMovie);
+App.post("/user/booking", authentication, userBooking);
 
-App.get("/secure", authentication, (req, res) => {
-  if (req.user.role === "admin") {
-    res.send("you are in authrequired page");
-  } else {
-    res.send("please try as admin again!");
-  }
-});
-
-App.post("/user/create/account", userController.addAccount); // ok.
-App.get("/user/login", userController.userGetLogin);
-App.post("/user/login", userController.userPostLogin);
-
-App.get("/user/get/all/movie", userController.getAllMovie); // ok
-App.get("/user/get/date/:id_movie", userController.getAllDateOfMovie); // ok
-App.get(
-  "/user/get/time/:id_movie/:id_date",
-  userController.getAllTimeOfDateInMovie
-); // ok
-App.get(
-  "/user/get/seated/:id_movie/:id_date/:id_time",
-  userController.getChoNgoiDaDuocDat
-); // ok
-App.post("/user/booking", authentication, userController.userBooking); // ok
-
-App.get("/user/get/order", authentication, userController.getAllOrder); // ok
-App.post("/user/delete/order", authentication, userController.deleteOrder); // ok
-App.post("/user/update/seat", authentication, userController.editBooking); // ok
+App.get("/user/get/order", authentication, userGetOrder);
+App.delete("/user/delete/:id_order", authentication, userDeleteOrder);
+App.patch("/user/update/seat", authentication, userUpdateSeat);
 
 /*Administrator*/
-App.post("/admin/add/movie", authentication, adminController.addMovie); // ok
-App.get("/admin/get/all/order", authentication, adminController.getAllOrder); // ok
+App.post("/admin/add/movie", authentication, adminAddMovie);
+App.get("/admin/get/all/order", authentication, adminGetAllOrder);
+App.delete("/admin/delete/movie/:id_movie", authentication, adminDeleteMovie);
 App.get(
-  "/admin/get/all/order/:date",
+  "/admin/get/all/order/bydate/:date",
   authentication,
-  adminController.getAllOrderByDate
-); // ok
+  adminGetAllOrderByDate
+);
 
-App.get("/checkOrder/:id_order", adminController.checkOrderUser);
+App.get(
+  "/admin/get/all/order/bymovie/:id_movie",
+  authentication,
+  adminGetAllOrderByMovie
+);
+App.get(
+  "/admin/get/all/order/bytime/:s_time/:e_time",
+  authentication,
+  adminGetAllOrderByTime
+);
+App.get("/checkOrder/:id_order", adminCheckOrderUser);
 module.exports = { App };
