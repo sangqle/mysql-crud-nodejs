@@ -1,11 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-<<<<<<< HEAD
 //const cors = require("cors");
-=======
-const cors = require("cors");
->>>>>>> b041db5c3265f2fbc094e248d9292661e07940f7
 
 const { authentication } = require("./src/middleware/authentication");
 //const getLog = require('./src/middleware/getlog');

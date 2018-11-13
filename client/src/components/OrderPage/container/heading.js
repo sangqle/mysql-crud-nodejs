@@ -8,7 +8,7 @@ const Heading = props => {
         className="card-aside-column"
         style={{
           backgroundImage:
-            "url(https://www.movienewsletters.net/photos/VNM_247729R1.jpg)"
+            "url('https://www.movienewsletters.net/photos/VNM_247729R1.jpg')"
         }}
       >
         {""}

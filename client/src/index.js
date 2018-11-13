@@ -11,11 +11,10 @@ import PageNotFound from "../src/components/404";
 import Order from "../src/container/order";
 import VerifyOrder from "../src/container/orderSuccess";
 import AddMovie from "../src/container/addmovie";
-
 import App from "../src/components/OrderPage/App";
 
-import "./Styles/global.scss";
 import "./styles.css";
+import "./Styles/global.scss";
 
 const Page = () => {
   return (
