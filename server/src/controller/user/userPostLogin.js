@@ -26,25 +26,31 @@ exports.userPostLogin = (req, res) => {
       bcrypt
         .compare(req.body.password + "secure", user.password)
         .then(check => {
-          const token = jwt.sign(
-            {
-              id_user: user.id_user,
-              name: user.name,
-              email: user.email,
-              role: user.role
-            },
-            "secure"
-          );
-          return res
-            .status(200)
-            .header("x-auth", token)
-            .send({
-              id_user: user.id_user,
-              name: user.name,
-              email: user.email,
-              role: user.role,
-              token: token
-            });
+          if (check) {
+            const token = jwt.sign(
+              {
+                id_user: user.id_user,
+                name: user.name,
+                email: user.email,
+                role: user.role
+              },
+              "secure"
+            );
+            return res
+              .status(200)
+              .header("x-auth", token)
+              .send({
+                id_user: user.id_user,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                token: token
+              });
+          } else {
+            res.status(400).send({error: 400, message: "Password is incorrect"})
+          }
+        }, (error) => {
+          res.status(400).send({ error });
         });
     });
   } catch (error) {

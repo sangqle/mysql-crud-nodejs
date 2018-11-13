@@ -1,0 +1,22 @@
+input[type="checkbox"]::before {
+  content: "";
+  background: linear-gradient(to bottom, #e6e6e6 0px, #fff 100%) repeat scroll 0
+    0 rgba(122, 49, 49, 0);
+  border-color: #3d9000;
+  color: #96be0a;
+  font-size: 38px;
+  line-height: 35px;
+  text-align: center;
+}
+
+input[type="checkbox"][disabled] {
+  content: "✓";
+  border-color: #eee;
+  color: #ccc;
+  background: linear-gradient(to top, #e6e6e6 0px, #fff 100%) repeat scroll 0 0
+    rgba(0, 0, 0, 0);
+}
+
+input[type="checkbox"] {
+  position: absolute;
+}

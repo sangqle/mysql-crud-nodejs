@@ -1,6 +1,7 @@
 import React from "react";
 import { FormGroup, Label, Input, Container, Button, Form } from "reactstrap";
 import { navigate } from "@reach/router";
+import "./order.css";
 
 class Order extends React.Component {
   state = {
@@ -13,7 +14,7 @@ class Order extends React.Component {
   };
 
   componentDidMount() {
-    fetch(`http://localhost:8080/user/get/date/${this.props.id_movie}`, {
+    fetch(`http://128.199.77.102:7777/user/get/date/${this.props.id_movie}`, {
       method: "get",
 
       headers: {
@@ -28,7 +29,7 @@ class Order extends React.Component {
   handleSelectDay = e => {
     this.setState({ id_day: e.target.value });
     fetch(
-      `http://localhost:8080/user/get/time/${this.props.id_movie}/${
+      `http://128.199.77.102:7777/user/get/time/${this.props.id_movie}/${
         e.target.value
       }`,
       {
@@ -47,9 +48,9 @@ class Order extends React.Component {
     this.setState({ id_time: e.target.value });
     const { id_day } = this.state;
     fetch(
-      `http://localhost:8080/user/get/seated/${this.props.id_movie}/${id_day}/${
-        e.target.value
-      }`,
+      `http://128.199.77.102:7777/user/get/seated/${
+        this.props.id_movie
+      }/${id_day}/${e.target.value}`,
       {
         method: "get",
         headers: {
@@ -59,7 +60,10 @@ class Order extends React.Component {
       }
     )
       .then(res => res.json())
-      .then(data => this.setState({ seated: data.seated }));
+      .then(data => {
+        this.setState({ seated: data.seated })
+        console.log(data);
+      });
   };
 
   getCheck = e => {
@@ -70,11 +74,11 @@ class Order extends React.Component {
     const { seatWanted } = this.state;
     const seats = seatWanted
       .flat()
-      .map(v => parseInt(v)); /* Really powerful features */
+      .map(v => parseInt(v) + 1); /* Really powerful features */
 
     console.log(seats);
     e.preventDefault();
-    fetch("http://localhost:8080/user/booking", {
+    fetch("http://128.199.77.102:7777/user/booking", {
       method: "post",
       body: JSON.stringify({
         id_movie: this.props.id_movie,
@@ -86,8 +90,7 @@ class Order extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "x-auth": localStorage.getItem("token")
-      },
-      credentials: "include" // send cookies, even in CORS
+      }
     })
       .then(res => res.json())
       .then(data => {

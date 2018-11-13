@@ -32,7 +32,7 @@ class LoginForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    return fetch("http://localhost:8080/user/login", {
+    return fetch("http://128.199.77.102:7777/user/login", {
       method: "post",
       body: JSON.stringify({
         email: this.state.email,
@@ -41,9 +41,7 @@ class LoginForm extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
-      },
-
-      credentials: "include" // send cookies, even in CORS
+      }
     })
       .then(res => {
         return res.json();
@@ -63,10 +61,13 @@ class LoginForm extends Component {
               localStorage.setItem("userName", user.name);
               navigate("/");
             }
+          } else {
+            console.log("Handle Error Login Here");
+            navigate("/login");
           }
         },
-
         error => {
+          navigate("/login");
           console.log(error);
         }
       );
