@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Router } from "@reach/router";
-//import App from "./App";
+import App from "./App";
 import Login from "../src/components/Login";
 import SignUp from "../src/components/signUp";
 import Admin from "../src/components/Admin";
@@ -11,7 +11,7 @@ import PageNotFound from "../src/components/404";
 import Order from "../src/container/order";
 import VerifyOrder from "../src/container/orderSuccess";
 import AddMovie from "../src/container/addmovie";
-import App from "../src/components/OrderPage/App";
+//import App from "../src/components/OrderPage/App";
 
 import "./styles.css";
 import "./Styles/global.scss";
@@ -32,4 +32,4 @@ const Page = () => {
 };
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(<Page />, rootElement);
