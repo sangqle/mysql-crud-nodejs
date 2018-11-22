@@ -22,11 +22,16 @@ exports.getTimeOfDateByMovie = (req, res) => {
         return res.status(400).send({ error });
       }
       var times = results[0];
+      for(t of times) {
+        t.time = `${parseInt(t.time/60, 10)}h${t.time%60}`
+      }
       cache_time.id_movie = id_movie;
       cache_time.id_date = id_date;
       cache_time.times = times;
       time_of_movies.push(cache_time);
       //console.log('Array: ', time_of_movies);
+
+      
       return res.status(200).send({
         instaces: times.length,
         times: times

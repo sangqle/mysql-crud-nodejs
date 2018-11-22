@@ -10,12 +10,15 @@ exports.userGetOrder = (req, res) => {
         if (error) {
           return res.status(400).send({ error });
         }
-        var order = results[0];
+        var orders = results[0];
+        for(order of orders) {
+          order.time_order = new Date(parseInt(order.time_order, 10)).toLocaleString();
+        }
         res.status(200).send({
           id_user: req.user.id_user,
           name: req.user.name,
-          instance: order.length,
-          order: order
+          instance: orders.length,
+          order: orders
         });
       });
     } catch (error) {
