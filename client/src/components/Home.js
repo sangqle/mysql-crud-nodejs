@@ -13,7 +13,7 @@ export default class Home extends Component {
   };
 
   componentDidMount() {
-    fetch("http://128.199.77.102:7777/user/get/all/movie")
+    fetch("http://localhost:8080/user/get/all/movie")
       .then(data => data.json())
       .then(result => {
         console.log(result);

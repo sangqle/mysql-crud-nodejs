@@ -22,7 +22,7 @@
     "react-qr-code": "^0.1.2",
     "react-qr-svg": "^2.1.0",
     "react-router": "^4.3.1",
-    "react-scripts": "1.1.4",
+    "react-scripts": "^2.1.1",
     "reactstrap": "6.4.0",
     "styled-components": "^4.0.3",
     "sweetalert": "^2.1.2"
@@ -33,5 +33,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
