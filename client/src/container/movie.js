@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Media, Col } from "reactstrap";
+import { Button, Media, Col, Form } from "reactstrap";
 import "./movie.css";
-
+import {apiLocalhost} from "../env/api";
 class Moives extends React.Component {
   onDelete = e => {
     e.preventDefault();
-    fetch(`http://localhost:8080/admin/delete/movie/${this.props.id}`, {
+    fetch(`${apiLocalhost}/admin/delete/movie/${this.props.id}`, {
       method: "delete",
 
       headers: {

@@ -3,6 +3,7 @@ import { Container, Row, Button } from "reactstrap";
 import { Link, navigate } from "@reach/router";
 import MovieCards from "../container/movieCards";
 import "./home.css";
+import {apiLocalhost} from "../env/api"
 //import { userBooking } from "../../../server/src/controller/user";
 
 const Slide = lazy(() => import("../container/slide"));
@@ -13,7 +14,7 @@ export default class Home extends Component {
   };
 
   componentDidMount() {
-    fetch("http://localhost:8080/user/get/all/movie")
+    fetch(`${apiLocalhost}/user/get/all/movie`)
       .then(data => data.json())
       .then(result => {
         console.log(result);

@@ -6,7 +6,9 @@ exports.userBooking = (req, res) => {
     var { id_movie, id_date, id_time, id_seat } = req.body;
     var id_user = req.user.id_user;
     const seatedJson = JSON.stringify(id_seat);
-    let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, '${seatedJson}');`;
+    let timeOrder = new Date().getTime();
+    let timeOrderString = JSON.stringify(timeOrder);
+    let sql = `call datVe(${id_user}, ${id_movie}, ${id_date}, ${id_time}, '${seatedJson}', '${timeOrderString}');`;
     try {
       pool.query(sql, (error, results, fields) => {
         if (error) {
@@ -14,7 +16,10 @@ exports.userBooking = (req, res) => {
         }
         let orders = [];
         for (order of results[0]) {
-          if (id_seat.includes(order.id_seat)) orders.push(order);
+          if (id_seat.includes(order.id_seat)) {
+            order.time_order = new Date(parseInt(order.time_order, 10)).toLocaleString();
+            orders.push(order);
+          }
         }
         res.status(200).send({
           order: orders

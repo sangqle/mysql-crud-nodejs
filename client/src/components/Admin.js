@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Button, Row } from "reactstrap";
 import { Redirect, navigate, Link } from "@reach/router";
 import MovieList from "../container/movieList";
+import {apiLocalhost} from "../env/api";
 
 import "./admin.css";
 export default class Admin extends Component {
@@ -12,7 +13,7 @@ export default class Admin extends Component {
   };
 
   componentDidMount() {
-    fetch("http://localhost:8080/user/get/all/movie")
+    fetch(`${apiLocalhost}/user/get/all/movie`)
       .then(data => data.json())
       .then(result => {
         console.log(result);
@@ -44,7 +45,7 @@ export default class Admin extends Component {
 
   viewOrder = e => {
     e.preventDefault();
-    return fetch("http://localhost:8080/admin/get/all/order", {
+    return fetch(`${apiLocalhost}/admin/get/all/order`, {
       method: "GET",
 
       headers: {
