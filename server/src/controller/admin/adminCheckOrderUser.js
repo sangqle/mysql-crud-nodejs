@@ -32,19 +32,23 @@ exports.adminCheckOrderUser = (req, res) => {
     } catch (error) {
       return reject({ error });
     }
-  }).then((data) => {
-    let sql = `update reservation
+  }).then(
+    data => {
+      let sql = `update reservation
                set status = 'processed'
-               where id_order = ${id_order}`
-    try {
-      pool.query(sql, (error, results, feilds) => {
-        data.status = 'processed';
-        return res.send(data);
-      });
-    } catch (error) {
-      return res.send({error})
+               where id_order = ${id_order}`;
+      try {
+        pool.query(sql, (error, results, feilds) => {
+          if (error) return res.send({ error });
+          data.status = "processed";
+          return res.send(data);
+        });
+      } catch (error) {
+        return res.send({ error });
+      }
+    },
+    error => {
+      return res.send({ error });
     }
-  }, (error) => {
-    return res.send({error})
-  });
+  );
 };
