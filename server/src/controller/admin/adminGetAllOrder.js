@@ -1,4 +1,6 @@
-const { pool } = require("../../mysql/connect");
+const {
+  pool
+} = require("../../mysql/connect");
 
 exports.adminGetAllOrder = (req, res) => {
   if (req.user.role !== "admin")
@@ -8,7 +10,9 @@ exports.adminGetAllOrder = (req, res) => {
   let sql = `call admin_getAllOrder();`;
   try {
     pool.query(sql, (error, results, feilds) => {
-      if (error) return res.status(400).send({ error });
+      if (error) return res.status(400).send({
+        error
+      });
 
       let orders = results[0];
       for (order of orders) {
@@ -21,6 +25,8 @@ exports.adminGetAllOrder = (req, res) => {
       });
     });
   } catch (error) {
-    if (error) return res.status(400).send({ error });
+    if (error) return res.status(400).send({
+      error
+    });
   }
 };

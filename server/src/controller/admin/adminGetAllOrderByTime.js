@@ -1,16 +1,23 @@
-const { pool } = require("../../mysql/connect");
+const {
+  pool
+} = require("../../mysql/connect");
 
 exports.adminGetAllOrderByTime = (req, res) => {
   if (req.user.role !== "admin")
     return res.send({
       message: "You do not have a permission. Please try login as Admin"
     });
-  let { s_time, e_time } = req.params;
+  let {
+    s_time,
+    e_time
+  } = req.params;
   let sql = `call admin_getAllOrderByTime(${s_time}, ${e_time});
               select count (id_order) as n_order from reservation;`;
   try {
     pool.query(sql, (error, results, feilds) => {
-      if (error) return res.status(400).send({ error });
+      if (error) return res.status(400).send({
+        error
+      });
 
       let orders = results[0];
       for (order of orders) {
@@ -26,6 +33,8 @@ exports.adminGetAllOrderByTime = (req, res) => {
       res.status(200).send(data);
     });
   } catch (error) {
-    if (error) return res.status(400).send({ error });
+    if (error) return res.status(400).send({
+      error
+    });
   }
 };

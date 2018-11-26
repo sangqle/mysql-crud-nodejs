@@ -1,4 +1,6 @@
-const { pool } = require("../../mysql/connect");
+const {
+  pool
+} = require("../../mysql/connect");
 
 exports.adminCheckOrderUser = (req, res) => {
   let id_order = req.params.id_order;
@@ -30,7 +32,9 @@ exports.adminCheckOrderUser = (req, res) => {
         });
       });
     } catch (error) {
-      return reject({ error });
+      return reject({
+        error
+      });
     }
   }).then(
     data => {
@@ -39,16 +43,22 @@ exports.adminCheckOrderUser = (req, res) => {
                where id_order = ${id_order}`;
       try {
         pool.query(sql, (error, results, feilds) => {
-          if (error) return res.send({ error });
+          if (error) return res.send({
+            error
+          });
           data.status = "processed";
           return res.send(data);
         });
       } catch (error) {
-        return res.send({ error });
+        return res.send({
+          error
+        });
       }
     },
     error => {
-      return res.send({ error });
+      return res.send({
+        error
+      });
     }
   );
 };
