@@ -14,6 +14,7 @@ exports.adminGetAllOrderByMovie = (req, res) => {
 
       let orders = results[0];
       for (order of orders) {
+        order.time = `${parseInt(order.time / 60)}h${order.time % 60}`
         order.time_order = new Date(parseInt(order.time_order, 10)).toLocaleString();
       }
       let data = {
