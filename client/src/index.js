@@ -14,7 +14,7 @@ import AddMovie from "../src/container/addmovie";
 //import App from "../src/components/OrderPage/App";
 
 import "./styles.css";
-import "./Styles/global.scss";
+//import "./Styles/global.scss";
 
 const Page = () => {
   return (

@@ -10,10 +10,13 @@ exports.adminGetAllOrder = (req, res) => {
     pool.query(sql, (error, results, feilds) => {
       if (error) return res.status(400).send({ error });
 
-      let order = results[0];
+      let orders = results[0];
+      for (order of orders) {
+        order.time_order = new Date(parseInt(order.time_order, 10)).toLocaleString();
+      }
       res.status(200).send({
         instance: order.length,
-        order: order
+        order: orders
       });
     });
   } catch (error) {

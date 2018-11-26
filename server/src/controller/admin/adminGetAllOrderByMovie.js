@@ -12,12 +12,15 @@ exports.adminGetAllOrderByMovie = (req, res) => {
     pool.query(sql, (error, results, feilds) => {
       if (error) return res.status(400).send({ error });
 
-      let order = results[0];
+      let orders = results[0];
+      for (order of orders) {
+        order.time_order = new Date(parseInt(order.time_order, 10)).toLocaleString();
+      }
       let data = {
         n_order: results[2][0].n_order,
-        instance: order.length,
-        ratio_order: order.length / results[2][0].n_order,
-        order: order
+        instance: orders.length,
+        ratio_order: orders.length / results[2][0].n_order,
+        order: orders
       };
       res.status(200).send(data);
     });

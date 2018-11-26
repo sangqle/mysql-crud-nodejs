@@ -15,10 +15,49 @@
 
 ## :smiley: Requirement
 
-> [![Build Status]](https://nodejs.org/en/) </br>
+> [Nodejs](https://nodejs.org/en/) </br>
  > [Mysql Server](https://dev.mysql.com/downloads/mysql/) </br>
  > [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) </br>
+ > [PostMan TestAPI](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi)
 
+ 
+## How to run:
+
+### Config MySQL server
+    
+```javascript
+// Create a file in /server/src/mysql/config.js
+    {
+        const mysql = require('mysql');
+        const pool = mysql.createPool({
+              connectionLimit : 10,
+              host: '127.0.0.1',
+              user: 'yourUserName',
+              password: 'yourPassword',
+              database: 'your_DB_Name',
+              debug:  false,
+              multipleStatements: true
+        });
+
+        module.exports = {pool};
+    }
+```
+### Config Server && Client
+```
+1. Open a terminal
+    $ git clone https://github.com/lequangsang97/mysql-crud-nodejs.git
+    $ cd mysql-crud-nodejs && code .
+    $ cd server && npm install nodemon
+    $ npm install
+    $ npm run dev:start
+
+2. Open another terminal
+    $ cd client && npm install
+    $ npm start
+
+```
+## Node Host: [http://localhost:8080](http://localhost:8080)<br>
+## React Host: [http://localhost:3000](http://localhost:3000)<br>
 ## :ok_hand: API
 
 - User
@@ -263,8 +302,4 @@
     }
     ```
   * Item 2b
-
-## How to run:
-
-> `npm install` </br>
- > `npm start`
+// le quang sang

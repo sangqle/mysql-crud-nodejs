@@ -12,6 +12,7 @@ import {
 import { navigate, Link } from "@reach/router";
 import "./login.css";
 
+import {apiLocalhost} from "../env/api";
 class LoginForm extends Component {
   state = {
     email: "",
@@ -32,7 +33,7 @@ class LoginForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    return fetch("http://128.199.77.102:7777/user/login", {
+    return fetch(`${apiLocalhost}/user/login`, {
       method: "post",
       body: JSON.stringify({
         email: this.state.email,

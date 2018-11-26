@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import "./signUp.css";
 import { Link } from "@reach/router";
+import {apiLocalhost} from "../env/api";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class LoginForm extends Component {
   };
 
   onClick = () => {
-    fetch("http://localhost:8080/user/create/account", {
+    fetch(`${apiLocalhost}/user/create/account`, {
       method: "post",
       body: JSON.stringify({
         email: this.state.email,

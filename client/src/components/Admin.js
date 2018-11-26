@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Button, Row } from "reactstrap";
 import { Redirect, navigate, Link } from "@reach/router";
 import MovieList from "../container/movieList";
+import {apiLocalhost} from "../env/api";
 
 import "./admin.css";
 export default class Admin extends Component {
@@ -12,7 +13,7 @@ export default class Admin extends Component {
   };
 
   componentDidMount() {
-    fetch("http://128.199.77.102:7777/user/get/all/movie")
+    fetch(`${apiLocalhost}/user/get/all/movie`)
       .then(data => data.json())
       .then(result => {
         console.log(result);
@@ -44,14 +45,13 @@ export default class Admin extends Component {
 
   viewOrder = e => {
     e.preventDefault();
-    return fetch("http://128.199.77.102:7777/admin/get/all/order", {
+    return fetch(`${apiLocalhost}/admin/get/all/order`, {
       method: "GET",
 
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "x-auth":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNSwibmFtZSI6Ik5ndXllbiBQaHVvYyBUaGFuaCIsImVtYWlsIjoidGhhbmhuZ3V5ZW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTQxNDAzNTI1fQ.SaybRll6NXcl0uRZJoYdT23rmXL27PKcEIXxyaqQhz4"
+        "x-auth": localStorage.getItem("token")
       },
 
       credentials: "include" // send cookies, even in CORS
