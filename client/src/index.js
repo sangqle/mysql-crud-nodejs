@@ -35,5 +35,5 @@ const Page = () => {
 };
 
 const rootElement = document.getElementById("root");
-//ReactDOM.render(<User/>, rootElement)
-ReactDOM.render(<Page />, rootElement);
+ReactDOM.render(<User/>, rootElement)
+//ReactDOM.render(<Page />, rootElement);
