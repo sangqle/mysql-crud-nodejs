@@ -26,6 +26,7 @@ exports.adminAddMovie = (req, res) => {
 
   //const oRequired = req.body;
   const inputJson = JSON.parse(JSON.stringify(req.body));
+
   const aMovie = [
     "title",
     "director",
@@ -34,20 +35,27 @@ exports.adminAddMovie = (req, res) => {
     "price",
     "discription"
   ];
+
   let aDateTime = [];
   let objDateTime = {};
 
-  for (key of Object.keys(inputJson)) {
-    if (!aMovie.includes(key)) {
-      objDateTime = {};
-      objDateTime.date = parseInt(key);
-      objDateTime.time = inputJson[key].split(/\s+/).map(e => parseInt(e));
+  if (inputJson.data) {
+    aDateTime = inputJson.data;
+    //console.log(aDateTime);
+  } else {
+    for (key of Object.keys(inputJson)) {
+      if (!aMovie.includes(key)) {
+        objDateTime = {};
+        objDateTime.date = parseInt(key);
+        objDateTime.time = inputJson[key].split(/\s+/).map(e => parseInt(e));
 
-      aDateTime.push(objDateTime);
+        aDateTime.push(objDateTime);
+      }
     }
   }
 
   // res.json(aDateTime)
+  
   uploadPromise = new AWS.S3()
     .putObject(objParam)
     .promise()
