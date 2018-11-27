@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, Media, Col, Form } from "reactstrap";
 import "./movie.css";
-import {apiLocalhost} from "../env/api";
+import { apiLocalhost } from "../env/api";
+import { Link } from "@reach/router";
 class Moives extends React.Component {
   onDelete = e => {
     e.preventDefault();
@@ -17,6 +18,10 @@ class Moives extends React.Component {
     })
       .then(res => res.json())
       .then(data => console.log(data));
+  };
+
+  onEdit = e => {
+    e.preventDefault();
   };
 
   render() {
@@ -64,6 +69,14 @@ class Moives extends React.Component {
         <Col xs="2">
           <Button className="btn btn-danger" onClick={this.onDelete}>
             Delete
+          </Button>
+          <Button className="btn btn-info" onClick={this.onEdit}>
+            <Link
+              className="link-btn"
+              to={`/admin/edit_movie/${this.props.id}`}
+            >
+              Edit
+            </Link>
           </Button>
         </Col>
       </React.Fragment>

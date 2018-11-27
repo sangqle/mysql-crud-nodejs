@@ -1,7 +1,22 @@
 import React, { Component } from "react";
 import { Container, FormGroup, Label, Input } from "reactstrap";
 import CatInputs from "./CatInputs";
+
+import generate from "nanoid/generate";
+import firebase from "firebase/app";
+import "firebase/storage";
+
 import "./addMovie.scss";
+
+var config = {
+  apiKey: "AIzaSyAsoEs4lxeAEc4paNkCmxsBI1nauC13S54",
+  authDomain: "uploadimage-cdb0f.firebaseapp.com",
+  databaseURL: "https://uploadimage-cdb0f.firebaseio.com",
+  projectId: "uploadimage-cdb0f",
+  storageBucket: "uploadimage-cdb0f.appspot.com",
+  messagingSenderId: "130161612171"
+};
+firebase.initializeApp(config);
 
 export default class addmovie extends Component {
   state = {
@@ -32,6 +47,20 @@ export default class addmovie extends Component {
     this.setState({ cats: [...this.state.cats, { name: "", age: "" }] });
   };
 
+  selectFileHandler = e => {
+    const storageRef = firebase.storage().ref();
+    const nameFile = generate("0123456789abcdefghijklmnoprstuvwsyz-", 8);
+    storageRef
+      .child(`movie/${nameFile}.jpg`)
+      .put(e.target.files[0])
+      .then(snapshot => {
+        snapshot.ref.getDownloadURL().then(downloadURL => {
+          console.log(downloadURL);
+          this.setState({ avatar: downloadURL });
+        });
+      });
+  };
+
   handleAdd = e => {
     e.preventDefault();
     const {
@@ -44,6 +73,7 @@ export default class addmovie extends Component {
       description,
       avatar
     } = this.state;
+
     const data = cats.map(val => {
       return {
         date: parseInt(val.name),
@@ -60,9 +90,9 @@ export default class addmovie extends Component {
         title: movie_name,
         length: parseInt(length),
         released: parseInt(year_rel),
-        description: description,
+        discription: description,
         price: parseInt(price),
-        avatar: avatar
+        imageUrl: avatar
       }),
 
       headers: {
@@ -84,8 +114,8 @@ export default class addmovie extends Component {
           <Input type="text" name="movie_name" />
           <Label for="exampleText">Director</Label>
           <Input type="text" name="director" />
-          <Label for="exampleText">Image URL</Label>
-          <Input type="text" name="avatar" />
+          <Label for="exampleText">Image</Label>
+          <Input type="file" onChange={this.selectFileHandler} />
           <Label for="exampleText">Description</Label>
           <Input type="textarea" name="description" />
           <Label for="exampleText">Length</Label>
