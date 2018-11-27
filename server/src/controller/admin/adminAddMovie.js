@@ -72,7 +72,7 @@ exports.adminAddMovie = (req, res) => {
           }
           if (results.affectedRows) {
             cache_system.movies = [];
-            res.status(200).send({ message: "Thanh Cong." });
+            res.status(200).send({ message: "Insert Thanh Cong." });
           } else {
             res.status(400).send({
               message: "Nothing to change."

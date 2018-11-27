@@ -82,8 +82,8 @@
     {
         "name": "Nguyen Phuoc Thanh",
         "email": "thanhnguyen@gmail.com",
-        "password": "pass",
-        "sdt": "11111"
+        "password": "makhau8kytu",
+        "sdt": "0123456789"
     }
     ```
     Response:
@@ -91,7 +91,7 @@
     {
         "name": "Nguyen Phuoc Thanh",
         "email": "thanhnguyen@gmail.com",
-        "sdt": "11111"
+        "sdt": "0123456789"
     }
     ```
   - [x] POST: [http://localhost:8080/user/login](http://localhost:8080/user/login) <br>
@@ -264,41 +264,13 @@
 - Administrator
   - [x] POST: [http://localhost:8080/admin/add/movie](http://localhost:8080/admin/add/movie) <br>
         Request:
-    ```javascript
-    body: {
-        "title": "Oh Joy, Coming Soon",
-        "director": "Joy jobs",
-        "released": 2016,
-        "length": 85,
-        "price": 90,
-        "imageUrl": "https://lottecinemavn.com/Lotte/files/85/85c6c0b3-a951-4802-9f94-d7b4819ca493.jpg",
-        "data": [{
-            "date": 20,
-            "time": [1020, 1140]
-        }]
-    }
-    ```
+        ![alt text](https://s3-ap-southeast-1.amazonaws.com/dbms-photo-movies/Capture.PNG)
     Response:
     ```javascript
     {
-        "query": {
-            "title": "Jonny English",
-            "director": "Joy jobs",
-            "released": 2016,
-            "length": 126,
-            "price": 100,
-            "data": [
-                {
-                    "date": 20,
-                    "time": [
-                        1020,
-                        1140
-                    ]
-                }
-            ]
-        }
+        message: 'Insert Thanh Cong'
     }
-    ```
+    ````
   - [x] GET: [http://localhost:8080/admin/get/all/order/:date](http://localhost:8080/admin/get/all/order/21) <br>
     ```javascript
     {

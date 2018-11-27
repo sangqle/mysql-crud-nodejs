@@ -20,7 +20,7 @@ exports.adminDeleteMovie = (req, res) => {
         cache_system.date_of_movies = [];
         cache_system.time_of_movies = [];
         return res.status(200).send({
-          message: "Thanh Cong"
+          message: "Delete Thanh Cong"
         });
       } else {
         return res.status(404).send({
