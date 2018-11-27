@@ -2,6 +2,7 @@ import React, { Component, lazy, Suspense } from "react";
 import { Container, Row, Button } from "reactstrap";
 import { Link, navigate } from "@reach/router";
 import MovieCards from "../container/movieCards";
+import Loading from "../container/loading";
 import "./home.css";
 import {apiLocalhost} from "../env/api"
 //import { userBooking } from "../../../server/src/controller/user";
@@ -55,7 +56,7 @@ export default class Home extends Component {
             </nav>
           </React.Fragment>
         )}
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading/>}>
           <Slide />
         </Suspense>
         <input

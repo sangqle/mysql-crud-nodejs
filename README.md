@@ -20,29 +20,41 @@
  > [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) </br>
  > [PostMan TestAPI](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=vi)
 
- 
 ## How to run:
 
 ### Config MySQL server
-    
+
 ```javascript
 // Create a file in /server/src/mysql/config.js
-    {
-        const mysql = require('mysql');
-        const pool = mysql.createPool({
-              connectionLimit : 10,
-              host: '127.0.0.1',
-              user: 'yourUserName',
-              password: 'yourPassword',
-              database: 'your_DB_Name',
-              debug:  false,
-              multipleStatements: true
-        });
+{
+  const config = {
+    host: "yourHostName",
+    port: 3306,
+    user: "yourUser",
+    password: "yourPassWord",
+    database: "yourDatabaseName",
+    multipleStatements: true
+  };
 
-        module.exports = {pool};
-    }
+  const accessKey = "xxxxxxxxxxxxxxxxxx";
+  const secretKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+  const Bucket = "??????";
+  const ACL = "public-read-write";
+  const ContentType = "image/jpg";
+
+  module.exports = {
+    config,
+    accessKey,
+    secretKey,
+    Bucket,
+    ACL,
+    ContentType
+  };
+}
 ```
+
 ### Config Server && Client
+
 ```
 1. Open a terminal
     $ git clone https://github.com/lequangsang97/mysql-crud-nodejs.git
@@ -56,8 +68,11 @@
     $ npm start
 
 ```
+
 ## Node Host: [http://localhost:8080](http://localhost:8080)<br>
+
 ## React Host: [http://localhost:3000](http://localhost:3000)<br>
+
 ## :ok_hand: API
 
 - User
@@ -302,4 +317,4 @@
     }
     ```
   * Item 2b
-// le quang sang
+    // le quang sang
