@@ -73,36 +73,36 @@ App.use(
 // Add headers
 //App.use(cors());
 
-// App.use(function(req, res, next) {
-//   //res.setHeader("Access-Control-Allow-Origin", "*");
-//  // res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000');
-//   res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000');
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-//   );
-//   //Request headers you wish to allow
-//   res.setHeader("Access-Control-Allow-Headers", "x-auth, content-type");
-//   // Set to true if you need the website to include cookies in the requests sent
-//   // to the API (e.g. in case you use sessions)
-//   res.setHeader("Access-Control-Allow-Credentials", true);
-//   // Pass to next layer of middleware
-//   //res.setHeader("Access-Control-Allow-Origin", "");
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Access-Control-Allow-Headers, Origin,Accept, x-auth, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-//   );
-//   next();
-// });
-
-App.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+App.use(function(req, res, next) {
+  //res.setHeader("Access-Control-Allow-Origin", "*");
+ // res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000');
+  res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000');
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  //Request headers you wish to allow
+  res.setHeader("Access-Control-Allow-Headers", "x-auth, content-type");
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  // Pass to next layer of middleware
+  //res.setHeader("Access-Control-Allow-Origin", "");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, x-auth, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
   );
   next();
 });
+
+// App.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+//   );
+//   next();
+// });
 
 
 App.post("/user/create/account", userPostCreateAccount);
