@@ -8,6 +8,7 @@ export default class addmovie extends Component {
     movie_name: "",
     director: "",
     description: "",
+    avartar: null,
     length: null,
     year_rel: null,
     price: null,
@@ -33,7 +34,16 @@ export default class addmovie extends Component {
 
   handleAdd = e => {
     e.preventDefault();
-    const { director, length, cats, year_rel, price, movie_name } = this.state;
+    const {
+      director,
+      length,
+      cats,
+      year_rel,
+      price,
+      movie_name,
+      description,
+      avartar
+    } = this.state;
     const data = cats.map(val => {
       return {
         date: parseInt(val.name),
@@ -41,25 +51,24 @@ export default class addmovie extends Component {
       };
     });
 
-    fetch(
-      "https://mntdl35w9i.execute-api.us-east-1.amazonaws.com/dev/admin/add/movie",
-      {
-        method: "post",
-        body: JSON.stringify({
-          title: movie_name,
-          director: director,
-          released: year_rel,
-          lenght: length,
-          price: price,
-          data: data
-        }),
+    fetch("https://localhost:8080/admin/add/movie", {
+      method: "post",
+      body: JSON.stringify({
+        title: movie_name,
+        avartar: avartar,
+        description: description,
+        director: director,
+        released: year_rel,
+        lenght: length,
+        price: price,
+        data: data
+      }),
 
-        headers: {
-          Accept: "application/json",
-          "x-auth": localStorage.getItem("token")
-        }
+      headers: {
+        Accept: "application/json",
+        "x-auth": localStorage.getItem("token")
       }
-    );
+    });
   };
 
   render() {
@@ -71,6 +80,13 @@ export default class addmovie extends Component {
           <Input type="text" name="movie_name" />
           <Label for="exampleText">Director</Label>
           <Input type="text" name="director" />
+          <label for="avatar">Choose a profile picture:</label>
+          <input
+            type="file"
+            id="avatar"
+            name="avatar"
+            accept="image/png, image/jpeg"
+          />
           <Label for="exampleText">Description</Label>
           <Input type="textarea" name="description" />
           <Label for="exampleText">Length</Label>
