@@ -32,6 +32,12 @@ export default class addmovie extends Component {
     this.setState({ cats: [...this.state.cats, { name: "", age: "" }] });
   };
 
+  fileSelectHandler = e => {
+    this.setState({
+      avatar: e.target.files[0]
+    });
+  };
+
   handleAdd = e => {
     e.preventDefault();
     const {
@@ -50,19 +56,31 @@ export default class addmovie extends Component {
         time: val.age.split(" ").map(v => parseInt(v))
       };
     });
+<<<<<<< HEAD
 console.log(this.state.avatar);
+=======
+
+    const fd = new FormData();
+    fd.append("avatar", avatar);
+
+>>>>>>> b604d7e23350aced424ba94e308260183f4d544e
     fetch("http://localhost:8080/admin/add/movie", {
       method: "post",
-      body: JSON.stringify({
+      mode: "no-cors",
+      body: {
         title: movie_name,
+<<<<<<< HEAD
         avatar: avatar,
+=======
+>>>>>>> b604d7e23350aced424ba94e308260183f4d544e
         description: description,
         director: director,
-        released: year_rel,
-        lenght: length,
-        price: price,
-        data: data
-      }),
+        released: parseInt(year_rel),
+        lenght: parseInt(length),
+        price: parseInt(price),
+        data: data,
+        fd
+      },
 
       headers: {
         Accept: "application/json",
@@ -85,8 +103,8 @@ console.log(this.state.avatar);
           <input
             type="file"
             id="avatar"
-            name="avatar"
             accept="image/png, image/jpeg"
+            onChange={this.fileSelectHandler}
           />
           <Label for="exampleText">Description</Label>
           <Input type="textarea" name="description" />
