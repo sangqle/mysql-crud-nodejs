@@ -50,45 +50,35 @@ export default class addmovie extends Component {
       description,
       avatar
     } = this.state;
-    const data1 = cats.map(val => {
+    const data = cats.map(val => {
       return {
         date: parseInt(val.name),
         time: val.age.split(" ").map(v => parseInt(v))
       };
     });
 
-    
+    fetch("http://localhost:8080/admin/add/movie", {
+      method: "post",
 
-    
+      body: JSON.stringify({
+        director: director,
+        data: data,
+        title: movie_name,
+        length: parseInt(length),
+        released: parseInt(year_rel),
+        description: description,
+        price: parseInt(price),
+        avatar: "gasgasfgsgsga"
+      }),
 
-    var data = new FormData();
-    data.append("title", "Mission Impossible");
-    data.append("director", "Sang Le");
-    data.append("released", "2108");
-    data.append("length", "100");
-    data.append("price", "190");
-    data.append("avatar", "C:\\Users\\lqs\\Desktop\\dims.jpg");
-    data.append("discription", "Two most important day in you day");
-    data.append("23", "1114 1200");
-    data.append("24", "1200");
-    
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-    
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        console.log(this.responseText);
+      headers: {
+        Accept: "application/json",
+        "x-auth": localStorage.getItem("token")
       }
-    });
-    
-    xhr.open("POST", "http://localhost:8080/admin/add/movie");
-    xhr.setRequestHeader("x-auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNSwibmFtZSI6Ik5ndXllbiBQaHVvYyBUaGFuaCIsImVtYWlsIjoidGhhbmhuZ3V5ZW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTQzMjU0NTUyfQ._Yv_D4AOQHaSb20QImrul4ijq8StUIe-r6Zr6NCTnHE");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("cache-control", "no-cache");
-    xhr.setRequestHeader("Postman-Token", "bed90fb1-f95b-485d-b094-b2112a890c1b");
-    
-    xhr.send(data);
-  }
+    })
+      .then(res => res.json())
+      .then(data => console.log(data));
+  };
 
   render() {
     const { cats } = this.state;
