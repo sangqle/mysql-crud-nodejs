@@ -56,38 +56,37 @@ export default class addmovie extends Component {
         time: val.age.split(" ").map(v => parseInt(v))
       };
     });
-<<<<<<< HEAD
-console.log(this.state.avatar);
-=======
+
+    console.log(data);
 
     const fd = new FormData();
     fd.append("avatar", avatar);
 
->>>>>>> b604d7e23350aced424ba94e308260183f4d544e
-    fetch("http://localhost:8080/admin/add/movie", {
+    return fetch("http://localhost:8080/admin/add/movie", {
       method: "post",
       mode: "no-cors",
-      body: {
+      body: fd, // post body
+      body: JSON.stringify({
         title: movie_name,
-<<<<<<< HEAD
-        avatar: avatar,
-=======
->>>>>>> b604d7e23350aced424ba94e308260183f4d544e
+        data: data,
+        price: parseInt(price),
+        length: parseInt(length),
         description: description,
         director: director,
-        released: parseInt(year_rel),
-        lenght: parseInt(length),
-        price: parseInt(price),
-        data: data,
-        fd
-      },
+        released: parseInt(year_rel)
+      }),
 
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
-        "x-auth": localStorage.getItem("token")
+        "x-auth": localStorage.getItem("token"),
+        "Content-Type": "application/json"
       }
-    }).then(res => res.json()).then(data => console.log(data));
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
