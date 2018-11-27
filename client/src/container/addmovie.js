@@ -50,48 +50,44 @@ export default class addmovie extends Component {
       description,
       avatar
     } = this.state;
-    const data = cats.map(val => {
+    const data1 = cats.map(val => {
       return {
         date: parseInt(val.name),
         time: val.age.split(" ").map(v => parseInt(v))
       };
     });
 
-    const file = new FormData();
+    
 
-    file.append("avatar", this.state.avatar)
-    console.log(this.state.avatar);
-    //fd.append("avatar", avatar);
+    
 
-    return fetch("http://localhost:8080/admin/add/movie", {
-      method: "POST",
-     // mode: "no-cors",
-     // body: file.avatar, // post body
-      // body: JSON.stringify({
-      //   title: movie_name,
-      //   data: data,
-      //   price: parseInt(price),
-      //   length: parseInt(length),
-      //   description: description,
-      //   director: director,
-      //   released: parseInt(year_rel)
-      // }),
-
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "type": "formData",
-        "x-auth": localStorage.getItem("token")
-      },
-    }).then(function (res) {
-      if (res) {
-        console.log(res);
-      } else if (res.status == 401) {
-        console.log('Loi toi ban oi');
+    var data = new FormData();
+    data.append("title", "Mission Impossible");
+    data.append("director", "Sang Le");
+    data.append("released", "2108");
+    data.append("length", "100");
+    data.append("price", "190");
+    data.append("avatar", "C:\\Users\\lqs\\Desktop\\dims.jpg");
+    data.append("discription", "Two most important day in you day");
+    data.append("23", "1114 1200");
+    data.append("24", "1200");
+    
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        console.log(this.responseText);
       }
-    }, function (e) {
-      alert("Error submitting form!");
     });
+    
+    xhr.open("POST", "http://localhost:8080/admin/add/movie");
+    xhr.setRequestHeader("x-auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozNSwibmFtZSI6Ik5ndXllbiBQaHVvYyBUaGFuaCIsImVtYWlsIjoidGhhbmhuZ3V5ZW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTQzMjU0NTUyfQ._Yv_D4AOQHaSb20QImrul4ijq8StUIe-r6Zr6NCTnHE");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.setRequestHeader("Postman-Token", "bed90fb1-f95b-485d-b094-b2112a890c1b");
+    
+    xhr.send(data);
   }
 
   render() {

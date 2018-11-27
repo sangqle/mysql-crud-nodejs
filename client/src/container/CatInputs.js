@@ -1,4 +1,5 @@
 import React from "react";
+
 const CatInputs = props => {
   return props.cats.map((val, idx) => {
     let catId = `cat-${idx}`,

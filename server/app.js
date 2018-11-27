@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const AWS = require("aws-sdk");
 const morgan = require("morgan");
+const cors = require('cors');
 const { accessKey, secretKey } = require("../server/src/mysql/config");
 
 // config AWS for access S3
@@ -72,25 +73,37 @@ App.use(
 // Add headers
 //App.use(cors());
 
-App.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000/");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+// App.use(function(req, res, next) {
+//   //res.setHeader("Access-Control-Allow-Origin", "*");
+//  // res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000');
+//   res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000');
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+//   );
+//   //Request headers you wish to allow
+//   res.setHeader("Access-Control-Allow-Headers", "x-auth, content-type");
+//   // Set to true if you need the website to include cookies in the requests sent
+//   // to the API (e.g. in case you use sessions)
+//   res.setHeader("Access-Control-Allow-Credentials", true);
+//   // Pass to next layer of middleware
+//   //res.setHeader("Access-Control-Allow-Origin", "");
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Access-Control-Allow-Headers, Origin,Accept, x-auth, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+//   );
+//   next();
+// });
+
+App.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
-  //Request headers you wish to allow
-  res.setHeader("Access-Control-Allow-Headers", "x-auth, content-type");
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  // Pass to next layer of middleware
-  //res.setHeader("Access-Control-Allow-Origin", "");
-  // res.setHeader(
-  //   "Access-Control-Allow-Headers",
-  //   "Access-Control-Allow-Headers, Origin,Accept, x-auth, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-  // );
   next();
 });
+
 
 App.post("/user/create/account", userPostCreateAccount);
 App.post("/user/login", userPostLogin);
@@ -108,7 +121,7 @@ App.patch("/user/update/seat", authentication, userUpdateSeat);
 App.post(
   "/admin/add/movie",
   authentication,
-  //upload.single("avatar"),
+ // upload.single("avatar"),
   adminAddMovie
 );
 App.get("/admin/get/all/order", authentication, adminGetAllOrder);
