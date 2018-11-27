@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, FormGroup, Label, Input } from "reactstrap";
+import CatInputs from "./CatInputs";
 import "./addMovie.scss";
 
 export default class addmovie extends Component {
@@ -9,50 +10,80 @@ export default class addmovie extends Component {
     description: "",
     length: null,
     year_rel: null,
-    price: null
+    price: null,
+    cats: [{ name: "", age: "" }]
   };
 
   handleInputChange = e => {
-    this.setState({ [e.targer.name]: e.target.value });
-    console.log(this.state);
+    if (["name", "age"].includes(e.target.className)) {
+      let cats = [...this.state.cats];
+      cats[e.target.dataset.id][e.target.className] = e.target.value;
+      this.setState({ cats }, () => console.log(this.state.cats));
+    } else {
+      this.setState({ [e.target.name]: e.target.value }, () =>
+        console.log(this.state)
+      );
+    }
+  };
+
+  addCart = e => {
+    e.preventDefault();
+    this.setState({ cats: [...this.state.cats, { name: "", age: "" }] });
+  };
+
+  handleAdd = e => {
+    e.preventDefault();
+    const { director, length, cats, year_rel, price, movie_name } = this.state;
+    const data = cats.map(val => {
+      return {
+        date: parseInt(val.name),
+        time: val.age.split(" ").map(v => parseInt(v))
+      };
+    });
+
+    fetch(
+      "https://mntdl35w9i.execute-api.us-east-1.amazonaws.com/dev/admin/add/movie",
+      {
+        method: "post",
+        body: JSON.stringify({
+          title: movie_name,
+          director: director,
+          released: year_rel,
+          lenght: length,
+          price: price,
+          data: data
+        }),
+
+        headers: {
+          Accept: "application/json",
+          "x-auth": localStorage.getItem("token")
+        }
+      }
+    );
   };
 
   render() {
+    const { cats } = this.state;
     return (
       <Container>
-        <FormGroup>
+        <FormGroup onChange={this.handleInputChange}>
           <Label for="exampleText">Movie name</Label>
-          <Input
-            onChange={this.handleInputChange}
-            type="text"
-            name="movie_name"
-          />
+          <Input type="text" name="movie_name" />
           <Label for="exampleText">Director</Label>
-          <Input
-            onChange={this.handleInputChange}
-            type="text"
-            name="director"
-          />
+          <Input type="text" name="director" />
           <Label for="exampleText">Description</Label>
-          <Input
-            onChange={this.handleInputChange}
-            type="textarea"
-            name="description"
-          />
+          <Input type="textarea" name="description" />
           <Label for="exampleText">Length</Label>
-          <Input
-            onChange={this.handleInputChange}
-            type="number"
-            name="length"
-          />
+          <Input type="number" name="length" />
           <Label for="exampleText">Year release</Label>
-          <Input
-            onChange={this.handleInputChange}
-            type="number"
-            name="year_rel"
-          />
+          <Input type="number" name="year_rel" />
           <Label for="exampleText">Price</Label>
-          <Input onChange={this.handleInputChange} type="text" name="price" />
+          <Input type="text" name="price" />
+          <button onClick={this.addCart}>Add new date</button>
+          <CatInputs cats={cats} />
+          <button className="btn btn-danger" onClick={this.handleAdd}>
+            Add this movie
+          </button>
         </FormGroup>
       </Container>
     );
