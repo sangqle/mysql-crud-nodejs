@@ -5,6 +5,7 @@ const cache_system = require("../../cache_system/cache_movies");
 const AWS = require("aws-sdk");
 
 exports.adminAddMovie = (req, res) => {
+  console.log(req);
   if (req.user.role !== "admin")
     return res.send({
       message: "Please try to login as Admin"
@@ -55,7 +56,7 @@ exports.adminAddMovie = (req, res) => {
   }
 
   // res.json(aDateTime)
-  
+
   uploadPromise = new AWS.S3()
     .putObject(objParam)
     .promise()

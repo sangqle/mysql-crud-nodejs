@@ -1,69 +1,45 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const multer = require('multer');
-const AWS = require('aws-sdk');
+const multer = require("multer");
+const AWS = require("aws-sdk");
 const morgan = require("morgan");
-const {
-  accessKey,
-  secretKey
-} = require('../server/src/mysql/config');
+const cors = require("cors");
+const { accessKey, secretKey } = require("../server/src/mysql/config");
 
 // config AWS for access S3
 AWS.config.update({
   accessKeyId: accessKey,
   secretAccessKey: secretKey,
-  region: 'ap-southeast-1'
+  region: "ap-southeast-1"
 });
 
 const upload = multer(); // create middleware upload file
 
-const {
-  authentication
-} = require("./src/middleware/authentication");
+const { authentication } = require("./src/middleware/authentication");
 //const getLog = require('./src/middleware/getlog');
-const {
-  userGetMovies
-} = require("./src/controller/user/userGetMovies");
-const {
-  userPostLogin
-} = require("./src/controller/user/userPostLogin");
+const { userGetMovies } = require("./src/controller/user/userGetMovies");
+const { userPostLogin } = require("./src/controller/user/userPostLogin");
 const {
   userPostCreateAccount
 } = require("./src/controller/user/userPostCreateAccount");
-const {
-  getDateOfMovie
-} = require("./src/controller/user/getDateOfMovie");
+const { getDateOfMovie } = require("./src/controller/user/getDateOfMovie");
 const {
   getTimeOfDateByMovie
 } = require("./src/controller/user/getTimeOfDateByMovie");
 const {
   userGetSeatedOfMovie
 } = require("./src/controller/user/userGetSeatedOfMovie");
-const {
-  userBooking
-} = require("./src/controller/user/userBooking");
-const {
-  userGetOrder
-} = require("./src/controller/user/userGetOrder");
-const {
-  userDeleteOrder
-} = require("./src/controller/user/userDeleteOrder");
-const {
-  userUpdateSeat
-} = require("./src/controller/user/userUpdateSeat");
+const { userBooking } = require("./src/controller/user/userBooking");
+const { userGetOrder } = require("./src/controller/user/userGetOrder");
+const { userDeleteOrder } = require("./src/controller/user/userDeleteOrder");
+const { userUpdateSeat } = require("./src/controller/user/userUpdateSeat");
 
-const {
-  adminAddMovie
-} = require("./src/controller/admin/adminAddMovie");
+const { adminAddMovie } = require("./src/controller/admin/adminAddMovie");
 const {
   adminCheckOrderUser
 } = require("./src/controller/admin/adminCheckOrderUser");
-const {
-  adminDeleteMovie
-} = require("./src/controller/admin/adminDeleteMovie");
-const {
-  adminGetAllOrder
-} = require("./src/controller/admin/adminGetAllOrder");
+const { adminDeleteMovie } = require("./src/controller/admin/adminDeleteMovie");
+const { adminGetAllOrder } = require("./src/controller/admin/adminGetAllOrder");
 const {
   adminGetAllOrderByDate
 } = require("./src/controller/admin/adminGetAllOrderByDate");
@@ -82,18 +58,22 @@ const App = express();
 App.use(
   morgan({
     format: "dev",
-    skip: function (req, res) {
+    skip: function(req, res) {
       return res.statusCode === 304;
     }
   })
 );
 App.use(bodyParser.json());
-App.use(bodyParser.urlencoded({
-  extended: true
-}));
+App.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 
 // Add headers
-App.use(function (req, res, next) {
+//App.use(cors());
+
+App.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -126,7 +106,12 @@ App.delete("/user/delete/:id_order", authentication, userDeleteOrder);
 App.patch("/user/update/seat", authentication, userUpdateSeat);
 
 /*Administrator*/
-App.post("/admin/add/movie", authentication, upload.single('avatar'), adminAddMovie);
+App.post(
+  "/admin/add/movie",
+  authentication,
+  upload.single("avatar"),
+  adminAddMovie
+);
 App.get("/admin/get/all/order", authentication, adminGetAllOrder);
 App.delete("/admin/delete/movie/:id_movie", authentication, adminDeleteMovie);
 App.get(

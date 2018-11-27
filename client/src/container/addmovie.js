@@ -8,7 +8,7 @@ export default class addmovie extends Component {
     movie_name: "",
     director: "",
     description: "",
-    avartar: null,
+    avatar: null,
     length: null,
     year_rel: null,
     price: null,
@@ -32,6 +32,12 @@ export default class addmovie extends Component {
     this.setState({ cats: [...this.state.cats, { name: "", age: "" }] });
   };
 
+  fileSelectHandler = e => {
+    this.setState({
+      avatar: e.target.files[0]
+    });
+  };
+
   handleAdd = e => {
     e.preventDefault();
     const {
@@ -42,7 +48,7 @@ export default class addmovie extends Component {
       price,
       movie_name,
       description,
-      avartar
+      avatar
     } = this.state;
     const data = cats.map(val => {
       return {
@@ -51,24 +57,31 @@ export default class addmovie extends Component {
       };
     });
 
-    fetch("https://localhost:8080/admin/add/movie", {
+    const fd = new FormData();
+    fd.append("avatar", avatar);
+
+    fetch("http://localhost:8080/admin/add/movie", {
       method: "post",
-      body: JSON.stringify({
+      mode: "no-cors",
+      body: {
         title: movie_name,
-        avartar: avartar,
         description: description,
         director: director,
-        released: year_rel,
-        lenght: length,
-        price: price,
-        data: data
-      }),
+        released: parseInt(year_rel),
+        lenght: parseInt(length),
+        price: parseInt(price),
+        data: data,
+        fd
+      },
 
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json",
         "x-auth": localStorage.getItem("token")
       }
-    });
+    })
+      .then(res => res.json())
+      .then(data => console.log(data));
   };
 
   render() {
@@ -84,8 +97,8 @@ export default class addmovie extends Component {
           <input
             type="file"
             id="avatar"
-            name="avatar"
             accept="image/png, image/jpeg"
+            onChange={this.fileSelectHandler}
           />
           <Label for="exampleText">Description</Label>
           <Input type="textarea" name="description" />
