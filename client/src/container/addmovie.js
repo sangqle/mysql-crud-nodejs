@@ -32,12 +32,6 @@ export default class addmovie extends Component {
     this.setState({ cats: [...this.state.cats, { name: "", age: "" }] });
   };
 
-  fileSelectHandler = e => {
-    this.setState({
-      avatar: e.target.files[0]
-    });
-  };
-
   handleAdd = e => {
     e.preventDefault();
     const {
@@ -56,7 +50,7 @@ export default class addmovie extends Component {
         time: val.age.split(" ").map(v => parseInt(v))
       };
     });
-
+    console.log(this.state);
     fetch("http://localhost:8080/admin/add/movie", {
       method: "post",
 
@@ -68,11 +62,12 @@ export default class addmovie extends Component {
         released: parseInt(year_rel),
         description: description,
         price: parseInt(price),
-        avatar: "gasgasfgsgsga"
+        avatar: avatar
       }),
 
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json",
         "x-auth": localStorage.getItem("token")
       }
     })
@@ -89,13 +84,8 @@ export default class addmovie extends Component {
           <Input type="text" name="movie_name" />
           <Label for="exampleText">Director</Label>
           <Input type="text" name="director" />
-          <label for="avatar">Choose a profile picture:</label>
-          <input
-            type="file"
-            id="avatar"
-            accept="image/png, image/jpeg"
-            onChange={this.fileSelectHandler}
-          />
+          <Label for="exampleText">Image URL</Label>
+          <Input type="text" name="avatar" />
           <Label for="exampleText">Description</Label>
           <Input type="textarea" name="description" />
           <Label for="exampleText">Length</Label>
