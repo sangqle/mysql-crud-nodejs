@@ -1,14 +1,8 @@
-const {
-  pool
-} = require("../../mysql/connect");
-const {
-  Bucket,
-  ACL,
-  ContentType
-} = require('../../mysql/config');
+const { pool } = require("../../mysql/connect");
+const { Bucket, ACL, ContentType } = require("../../mysql/config");
 const cache_system = require("../../cache_system/cache_movies");
 
-const AWS = require('aws-sdk');
+const AWS = require("aws-sdk");
 
 exports.adminAddMovie = (req, res) => {
   if (req.user.role !== "admin")
@@ -18,7 +12,7 @@ exports.adminAddMovie = (req, res) => {
 
   if (!req.file) {
     return res.json({
-      message: 'Lose a avatar. Please try again'
+      message: "Lose a avatar. Please try again"
     });
   }
 
@@ -28,53 +22,67 @@ exports.adminAddMovie = (req, res) => {
     Body: req.file.buffer,
     ACL: ACL,
     ContentType: ContentType
+  };
+
+  //const oRequired = req.body;
+  const inputJson = JSON.parse(JSON.stringify(req.body));
+  const aMovie = [
+    "title",
+    "director",
+    "released",
+    "length",
+    "price",
+    "discription"
+  ];
+  let aDateTime = [];
+  let objDateTime = {};
+
+  for (key of Object.keys(inputJson)) {
+    if (!aMovie.includes(key)) {
+      objDateTime = {};
+      objDateTime.date = parseInt(key);
+      objDateTime.time = inputJson[key].split(/\s+/).map(e => parseInt(e));
+
+      aDateTime.push(objDateTime);
+    }
   }
 
-  uploadPromise = new AWS.S3().putObject(objParam).promise().then((rs) => {
+  // res.json(aDateTime)
+  uploadPromise = new AWS.S3()
+    .putObject(objParam)
+    .promise()
+    .then(rs => {
+      const imageUrl = `https://s3-${AWS.config.region}.amazonaws.com/${
+        objParam.Bucket
+      }/${objParam.Key}`;
 
-    const {
-      title,
-      director,
-      released,
-      length,
-      price,
-      data
-    } = req.body;
+      let sql = `call add_movie('${inputJson.title}', '${
+        inputJson.director
+      }', ${inputJson.released}, ${inputJson.length}, ${
+        inputJson.price
+      }, '${imageUrl}','${JSON.stringify(aDateTime)}',
+      '${inputJson.discription}');`;
 
-    const imageUrl = `s3-${AWS.config.region}.amazonaws.com/${objParam.Bucket}/${objParam.Key}`
-    const dataJson = JSON.stringify(data);
-
-    let sql = `call add_movie('${title}', '${director}', ${released}, ${length}, ${price}, '${imageUrl}','${dataJson}');`;
-    try {
-      pool.query(sql, (error, results, feilds) => {
-        if (error) {
-          return res.status(400).send({
-            error
-          });
-        }
-        if (results.affectedRows) {
-          cache_system.movies = [];
-          res.status(200).send({
-            results: results,
-            query: {
-              title,
-              director,
-              released,
-              length,
-              price,
-              data
-            }
-          });
-        } else {
-          res.status(400).send({
-            message: "Nothing to change."
-          });
-        }
-      });
-    } catch (error) {
-      res.status(400).send({
-        error
-      });
-    }
-  });
+      try {
+        pool.query(sql, (error, results, feilds) => {
+          if (error) {
+            return res.status(400).send({
+              error
+            });
+          }
+          if (results.affectedRows) {
+            cache_system.movies = [];
+            res.status(200).send({ message: "Insert Thanh Cong." });
+          } else {
+            res.status(400).send({
+              message: "Nothing to change."
+            });
+          }
+        });
+      } catch (error) {
+        res.status(400).send({
+          error
+        });
+      }
+    });
 };
