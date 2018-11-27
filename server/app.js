@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const AWS = require("aws-sdk");
 const morgan = require("morgan");
-const cors = require("cors");
 const { accessKey, secretKey } = require("../server/src/mysql/config");
 
 // config AWS for access S3
@@ -109,7 +108,7 @@ App.patch("/user/update/seat", authentication, userUpdateSeat);
 App.post(
   "/admin/add/movie",
   authentication,
-  upload.single("avatar"),
+ // upload.single("avatar"),
   adminAddMovie
 );
 App.get("/admin/get/all/order", authentication, adminGetAllOrder);

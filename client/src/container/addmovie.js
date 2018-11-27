@@ -56,38 +56,42 @@ export default class addmovie extends Component {
         time: val.age.split(" ").map(v => parseInt(v))
       };
     });
-<<<<<<< HEAD
-console.log(this.state.avatar);
-=======
 
     const fd = new FormData();
-    fd.append("avatar", avatar);
+    var imagedata = document.querySelector('input[type="file"]').files[0];
+    fd.append("avatar", imagedata)
+    //fd.append("avatar", avatar);
 
->>>>>>> b604d7e23350aced424ba94e308260183f4d544e
     fetch("http://localhost:8080/admin/add/movie", {
       method: "post",
       mode: "no-cors",
       body: {
         title: movie_name,
-<<<<<<< HEAD
-        avatar: avatar,
-=======
->>>>>>> b604d7e23350aced424ba94e308260183f4d544e
         description: description,
         director: director,
         released: parseInt(year_rel),
         lenght: parseInt(length),
         price: parseInt(price),
         data: data,
-        fd
+        
       },
 
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data; boundary=AaB03x" +
+        "--AaB03x" +
+        "Content-Disposition: file" +
+        "Content-Type: png" +
+        "Content-Transfer-Encoding: binary" +
+        "...data... " +
+        "--AaB03x--",
+        "Accept": "application/json",
+        "type": "formData",
         "x-auth": localStorage.getItem("token")
       }
-    }).then(res => res.json()).then(data => console.log(data));
+    })
+    .then(res => res)
+    .then(data => console.log(fd))
+    .catch((err) => console.log(err));
   };
 
   render() {
