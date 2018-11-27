@@ -11,7 +11,7 @@ import PageNotFound from "../src/components/404";
 import Order from "../src/container/order";
 import VerifyOrder from "../src/container/orderSuccess";
 import AddMovie from "../src/container/addmovie";
-import User from "../src/components/user"
+import User from "../src/components/user";
 //import App from "../src/components/OrderPage/App";
 
 import "./styles.css";

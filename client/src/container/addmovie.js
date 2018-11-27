@@ -57,42 +57,42 @@ export default class addmovie extends Component {
       };
     });
 
-    const fd = new FormData();
-    var imagedata = document.querySelector('input[type="file"]').files[0];
-    fd.append("avatar", imagedata)
+    const file = new FormData();
+
+    file.append("avatar", this.state.avatar)
+    console.log(this.state.avatar);
     //fd.append("avatar", avatar);
 
-    fetch("http://localhost:8080/admin/add/movie", {
-      method: "post",
-      mode: "no-cors",
-      body: {
-        title: movie_name,
-        description: description,
-        director: director,
-        released: parseInt(year_rel),
-        lenght: parseInt(length),
-        price: parseInt(price),
-        data: data,
-        
-      },
+    return fetch("http://localhost:8080/admin/add/movie", {
+      method: "POST",
+     // mode: "no-cors",
+     // body: file.avatar, // post body
+      // body: JSON.stringify({
+      //   title: movie_name,
+      //   data: data,
+      //   price: parseInt(price),
+      //   length: parseInt(length),
+      //   description: description,
+      //   director: director,
+      //   released: parseInt(year_rel)
+      // }),
 
       headers: {
-        "Content-Type": "multipart/form-data; boundary=AaB03x" +
-        "--AaB03x" +
-        "Content-Disposition: file" +
-        "Content-Type: png" +
-        "Content-Transfer-Encoding: binary" +
-        "...data... " +
-        "--AaB03x--",
+        "Content-Type": "application/json",
         "Accept": "application/json",
         "type": "formData",
         "x-auth": localStorage.getItem("token")
+      },
+    }).then(function (res) {
+      if (res) {
+        console.log(res);
+      } else if (res.status == 401) {
+        console.log('Loi toi ban oi');
       }
-    })
-    .then(res => res)
-    .then(data => console.log(fd))
-    .catch((err) => console.log(err));
-  };
+    }, function (e) {
+      alert("Error submitting form!");
+    });
+  }
 
   render() {
     const { cats } = this.state;

@@ -6,7 +6,7 @@ const AWS = require("aws-sdk");
 
 exports.adminAddMovie = (req, res) => {
  // console.log();
-  console.log(req.file);
+  console.log(req);
   /* if (req.user.role !== "admin")
     return res.send({
       message: "Please try to login as Admin"

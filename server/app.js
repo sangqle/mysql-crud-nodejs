@@ -73,7 +73,7 @@ App.use(
 //App.use(cors());
 
 App.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000/");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
@@ -108,7 +108,7 @@ App.patch("/user/update/seat", authentication, userUpdateSeat);
 App.post(
   "/admin/add/movie",
   authentication,
- // upload.single("avatar"),
+  //upload.single("avatar"),
   adminAddMovie
 );
 App.get("/admin/get/all/order", authentication, adminGetAllOrder);
