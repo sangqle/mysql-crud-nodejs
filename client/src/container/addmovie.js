@@ -59,27 +59,25 @@ export default class addmovie extends Component {
 
     console.log(data);
 
-    const fd = new FormData();
-    fd.append("avatar", avatar);
+    let fd = new FormData();
+    fd.append("file", avatar);
+    console.log(fd);
+    fd.append("title", movie_name);
+    fd.append("data", data);
+    fd.append("price", parseInt(price));
+    fd.append("length", parseInt(length));
+    fd.append("description", description);
+    fd.append("director", director);
+    fd.append("released", parseInt(year_rel));
 
     return fetch("http://localhost:8080/admin/add/movie", {
-      method: "post",
-      mode: "no-cors",
+      method: "POST",
+
       body: fd, // post body
-      body: JSON.stringify({
-        title: movie_name,
-        data: data,
-        price: parseInt(price),
-        length: parseInt(length),
-        description: description,
-        director: director,
-        released: parseInt(year_rel)
-      }),
 
       headers: {
-        Accept: "application/json",
         "x-auth": localStorage.getItem("token"),
-        "Content-Type": "application/json"
+        "Content-Type": "application/form-data"
       }
     })
       .then(response => response.json())
