@@ -5,6 +5,7 @@ const cache_system = require("../../cache_system/cache_movies");
 const AWS = require("aws-sdk");
 
 exports.adminAddMovie = (req, res) => {
+  console.log(req.file);
   if (req.user.role !== "admin")
     return res.send({
       message: "Please try to login as Admin"

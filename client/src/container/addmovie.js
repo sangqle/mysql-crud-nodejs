@@ -8,7 +8,7 @@ export default class addmovie extends Component {
     movie_name: "",
     director: "",
     description: "",
-    avartar: null,
+    avatar: null,
     length: null,
     year_rel: null,
     price: null,
@@ -42,7 +42,7 @@ export default class addmovie extends Component {
       price,
       movie_name,
       description,
-      avartar
+      avatar
     } = this.state;
     const data = cats.map(val => {
       return {
@@ -50,12 +50,12 @@ export default class addmovie extends Component {
         time: val.age.split(" ").map(v => parseInt(v))
       };
     });
-
-    fetch("https://localhost:8080/admin/add/movie", {
+console.log(this.state.avatar);
+    fetch("http://localhost:8080/admin/add/movie", {
       method: "post",
       body: JSON.stringify({
         title: movie_name,
-        avartar: avartar,
+        avatar: avatar,
         description: description,
         director: director,
         released: year_rel,
@@ -66,9 +66,10 @@ export default class addmovie extends Component {
 
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json",
         "x-auth": localStorage.getItem("token")
       }
-    });
+    }).then(res => res.json()).then(data => console.log(data));
   };
 
   render() {

@@ -11,6 +11,7 @@ import PageNotFound from "../src/components/404";
 import Order from "../src/container/order";
 import VerifyOrder from "../src/container/orderSuccess";
 import AddMovie from "../src/container/addmovie";
+import User from "../src/components/user"
 //import App from "../src/components/OrderPage/App";
 
 import "./styles.css";
@@ -32,4 +33,5 @@ const Page = () => {
 };
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<Page />, rootElement);
+ReactDOM.render(<User/>, rootElement)
+//ReactDOM.render(<Page />, rootElement);
