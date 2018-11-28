@@ -43,22 +43,7 @@ export default class Admin extends Component {
     console.log(this.state.search);
   };
 
-  viewOrder = e => {
-    e.preventDefault();
-    return fetch(`${apiLocalhost}/admin/get/all/order`, {
-      method: "GET",
 
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "x-auth": localStorage.getItem("token")
-      },
-
-      credentials: "include" // send cookies, even in CORS
-    })
-      .then(res => res.json())
-      .then(result => console.log(result));
-  };
 
   render() {
     const { movies, search } = this.state;
@@ -68,7 +53,7 @@ export default class Admin extends Component {
         {this.state.auth ? (
           <React.Fragment>
             <Button>{localStorage.getItem("adminName")}</Button>
-            <Button onClick={this.viewOrder}>View order</Button>
+            <Button onClick={this.viewOrder}><Link to="/admin/view_ordered">View order</Link></Button>
             <Button onClick={this.handleLogout}>Logout</Button>
             <div className="input">
               <input

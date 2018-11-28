@@ -11,6 +11,7 @@ import PageNotFound from "../src/components/404";
 import Order from "../src/container/order";
 import VerifyOrder from "../src/container/orderSuccess";
 import AddMovie from "../src/container/addmovie";
+import ViewOrder from './container/adminViewOrders'
 import User from "../src/components/user";
 import EditPage from "./components/editMovie";
 //import App from "../src/components/OrderPage/App";
@@ -29,11 +30,12 @@ const Page = () => {
       <VerifyOrder path="order/success/:id_order" />
       <AddMovie path="admin/add_movie" />
       <EditPage path="admin/edit_movie/:movie" />
+      <ViewOrder path="admin/view_ordered" />
       <PageNotFound path="*" />
     </Router>
   );
 };
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<User/>, rootElement)
-//ReactDOM.render(<Page />, rootElement);
+//ReactDOM.render(<User/>, rootElement)
+ReactDOM.render(<Page />, rootElement);
