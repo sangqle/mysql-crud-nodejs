@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const AWS = require("aws-sdk");
 const morgan = require("morgan");
-const cors = require('cors');
+const cors = require("cors");
 const { accessKey, secretKey } = require("../server/src/mysql/config");
 
 // config AWS for access S3
@@ -50,9 +50,7 @@ const {
   adminGetAllOrderByTime
 } = require("./src/controller/admin/adminGetAllOrderByTime");
 
-const {
-  adminEditMovie
-} = require("./src/controller/admin/adminEditMovie");
+const { adminEditMovie } = require("./src/controller/admin/adminEditMovie");
 
 const App = express();
 //App.use(cors());
@@ -79,8 +77,8 @@ App.use(
 
 App.use(function(req, res, next) {
   //res.setHeader("Access-Control-Allow-Origin", "*");
- // res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000');
-  res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000');
+  // res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000');
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
@@ -108,7 +106,6 @@ App.use(function(req, res, next) {
 //   next();
 // });
 
-
 App.post("/user/create/account", userPostCreateAccount);
 App.post("/user/login", userPostLogin);
 App.get("/user/get/all/movie", userGetMovies);
@@ -125,7 +122,7 @@ App.patch("/user/update/seat", authentication, userUpdateSeat);
 App.post(
   "/admin/add/movie",
   authentication,
- // upload.single("avatar"),
+  // upload.single("avatar"),
   adminAddMovie
 );
 App.get("/admin/get/all/order", authentication, adminGetAllOrder);
@@ -147,8 +144,13 @@ App.get(
   adminGetAllOrderByTime
 );
 
-App.get("/admin/get/movie/:idMovie", authentication, adminEditMovie)
+App.get("/admin/get/movie/:idMovie", authentication, adminEditMovie);
 App.get("/checkOrder/:id_order", adminCheckOrderUser);
+
+App.get('/', (req, res) => {
+  res.json({message: "Welcome To APIs"});
+})
+
 module.exports = {
   App
 };

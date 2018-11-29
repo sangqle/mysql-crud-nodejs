@@ -74,6 +74,23 @@
 ## React Host: [http://localhost:3000](http://localhost:3000)<br>
 
 ## :ok_hand: API
+- [x] Post: http://localhost:8080/user/create/account<br>
+- [x] Post: http://localhost:8080/user/login<br>
+- [x] Get: http://localhost:8080/user/get/all/movie<br>
+- [x] Get: http://localhost:8080/user/get/date/:idMovie<br>
+- [x] Get: http://localhost:8080/user/get/time/:idMovie/:idDate<br>
+- [x] Get: http://localhost:8080/user/get/seated/:idMovie/:idDate/:idTime<br>
+- [x] Post: http://localhost:8080/user/booking<br>
+- [x] Get: http://localhost:8080/user/get/order<br>
+- [x] Path: http://localhost:8080/user/update/seat<br>
+- [x] Post: http://localhost:8080/admin/add/movie<br>
+- [x] Get: http://localhost:8080/admin/get/all/order<br>
+- [x] Get: http://localhost:8080/admin/get/all/order/bymovie/:idMovie<br>
+- [x] Get: http://localhost:8080/admin/get/all/order/bydate/:date<br>
+- [x] Get: http://localhost:8080/admin/get/all/order/bytime/:timeStart/:timeEnd<br>
+- [x] Delete: http://localhost:8080/admin/delete/movie/:idMovie<br>
+
+
 
 - User
   - [x] POST: [http://localhost:8080/user/create/account](http://localhost:8080/user/create/account) <br>
@@ -108,7 +125,7 @@
         "id_user": 35,
         "name": "Nguyen Phuoc Thanh",
         "email": "thanhnguyen@gmail.com",
-        "role": "user",
+        "role": "admin",
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjozMywibmFtZSI6IkxlIFF1YW5nIFNhbmciLCJlbWFpbCI6InNhbmcubGVxdWFuZ0BnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTU0MTA0NTIwMH0.0b_pHp5e49SVP-Mod8SVr0oRzizPKcpSy07yaCgTbn4"
     }
     ```
@@ -124,8 +141,9 @@
                 "released": 2018,
                 "length": 110,
                 "price": 120,
-                "image": "https://lottecinemavn.com/Lotte/files/44/4427ab16-6b3e-45c8-9dee-58c8ad84304b.png"
+                "imagUrl": "https://lottecinemavn.com/Lotte/files/44/4427ab16-6b3e-45c8-9dee-58c8ad84304b.png"
             }
+            ...
         ]
     }
     ```
@@ -278,7 +296,7 @@
         "order": [
             {
                 "id_order": 2,
-                "name": "tran cong an",
+                "name": "Le Quang Sang",
                 "title": "Bad Times At The El Royale",
                 "date": 21,
                 "time": 1140,
@@ -288,5 +306,8 @@
         ]
     }
     ```
+    - [x] GET: [http://localhost:8080/admin/get/all/order/bymovie/:idMovie] <br>
+    - [x] GET: [http://localhost:8080/admin/get/all/order/bytime/:timeStart/:timeEnd]<br>
+    
   * Item 2b
     // le quang sang
