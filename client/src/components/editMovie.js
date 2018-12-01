@@ -41,10 +41,34 @@ class EditPage extends React.Component {
               title: movie.title
             }}
             onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
+              // setTimeout(() => {
+              //   alert(JSON.stringify(values, null, 2));
+              //   setSubmitting(false);
+              // }, 400);
+              console.log(values);
+              fetch(
+                `http://localhost:8080/admin/edit/movie/${this.props.id_movie}`,
+                {
+                  method: "post",
+                  body: JSON.stringify({
+                    title: values.title,
+                    director: values.director,
+                    description: values.discription,
+                    length: values.length,
+                    released: values.released,
+                    price: values.price
+                  }),
+
+                  headers: {
+                    Accept: "application/json",
+                    "x-auth": localStorage.getItem("token"),
+                    "Content-Type": "application/json"
+                  }
+                }
+              )
+                .then(res => res.json())
+                .then(data => console.log(data))
+                .catch(err => console.log(err));
             }}
           >
             {({
@@ -110,7 +134,7 @@ class EditPage extends React.Component {
                   name="price"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.released}
+                  value={values.price}
                 />
                 <button type="submit" disabled={isSubmitting}>
                   Submit
