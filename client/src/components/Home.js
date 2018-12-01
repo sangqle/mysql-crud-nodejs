@@ -4,7 +4,7 @@ import { Link, navigate } from "@reach/router";
 import MovieCards from "../container/movieCards";
 import Loading from "../container/loading";
 import "./home.css";
-import {apiLocalhost} from "../env/api"
+import { apiLocalhost } from "../env/api";
 //import { userBooking } from "../../../server/src/controller/user";
 
 const Slide = lazy(() => import("../container/slide"));
@@ -15,9 +15,10 @@ export default class Home extends Component {
   };
 
   componentDidMount() {
-    
     //fetch(`${apiLocalhost}/user/get/all/movie`)\
-    fetch(`https://mntdl35w9i.execute-api.us-east-1.amazonaws.com/dev/get/movies`)
+    fetch(
+      `https://mntdl35w9i.execute-api.us-east-1.amazonaws.com/dev/get/movies`
+    )
       .then(data => data.json())
       .then(result => {
         console.log(result);
@@ -52,11 +53,18 @@ export default class Home extends Component {
         ) : (
           <React.Fragment>
             <nav>
-              |<Link to="signUp">SIGN UP</Link> |<Link to="login">LOG IN</Link>
+              |
+              <Link className="sign_up" to="signUp">
+                SIGN UP
+              </Link>{" "}
+              |
+              <Link className="sign_in" to="login">
+                LOG IN
+              </Link>
             </nav>
           </React.Fragment>
         )}
-        <Suspense fallback={<Loading/>}>
+        <Suspense fallback={<Loading />}>
           <Slide />
         </Suspense>
         <input

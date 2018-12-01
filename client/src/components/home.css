@@ -3,6 +3,24 @@ input {
   border-color: blueviolet;
 }
 
-a {
-  color: steelblue;
+nav {
+  font-size: 1rem;
+}
+
+.sign_in {
+  color: brown;
+  background-color: lightgoldenrodyellow;
+}
+
+.sign_in:hover {
+  color: red;
+}
+
+.sign_up {
+  color: brown;
+  background-color: lightgoldenrodyellow;
+}
+
+.sign_up:hover {
+  color: red;
 }
