@@ -44,7 +44,9 @@ exports.adminAddMovie = (req, res) => {
     pool.query(sql, (error, results, feilds) => {
       if (error) {
         return res.status(400).send({
-          error
+          message: 'The error throw from adminAddMovie when execute SQL statement',
+          path: __dirname,
+          error: error
         });
       }
       if (results.affectedRows) {
@@ -58,6 +60,8 @@ exports.adminAddMovie = (req, res) => {
     });
   } catch (error) {
     res.status(400).send({
+      message: 'The error throw from adminAddMovie in trycatch',
+      path: __dirname,
       error
     });
   }

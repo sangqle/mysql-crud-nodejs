@@ -3,26 +3,8 @@ const { date_of_movies } = require("../../cache_system/cache_movies");
 
 /**User get all the date of the movie */
 exports.getDateOfMovie = (req, res) => {
+  
   var id_movie = req.params.id_movie;
-  /*
-  dateCache: [{
-    id_movie: 1,
-    dates: "dates": [
-        {
-            "id_date": 1,
-            "date": 19
-        },
-        {
-            "id_date": 2,
-            "date": 20
-        },
-        {
-            "id_date": 3,
-            "date": 21
-        }
-    ]
-    }]
-   */
   for (e of date_of_movies) {
     if (e.id_movie === id_movie) {
       console.log("Get Date In Cache_DAte");

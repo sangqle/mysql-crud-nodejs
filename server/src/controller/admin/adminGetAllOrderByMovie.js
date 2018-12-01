@@ -13,7 +13,9 @@ exports.adminGetAllOrderByMovie = (req, res) => {
   try {
     pool.query(sql, (error, results, feilds) => {
       if (error) return res.status(400).send({
-        error
+        message: 'The error from if(error)',
+        error,
+        path: __dirname
       });
 
       let orders = results[0];
@@ -31,7 +33,9 @@ exports.adminGetAllOrderByMovie = (req, res) => {
     });
   } catch (error) {
     if (error) return res.status(400).send({
-      error
+      message: 'The error from final trycatch',
+      error,
+      __dirname
     });
   }
 };

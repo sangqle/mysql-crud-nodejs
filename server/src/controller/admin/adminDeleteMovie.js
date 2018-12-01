@@ -6,7 +6,9 @@ const cache_system = require("../../cache_system/cache_movies");
 exports.adminDeleteMovie = (req, res) => {
   if (req.user.role !== "admin")
     return res.send({
-      message: "You do not have a permission. Please try login as Admin"
+      message: "You do not have a permission. Please try login as Admin",
+      error,
+      path: __dirname
     });
   let id_movie = req.params.id_movie;
   let sql = `call admin_deleteMovie(${id_movie})`;
@@ -30,7 +32,9 @@ exports.adminDeleteMovie = (req, res) => {
     });
   } catch (error) {
     if (error) return res.status(400).send({
-      error
+      message: 'The error throw from catch final',
+      error,
+      path: __dirname
     });
   }
 };

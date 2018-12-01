@@ -35,16 +35,18 @@ exports.adminEditMovie = (req, res) => {
     pool.query(sql, (error, data) => {
       if (error) {
         res.json({
-          message: "Error execute SQL from adminEditMovie.js",
-          error: error
+          message: "Error execute SQL from adminEditMovie",
+          error: error,
+          path: __dirname
         });
       }
       res.json({ message: "Edit Thanh Cong" });
     });
   } catch (error) {
     res.json({
-      message: "Error in catch from adminEditMovie.js",
-      error: error
+      message: "Error in catch from adminEditMovie",
+      error: error,
+      path: __dirname
     });
   }
 };

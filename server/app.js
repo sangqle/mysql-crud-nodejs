@@ -153,6 +153,7 @@ App.get('/', (req, res) => {
   res.json({message: "Welcome To APIs"});
 })
 
+console.log(__dirname);
 module.exports = {
   App
 };
