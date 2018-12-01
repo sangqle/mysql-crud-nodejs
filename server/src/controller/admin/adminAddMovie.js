@@ -15,13 +15,30 @@ exports.adminAddMovie = (req, res) => {
   //console.log(aDateTime);
 
   // res.json(aDateTime)
+  let title = inputJson.title
+    .split(/\s+/)
+    .map(val => val.charAt(0).toUpperCase() + val.substr(1).toLowerCase())
+    .join(" ")
+    .trim();
 
-  let sql = `call add_movie('${inputJson.title}', '${inputJson.director}', ${
-    inputJson.released
-  }, ${inputJson.length}, ${inputJson.price}, '${inputJson.imageUrl}','${JSON.stringify(
+  let director = inputJson.discription
+    .split(/\s+/)
+    .map(val => val.charAt(0).toUpperCase() + val.substr(1).toLowerCase())
+    .join(" ")
+    .trim();
+
+  let discription = inputJson.discription
+    .split(/\s+/)
+    .map(val => val.charAt(0).toUpperCase() + val.substr(1).toLowerCase())
+    .join(" ")
+    .trim();
+
+  let sql = `call add_movie('${title}', '${director}', ${inputJson.released}, ${
+    inputJson.length
+  }, ${inputJson.price}, '${inputJson.imageUrl}','${JSON.stringify(
     inputJson.data
   )}',
-      '${inputJson.discription}');`;
+      '${discription}');`;
 
   try {
     pool.query(sql, (error, results, feilds) => {

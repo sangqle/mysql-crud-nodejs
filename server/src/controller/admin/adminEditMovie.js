@@ -9,8 +9,26 @@ exports.adminEditMovie = (req, res) => {
     });
 
   const idMovie = req.params.idMovie;
-  
+
   const movie = req.body;
+
+  let title = movie.title
+    .split(/\s+/)
+    .map(val => val.charAt(0).toUpperCase() + val.substr(1).toLowerCase())
+    .join(" ")
+    .trim();
+
+  let director = movie.discription
+    .split(/\s+/)
+    .map(val => val.charAt(0).toUpperCase() + val.substr(1).toLowerCase())
+    .join(" ")
+    .trim();
+
+  let discription = movie.discription
+    .split(/\s+/)
+    .map(val => val.charAt(0).toUpperCase() + val.substr(1).toLowerCase())
+    .join(" ")
+    .trim();
 
   try {
     let sql = `call adminEditMovie()`;
@@ -21,7 +39,7 @@ exports.adminEditMovie = (req, res) => {
           error: error
         });
       }
-      res.json({ message: "Edit Thanh Cong"});
+      res.json({ message: "Edit Thanh Cong" });
     });
   } catch (error) {
     res.json({
