@@ -1,0 +1,27 @@
+
+.item1 { grid-area: idOrder; }
+.item2 { grid-area: name; }
+.item3 { grid-area: title; }
+.item4 { grid-area: date; }
+.item5 { grid-area: time; }
+.item6 { grid-area: seat; }
+.item7 { grid-area: price; }
+.item8 { grid-area: status; }
+.item9 {grid-area: timeAt}
+
+.grid-container {
+    width: 1150px;
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: 80px 180px 250px 80px 80px 80px 80px 100px 200px;
+}
+
+.item {
+    padding: 5px;
+    background-color: rgb(144, 241, 124);
+}
+
+.order-container {
+    width: 1150px;
+    background-color: rgb(225, 245, 219)
+}

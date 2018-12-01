@@ -35,20 +35,15 @@
     database: "yourDatabaseName",
     multipleStatements: true
   };
-
+/* User for AWS config S3
   const accessKey = "xxxxxxxxxxxxxxxxxx";
   const secretKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
   const Bucket = "??????";
   const ACL = "public-read-write";
   const ContentType = "image/jpg";
-
+*/
   module.exports = {
     config,
-    accessKey,
-    secretKey,
-    Bucket,
-    ACL,
-    ContentType
   };
 }
 ```
@@ -89,6 +84,8 @@
 - [x] Get: http://localhost:8080/admin/get/all/order/bydate/:date<br>
 - [x] Get: http://localhost:8080/admin/get/all/order/bytime/:timeStart/:timeEnd<br>
 - [x] Delete: http://localhost:8080/admin/delete/movie/:idMovie<br>
+- [x] Delete: http://localhost:8080/admin/get/movie/:idMovie<br>
+- [x] Delete: http://localhost:8080/admin/edit/movie/:idMovie<br>
 
 
 

@@ -51,7 +51,7 @@ const {
 } = require("./src/controller/admin/adminGetAllOrderByTime");
 
 const { adminEditMovie } = require("./src/controller/admin/adminEditMovie");
-
+const {getOneMovie} = require("./src/controller/getOneMovie")
 const App = express();
 //App.use(cors());
 
@@ -144,7 +144,9 @@ App.get(
   adminGetAllOrderByTime
 );
 
-App.get("/admin/get/movie/:idMovie", authentication, adminEditMovie);
+App.get("/admin/get/movie/:idMovie", authentication, getOneMovie);
+App.post("/admin/edit/movie/:idMovie", authentication, adminEditMovie);
+
 App.get("/checkOrder/:id_order", adminCheckOrderUser);
 
 App.get('/', (req, res) => {
