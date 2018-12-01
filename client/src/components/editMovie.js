@@ -104,6 +104,14 @@ class EditPage extends React.Component {
                   onBlur={handleBlur}
                   value={values.released}
                 />
+                <label>Price</label>
+                <input
+                  type="text"
+                  name="price"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.released}
+                />
                 <button type="submit" disabled={isSubmitting}>
                   Submit
                 </button>
