@@ -53,7 +53,7 @@ export default class adminViewOrders extends Component {
                   <div className="order col-sm">{val.date}</div>
                   <div className="order col-sm">{val.time}</div>
                   <div className="order col-sm">{val.id_seat}</div>
-                  <div className="order col-sm">{val.price}</div>
+                  <div className="order col-sm">{val.price}.000 VND</div>
                   <div className="order col-sm">{val.status}</div>
                   <div className="order col-sm">{val.time_order}</div>
                 </div>

@@ -31,7 +31,7 @@
 .grid-container {
   width: 1150px;
   display: grid;
-  grid-template-columns: 80px 180px 250px 80px 80px 80px 80px 100px 200px;
+  grid-template-columns: 80px 170px 230px 80px 80px 80px auto 100px 170px;
   background-color: rgb(244, 247, 244);
 }
 
