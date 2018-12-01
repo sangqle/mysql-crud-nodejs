@@ -57,7 +57,7 @@ class EditPage extends React.Component {
                     length: values.length,
                     released: values.released,
                     price: values.price,
-                    imageURL: values.image
+                    imageUrl: values.image
                   }),
 
                   headers: {
