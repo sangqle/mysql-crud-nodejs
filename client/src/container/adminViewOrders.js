@@ -1,5 +1,13 @@
 import React, { Component } from "react";
 import { apiLocalhost } from "../env/api";
+import { Link } from "@reach/router";
+import {
+  Button,
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownItem,
+  DropdownMenu
+} from "reactstrap";
 import "./adminViewOrders.css";
 
 export default class adminViewOrders extends Component {
@@ -27,6 +35,22 @@ export default class adminViewOrders extends Component {
     const { ordered } = this.state;
     return (
       <div className="container">
+        <Button className="bnt btn-danger">
+          <Link to="/admin">{"<<--"}</Link>
+        </Button>
+        <ButtonDropdown>
+          <Button id="caret" color="primary">
+            {this.props.text}
+          </Button>
+          <DropdownToggle caret color="primary" />
+          <DropdownMenu>
+            <DropdownItem header>Header</DropdownItem>
+            <DropdownItem disabled>Action</DropdownItem>
+            <DropdownItem>Another Action</DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem>Another Action</DropdownItem>
+          </DropdownMenu>
+        </ButtonDropdown>
         <div className="nav-bar grid-container">
           <div className="item">IdOder</div>
           <div className="item">Name</div>
@@ -40,25 +64,27 @@ export default class adminViewOrders extends Component {
         </div>
         <div className="order-container">
           {ordered &&
-            ordered.sort((a, b) => {
-              let nameA = a.name.toUpperCase();
-              let nameB = b.name.toUpperCase();
-              return nameA < nameB ? -1 : nameA > nameB ? 1 : 0; 
-            }).map(val => {
-              return (
-                <div className="order grid-container">
-                  <div className="order col-sm">{val.id_order}</div>
-                  <div className="order col-sm">{val.name}</div>
-                  <div className="order col-sm">{val.title}</div>
-                  <div className="order col-sm">{val.date}</div>
-                  <div className="order col-sm">{val.time}</div>
-                  <div className="order col-sm">{val.id_seat}</div>
-                  <div className="order col-sm">{val.price}.000 VND</div>
-                  <div className="order col-sm">{val.status}</div>
-                  <div className="order col-sm">{val.time_order}</div>
-                </div>
-              );
-            })}
+            ordered
+              .sort((a, b) => {
+                let nameA = a.name.toUpperCase();
+                let nameB = b.name.toUpperCase();
+                return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
+              })
+              .map(val => {
+                return (
+                  <div className="order grid-container">
+                    <div className="order col-sm">{val.id_order}</div>
+                    <div className="order col-sm">{val.name}</div>
+                    <div className="order col-sm">{val.title}</div>
+                    <div className="order col-sm">{val.date}</div>
+                    <div className="order col-sm">{val.time}</div>
+                    <div className="order col-sm">{val.id_seat}</div>
+                    <div className="order col-sm">{val.price}.000 VND</div>
+                    <div className="order col-sm">{val.status}</div>
+                    <div className="order col-sm">{val.time_order}</div>
+                  </div>
+                );
+              })}
         </div>
       </div>
     );
