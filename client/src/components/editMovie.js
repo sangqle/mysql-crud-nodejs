@@ -100,7 +100,7 @@ class EditPage extends React.Component {
                 <label>Description</label>
                 <input
                   type="text"
-                  name="description"
+                  name="discription"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.discription}
