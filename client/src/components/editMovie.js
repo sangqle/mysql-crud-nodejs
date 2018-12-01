@@ -1,4 +1,5 @@
 import React from "react";
+import { Container } from "reactstrap";
 import { Formik } from "formik";
 
 class EditPage extends React.Component {
@@ -27,7 +28,7 @@ class EditPage extends React.Component {
     console.log(this.state);
     return (
       movie && (
-        <div>
+        <Container>
           <h1>Edit your movie now !</h1>
           <Formik
             initialValues={{
@@ -109,7 +110,7 @@ class EditPage extends React.Component {
               </form>
             )}
           </Formik>
-        </div>
+        </Container>
       )
     );
   }

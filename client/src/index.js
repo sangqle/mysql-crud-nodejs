@@ -17,7 +17,7 @@ import EditPage from "./components/editMovie";
 //import App from "../src/components/OrderPage/App";
 
 import "./styles.css";
-//import "./Styles/global.scss";
+//import "./Styles/tabler.scss";
 
 const Page = () => {
   return (
