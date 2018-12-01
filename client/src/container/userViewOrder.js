@@ -8,7 +8,7 @@ export default class adminViewOrders extends Component {
   };
 
   componentDidMount() {
-    fetch(`${apiLocalhost}/admin/get/all/order`, {
+    fetch(`${apiLocalhost}/user/get/all/order`, {
       method: "GET",
 
       headers: {
@@ -27,21 +27,35 @@ export default class adminViewOrders extends Component {
     const { ordered } = this.state;
     return (
       <div className="container">
-        {ordered &&
-          ordered.map(val => {
-            return (
-              <div className="infOder">
-                <p>{val.name}</p>
-                <p>{val.title}</p>
-                <p>{val.date}</p>
-                <p>{val.time}</p>
-                <p>{val.price}</p>
-                <p>{val.seat}</p>
-                <p>{val.status}</p>
-                <p>{val.time_order}</p>
-              </div>
-            );
-          })}
+        <div className="grid-container">
+          <div className="item">IdOder</div>
+          <div className="item">Name</div>
+          <div className="item">Movie</div>
+          <div className="item">Date</div>
+          <div className="item">Time</div>
+          <div className="item">Seat</div>
+          <div className="item">Price</div>
+          <div className="item">Status</div>
+          <div className="item">Time Order</div>
+        </div>
+        <div className="order-container">
+          {ordered &&
+            ordered.map(val => {
+              return (
+                <div className="order grid-container">
+                  <p className="order col-sm">{val.id_order}</p>
+                  <p className="order col-sm">{val.name}</p>
+                  <p className="order col-sm">{val.title}</p>
+                  <p className="order col-sm">{val.date}</p>
+                  <p className="order col-sm">{val.time}</p>
+                  <p className="order col-sm">{val.id_seat}</p>
+                  <p className="order col-sm">{val.price}</p>
+                  <p className="order col-sm">{val.status}</p>
+                  <p className="order col-sm">{val.time_order}</p>
+                </div>
+              );
+            })}
+        </div>
       </div>
     );
   }
