@@ -12,26 +12,28 @@ exports.adminEditMovie = (req, res) => {
 
   const movie = req.body;
 
+  console.log(movie);
+
   let title = movie.title
     .split(/\s+/)
     .map(val => val.charAt(0).toUpperCase() + val.substr(1).toLowerCase())
     .join(" ")
     .trim();
 
-  let director = movie.discription
+  let director = movie.director
     .split(/\s+/)
     .map(val => val.charAt(0).toUpperCase() + val.substr(1).toLowerCase())
     .join(" ")
     .trim();
 
-  let discription = movie.discription
+  let description = movie.description
     .split(/\s+/)
     .map(val => val.charAt(0).toUpperCase() + val.substr(1).toLowerCase())
     .join(" ")
     .trim();
 
   try {
-    let sql = `call adminEditMovie()`;
+    let sql = `call adminEditMovie(${idMovie}, '${title}', '${description}', ${movie.released}, '${director}', '${movie.imageUrl}', ${movie.price}, ${movie.length})`;
     pool.query(sql, (error, data) => {
       if (error) {
         res.json({
@@ -44,7 +46,7 @@ exports.adminEditMovie = (req, res) => {
     });
   } catch (error) {
     res.json({
-      message: "Error in catch from adminEditMovie",
+      message: "Error in trycatch from adminEditMovie",
       error: error,
       path: __dirname
     });

@@ -145,7 +145,7 @@ App.get(
 );
 
 App.get("/admin/get/movie/:idMovie", authentication, getOneMovie);
-App.get("/admin/edit/movie/:idMovie", authentication, adminEditMovie);
+App.post("/admin/edit/movie/:idMovie", authentication, adminEditMovie);
 
 App.get("/checkOrder/:id_order", adminCheckOrderUser);
 
@@ -153,7 +153,6 @@ App.get('/', (req, res) => {
   res.json({message: "Welcome To APIs"});
 })
 
-console.log(__dirname);
 module.exports = {
   App
 };

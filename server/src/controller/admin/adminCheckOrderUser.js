@@ -66,7 +66,7 @@ exports.adminCheckOrderUser = (req, res) => {
     })
     .catch(error => {
       return res.send({
-        message: 'The error throw from trycatch final',
+        message: "The error throw from trycatch final",
         error,
         path: __dirname
       });
