@@ -35,20 +35,15 @@
     database: "yourDatabaseName",
     multipleStatements: true
   };
-
+/* User for AWS config S3
   const accessKey = "xxxxxxxxxxxxxxxxxx";
   const secretKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
   const Bucket = "??????";
   const ACL = "public-read-write";
   const ContentType = "image/jpg";
-
+*/
   module.exports = {
     config,
-    accessKey,
-    secretKey,
-    Bucket,
-    ACL,
-    ContentType
   };
 }
 ```
