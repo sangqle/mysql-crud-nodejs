@@ -8,7 +8,10 @@ exports.adminEditMovie = (req, res) => {
       message: "You do not have a permission. Please try login as Admin"
     });
 
- // const idMovie = req.params.idMovie;
+  const idMovie = req.params.idMovie;
+  
+  const movie = req.body;
+
   try {
     let sql = `call adminEditMovie()`;
     pool.query(sql, (error, data) => {
