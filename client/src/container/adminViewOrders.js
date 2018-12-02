@@ -1,12 +1,20 @@
 import React, { Component } from "react";
 import { apiLocalhost } from "../env/api";
 import { Link } from "@reach/router";
-import { UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle, Button } from 'reactstrap';
+import Ordered from "./ordered";
+import {
+  UncontrolledButtonDropdown,
+  DropdownMenu,
+  DropdownItem,
+  DropdownToggle,
+  Button
+} from "reactstrap";
 import "./adminViewOrders.css";
 
 export default class adminViewOrders extends Component {
   state = {
-    ordered: null
+    ordered: null,
+    filterState: null
   };
 
   componentDidMount() {
@@ -25,6 +33,25 @@ export default class adminViewOrders extends Component {
       .then(result => this.setState({ ordered: result.order }))
       .catch(err => console.log(err));
   }
+
+  handleFillPending = e => {
+    let filterState = this.state.ordered;
+
+    filterState = filterState.filter(v => v.status === "pending");
+    console.log(filterState);
+    this.setState({ filterState });
+    console.log(this.state.filterState);
+  };
+
+  handleFillProcessed = e => {
+    let filterState = this.state.ordered;
+
+    filterState = filterState.filter(v => v.status === "processed");
+    console.log(filterState);
+    this.setState({ filterState });
+    console.log(this.state.filterState);
+  };
+
   render() {
     const { ordered } = this.state;
     return (
@@ -33,15 +60,19 @@ export default class adminViewOrders extends Component {
           <Link to="/admin">{"<<--"}</Link>
         </Button>
         <UncontrolledButtonDropdown>
-      <DropdownToggle caret>
-        Sort
-      </DropdownToggle>
-      <DropdownMenu>
-        <DropdownItem>Date</DropdownItem>
-        <DropdownItem>Hours</DropdownItem>
-        <DropdownItem>Film</DropdownItem>       
-      </DropdownMenu>
-    </UncontrolledButtonDropdown>
+          <DropdownToggle caret>Sort</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem onClick={this.handleFillPending}>
+              Pending
+            </DropdownItem>
+            <DropdownItem onClick={this.handleFillProcessed}>
+              Processed
+            </DropdownItem>
+            <DropdownItem>Date</DropdownItem>
+            <DropdownItem>Hours</DropdownItem>
+            <DropdownItem>Film</DropdownItem>
+          </DropdownMenu>
+        </UncontrolledButtonDropdown>
         <div className="nav-bar grid-container">
           <div className="item">IdOder</div>
           <div className="item">Name</div>

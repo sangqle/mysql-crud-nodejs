@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Media, Col, Form } from "reactstrap";
 import "./movie.css";
 import { apiLocalhost } from "../env/api";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 class Moives extends React.Component {
   onDelete = e => {
     e.preventDefault();
@@ -22,6 +22,7 @@ class Moives extends React.Component {
 
   onEdit = e => {
     e.preventDefault();
+    navigate(`/admin/edit_movie/${this.props.id}`);
   };
 
   render() {
@@ -67,17 +68,14 @@ class Moives extends React.Component {
           </Media>
         </Col>
         <Col xs="2">
-          <Button className="btn btn-danger" onClick={this.onDelete}>
+          <button className="btn btn-danger" onClick={this.onDelete}>
+            <i className="fe fe-trash-2 icon-r" />
             Delete
-          </Button>
-          <Button className="btn btn-info" onClick={this.onEdit}>
-            <Link
-              className="link-btn"
-              to={`/admin/edit_movie/${this.props.id}`}
-            >
-              Edit
-            </Link>
-          </Button>
+          </button>
+          <button className="btn btn-info" onClick={this.onEdit}>
+            <i className="fe fe-edit icon-r" />
+            Edit
+          </button>
         </Col>
       </React.Fragment>
     );

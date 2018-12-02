@@ -1,6 +1,8 @@
 import React from "react";
-import { Container } from "reactstrap";
 import { Formik } from "formik";
+import { navigate } from "@reach/router";
+
+import "./editMoive.css";
 
 class EditPage extends React.Component {
   state = {
@@ -28,122 +30,158 @@ class EditPage extends React.Component {
     console.log(this.state);
     return (
       movie && (
-        <Container>
-          <h1>Edit your movie now !</h1>
-          <Formik
-            initialValues={{
-              director: movie.director,
-              discription: movie.discription,
-              image: movie.image,
-              length: movie.length,
-              price: movie.price,
-              released: movie.released,
-              title: movie.title
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-              // setTimeout(() => {
-              //   alert(JSON.stringify(values, null, 2));
-              //   setSubmitting(false);
-              // }, 400);
-              console.log(values);
-              fetch(
-                `http://localhost:8080/admin/edit/movie/${this.props.id_movie}`,
-                {
-                  method: "post",
-                  body: JSON.stringify({
-                    title: values.title,
-                    director: values.director,
-                    description: values.discription,
-                    length: values.length,
-                    released: values.released,
-                    price: values.price,
-                    imageUrl: values.image
-                  }),
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <Formik
+                initialValues={{
+                  director: movie.director,
+                  discription: movie.discription,
+                  image: movie.image,
+                  length: movie.length,
+                  price: movie.price,
+                  released: movie.released,
+                  title: movie.title
+                }}
+                onSubmit={(values, { setSubmitting }) => {
+                  // setTimeout(() => {
+                  //   alert(JSON.stringify(values, null, 2));
+                  //   setSubmitting(false);
+                  // }, 400);
+                  console.log(values);
+                  fetch(
+                    `http://localhost:8080/admin/edit/movie/${
+                      this.props.id_movie
+                    }`,
+                    {
+                      method: "post",
+                      body: JSON.stringify({
+                        title: values.title,
+                        director: values.director,
+                        description: values.discription,
+                        length: values.length,
+                        released: values.released,
+                        price: values.price,
+                        imageUrl: values.image
+                      }),
 
-                  headers: {
-                    Accept: "application/json",
-                    "x-auth": localStorage.getItem("token"),
-                    "Content-Type": "application/json"
-                  }
-                }
-              )
-                .then(res => res.json())
-                .then(data => console.log(data))
-                .catch(err => console.log(err));
-            }}
-          >
-            {({
-              values,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting
-              /* and other goodies */
-            }) => (
-              <form onSubmit={handleSubmit}>
-                <label>Title</label>
-                <input
-                  type="text"
-                  name="title"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.title}
-                />
-                <label>Director</label>
-                <input
-                  type="text"
-                  name="director"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.director}
-                />
-                <label>Description</label>
-                <input
-                  type="text"
-                  name="discription"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.discription}
-                />
-                <label>Image</label>
-                <input
-                  type="text"
-                  name="image"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.image}
-                />
-                <label>Length</label>
-                <input
-                  type="text"
-                  name="length"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.length}
-                />
-                <label>Year released</label>
-                <input
-                  type="text"
-                  name="released"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.released}
-                />
-                <label>Price</label>
-                <input
-                  type="text"
-                  name="price"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.price}
-                />
-                <button type="submit" disabled={isSubmitting}>
-                  Submit
-                </button>
-              </form>
-            )}
-          </Formik>
-        </Container>
+                      headers: {
+                        Accept: "application/json",
+                        "x-auth": localStorage.getItem("token"),
+                        "Content-Type": "application/json"
+                      }
+                    }
+                  )
+                    .then(res => res.json())
+                    .then(data => navigate("/admin"))
+                    .catch(err => console.log(err));
+                }}
+              >
+                {({
+                  values,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  isSubmitting
+                  /* and other goodies */
+                }) => (
+                  <form onSubmit={handleSubmit} className="card">
+                    <div className="card-header">
+                      <h3>Edit your movie here !</h3>
+                    </div>
+                    <div className="card-body">
+                      <div className="form-group">
+                        <label className="form-label">Title</label>
+                        <input
+                          className="form-control is-valid"
+                          type="text"
+                          name="title"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.title}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label">Director</label>
+                        <input
+                          className="form-control is-valid"
+                          type="text"
+                          name="director"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.director}
+                        />
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Description</label>
+                        <input
+                          className="form-control is-valid"
+                          type="text"
+                          name="discription"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.discription}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label">Image</label>
+                        <input
+                          className="form-control is-valid"
+                          type="text"
+                          name="image"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.image}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label">Length</label>
+                        <input
+                          className="form-control is-valid"
+                          type="text"
+                          name="length"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.length}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label">Year released</label>
+                        <input
+                          className="form-control is-valid"
+                          type="text"
+                          name="released"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.released}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label className="form-label">Price</label>
+                        <input
+                          className="form-control is-valid"
+                          type="text"
+                          name="price"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.price}
+                        />
+                      </div>
+                      <button
+                        className="btn btn-purple"
+                        type="submit"
+                        disabled={isSubmitting}
+                      >
+                        Edit this moive
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </Formik>
+            </div>
+          </div>
+        </div>
       )
     );
   }

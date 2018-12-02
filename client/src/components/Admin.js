@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Button, Row } from "reactstrap";
 import { Redirect, navigate, Link } from "@reach/router";
 import MovieList from "../container/movieList";
-import {apiLocalhost} from "../env/api";
+import { apiLocalhost } from "../env/api";
 
 import "./admin.css";
 export default class Admin extends Component {
@@ -43,8 +43,6 @@ export default class Admin extends Component {
     console.log(this.state.search);
   };
 
-
-
   render() {
     const { movies, search } = this.state;
     return (
@@ -53,16 +51,21 @@ export default class Admin extends Component {
         {this.state.auth ? (
           <React.Fragment>
             <Button>{localStorage.getItem("adminName")}</Button>
-            <Button onClick={this.viewOrder}><Link to="/admin/view_ordered">View order</Link></Button>
+            <Button onClick={this.viewOrder}>
+              <Link to="/admin/view_ordered">View order</Link>
+            </Button>
             <Button onClick={this.handleLogout}>Logout</Button>
             <div className="input">
               <input
                 type="text"
                 placeholder="Search ..."
+                className="search-box"
                 onChange={this.handleOnChange}
               />
               <Button className="btn btn-success">
-                <Link to="/admin/add_movie">+ ADD MOIVE</Link>
+                <Link to="/admin/add_movie">
+                  <i className="fe fe-plus-circle icon-r" /> ADD MOIVE
+                </Link>
               </Button>
             </div>
             <Row>
