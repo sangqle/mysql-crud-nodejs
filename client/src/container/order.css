@@ -5,7 +5,9 @@
   padding: 20px;
   margin-bottom: 20px;
 }
-
+label {
+  display: inline-block !important;
+}
 .selectgroup-button {
   font-size: 18px;
   color: #444444;

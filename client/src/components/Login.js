@@ -12,7 +12,7 @@ import {
 import { navigate, Link } from "@reach/router";
 import "./login.css";
 
-import {apiLocalhost} from "../env/api";
+import { apiLocalhost } from "../env/api";
 class LoginForm extends Component {
   state = {
     email: "",
@@ -33,12 +33,14 @@ class LoginForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    return fetch(`${apiLocalhost}/user/login`, {
+    const payload = JSON.stringify({
+      email: this.state.email,
+      password: this.state.password
+    });
+
+    fetch(`https://us-central1-liuliu-d7864.cloudfunctions.net/app/login`, {
       method: "post",
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password
-      }),
+      body: payload,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -48,71 +50,83 @@ class LoginForm extends Component {
         return res.json();
       })
 
-      .then(
-        user => {
-          console.log(user);
-          if (!user.error) {
-            localStorage.setItem("token", user.token);
-            if (user.role === "admin") {
-              localStorage.setItem("adminName", user.name);
-              localStorage.setItem("admin", true);
-              navigate("/admin");
-            } else {
-              localStorage.setItem("user", true);
-              localStorage.setItem("userName", user.name);
-              navigate("/");
-            }
+      .then(user => {
+        console.log(user);
+        if (!user.error) {
+          localStorage.setItem("token", user.token);
+          if (user.role === "admin") {
+            localStorage.setItem("adminName", user.name);
+            localStorage.setItem("admin", true);
+            navigate("/admin");
           } else {
-            console.log("Handle Error Login Here");
-            navigate("/login");
+            localStorage.setItem("user", true);
+            localStorage.setItem("userName", user.name);
+            navigate("/");
           }
-        },
-        error => {
+        } else {
+          console.log("Handle Error Login Here");
           navigate("/login");
-          console.log(error);
         }
-      );
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   render() {
+    console.log(this.state);
     return (
-      <Container>
-        <Button className="btn-outline-info">
-          <Link to="/">{"<<--"}</Link>
-        </Button>
-        <div className="App">
-          <h2>Sign In</h2>
+      <div className="container">
+        <button className="btn btn-primary">
+          <Link to="/">
+            <i class="fe fe-arrow-left mr-2" />
+            Back
+          </Link>
+        </button>
+        <div>
+          <Form onSubmit={this.handleSubmit}>
+            <div class="container">
+              <div class="row">
+                <div class="col col-login mx-auto">
+                  <form class="card" action="" method="post">
+                    <div class="card-body p-6">
+                      <div class="card-title">Login to your account</div>
+                      <div class="form-group">
+                        <label class="form-label">Email address</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          name="email"
+                          aria-describedby="emailHelp"
+                          placeholder="Enter email"
+                          onChange={this.handleChange}
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          onChange={this.handleChange}
+                          type="password"
+                          name="password"
+                          placeholder="password"
+                        />
+                      </div>
 
-          <Form className="form" onSubmit={this.handleSubmit}>
-            <Col>
-              <FormGroup>
-                <Label>Email</Label>
-                <Input
-                  autoFocus
-                  onChange={this.handleChange}
-                  type="email"
-                  name="email"
-                  id="exampleEmail"
-                  placeholder="myemail@email.com"
-                />
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label for="examplePassword">Password</Label>
-                <Input
-                  onChange={this.handleChange}
-                  type="password"
-                  name="password"
-                  id="examplePassword"
-                  placeholder="********"
-                />
-              </FormGroup>
-            </Col>
-            <Button className="btn btn-secondary">Submit</Button>
+                      <div class="form-footer">
+                        <button type="submit" class="btn btn-primary btn-block">
+                          Sign in
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
           </Form>
         </div>
-      </Container>
+      </div>
     );
   }
 }
