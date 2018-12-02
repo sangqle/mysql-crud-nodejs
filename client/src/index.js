@@ -20,9 +20,6 @@ import Checkin from "./components/Checkin";
 import CheckInId from "./components/CheckInId";
 //import App from "../src/components/OrderPage/App";
 
-import "./styles.css";
-//import "./Styles/tabler.scss";
-
 const Page = () => (
   <Router>
     <App path="/" />
