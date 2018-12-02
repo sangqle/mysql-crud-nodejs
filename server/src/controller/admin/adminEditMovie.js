@@ -1,5 +1,5 @@
 const { pool } = require("../../mysql/connect");
-
+const cache_system = require("../../cache_system/cache_movies");
 const { getOneMovie } = require("../getOneMoviePromise");
 
 exports.adminEditMovie = (req, res) => {
@@ -42,6 +42,7 @@ exports.adminEditMovie = (req, res) => {
           path: __dirname
         });
       }
+      cache_system.movies = [];
       res.json({ message: "Edit Thanh Cong" });
     });
   } catch (error) {

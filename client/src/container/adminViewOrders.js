@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import { apiLocalhost } from "../env/api";
 import { Link } from "@reach/router";
-import {
-  Button,
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownItem,
-  DropdownMenu
-} from "reactstrap";
+import { UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle, Button } from 'reactstrap';
 import "./adminViewOrders.css";
 
 export default class adminViewOrders extends Component {
@@ -38,19 +32,16 @@ export default class adminViewOrders extends Component {
         <Button className="bnt btn-danger">
           <Link to="/admin">{"<<--"}</Link>
         </Button>
-        <ButtonDropdown>
-          <Button id="caret" color="primary">
-            {this.props.text}
-          </Button>
-          <DropdownToggle caret color="primary" />
-          <DropdownMenu>
-            <DropdownItem header>Header</DropdownItem>
-            <DropdownItem disabled>Action</DropdownItem>
-            <DropdownItem>Another Action</DropdownItem>
-            <DropdownItem divider />
-            <DropdownItem>Another Action</DropdownItem>
-          </DropdownMenu>
-        </ButtonDropdown>
+        <UncontrolledButtonDropdown>
+      <DropdownToggle caret>
+        Sort
+      </DropdownToggle>
+      <DropdownMenu>
+        <DropdownItem>Date</DropdownItem>
+        <DropdownItem>Hours</DropdownItem>
+        <DropdownItem>Film</DropdownItem>       
+      </DropdownMenu>
+    </UncontrolledButtonDropdown>
         <div className="nav-bar grid-container">
           <div className="item">IdOder</div>
           <div className="item">Name</div>
