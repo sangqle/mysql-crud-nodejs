@@ -10,7 +10,7 @@ import {
   Button
 } from "reactstrap";
 import "./signUp.css";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import { apiLocalhost } from "../env/api";
 
 class LoginForm extends Component {
@@ -31,25 +31,31 @@ class LoginForm extends Component {
     });
   };
 
-  onClick = () => {
-    fetch(`${apiLocalhost}/user/create/account`, {
-      method: "post",
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-        name: this.state.name,
-        sdt: this.state.sdt
-      }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      credentials: "include" // send cookies, even in CORS
-    })
+  onClick = e => {
+    e.preventDefault();
+    fetch(
+      `https://us-central1-liuliu-d7864.cloudfunctions.net/app/user/create/account`,
+      {
+        method: "post",
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+          name: this.state.name,
+          sdt: this.state.sdt
+        }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      }
+    )
       .then(res => {
         return res.json();
       })
-      .then(data => console.log(data));
+      .then(data => {
+        navigate("/login");
+      })
+      .catch(e => console.log(e));
   };
 
   render() {
