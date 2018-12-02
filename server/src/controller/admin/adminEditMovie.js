@@ -39,7 +39,7 @@ exports.adminEditMovie = (req, res) => {
         res.json({
           message: "Error execute SQL from adminEditMovie",
           error: error,
-          path: __dirname
+          path: __filename
         });
       }
       cache_system.movies = [];
@@ -49,7 +49,7 @@ exports.adminEditMovie = (req, res) => {
     res.json({
       message: "Error in trycatch from adminEditMovie",
       error: error,
-      path: __dirname
+      path: __filename
     });
   }
 };

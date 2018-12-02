@@ -8,7 +8,7 @@ exports.adminDeleteMovie = (req, res) => {
     return res.send({
       message: "You do not have a permission. Please try login as Admin",
       error,
-      path: __dirname
+      path: __filename
     });
   let id_movie = req.params.id_movie;
   let sql = `call admin_deleteMovie(${id_movie})`;
@@ -34,7 +34,7 @@ exports.adminDeleteMovie = (req, res) => {
     if (error) return res.status(400).send({
       message: 'The error throw from catch final',
       error,
-      path: __dirname
+      path: __filename
     });
   }
 };

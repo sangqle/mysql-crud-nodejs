@@ -30,7 +30,7 @@ exports.adminGetAllOrder = (req, res) => {
     if (error) return res.status(400).send({
       message: 'The error from final trycatch',
       error,
-      path: __dirname
+      path: __filename
     });
   }
 };

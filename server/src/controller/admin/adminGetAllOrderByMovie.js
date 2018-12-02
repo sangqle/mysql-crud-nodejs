@@ -15,7 +15,7 @@ exports.adminGetAllOrderByMovie = (req, res) => {
       if (error) return res.status(400).send({
         message: 'The error from if(error)',
         error,
-        path: __dirname
+        path: __filename
       });
 
       let orders = results[0];
@@ -35,7 +35,7 @@ exports.adminGetAllOrderByMovie = (req, res) => {
     if (error) return res.status(400).send({
       message: 'The error from final trycatch',
       error,
-      __dirname
+      path: __filename
     });
   }
 };

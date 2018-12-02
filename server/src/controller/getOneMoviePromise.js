@@ -9,7 +9,8 @@ exports.getOneMovie = (req, res) => {
         if (error)
           return reject({
             message: "Error execute SQL satement in getOneMovie API",
-            error: error
+            error: error,
+            path: __filename
           });
         let movie = results[0];
         return resolve(movie);
@@ -18,7 +19,8 @@ exports.getOneMovie = (req, res) => {
       if (e)
         return reject({
           message: "Error throw from catch getOneMovie",
-          error: e
+          error: e,
+          path: __filename
         });
     }
   });

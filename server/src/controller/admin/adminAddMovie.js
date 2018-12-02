@@ -45,7 +45,7 @@ exports.adminAddMovie = (req, res) => {
       if (error) {
         return res.status(400).send({
           message: 'The error throw from adminAddMovie when execute SQL statement',
-          path: __dirname,
+          path: __filename,
           error: error
         });
       }
@@ -61,7 +61,7 @@ exports.adminAddMovie = (req, res) => {
   } catch (error) {
     res.status(400).send({
       message: 'The error throw from adminAddMovie in trycatch',
-      path: __dirname,
+      path: __filename,
       error
     });
   }

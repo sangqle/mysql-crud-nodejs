@@ -10,7 +10,7 @@ exports.adminCheckOrderUser = (req, res) => {
           return reject({
             message:
               "The error throw from adminCheckOrerUser when execute SQL statement",
-            path: __dirname,
+            path: __filename,
             error
           });
         let order = results[0];
@@ -38,7 +38,7 @@ exports.adminCheckOrderUser = (req, res) => {
     } catch (error) {
       return reject({
         message: "Error throw from trycatch statement at admincheckOrderUser",
-        path: __dirname,
+        path: __filename,
         error
       });
     }
@@ -59,7 +59,7 @@ exports.adminCheckOrderUser = (req, res) => {
       } catch (error) {
         return res.send({
           message: "Error throw from trycatch in promise exectue.",
-          path: __dirname,
+          path: __filename,
           error
         });
       }
@@ -68,7 +68,7 @@ exports.adminCheckOrderUser = (req, res) => {
       return res.send({
         message: "The error throw from trycatch final",
         error,
-        path: __dirname
+        path: __filename,
       });
     });
 };

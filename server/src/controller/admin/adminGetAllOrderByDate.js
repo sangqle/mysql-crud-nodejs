@@ -15,7 +15,7 @@ exports.adminGetAllOrderByDate = (req, res) => {
       if (error) return res.status(400).send({
         message: 'The error from if (error)',
         error,
-        path: __dirname
+        path: __filename
       });
       let orders = results[0];
       for (order of orders) {
@@ -34,7 +34,7 @@ exports.adminGetAllOrderByDate = (req, res) => {
     return res.status(400).send({
       message: 'The error from final trycatch',
       error,
-      path: __dirname
+      path: __filename
     });
   }
 };
