@@ -31,6 +31,7 @@ exports.getTimeOfDateByMovie = (req, res) => {
       time_of_movies.push(cache_time);
       //console.log('Array: ', time_of_movies);
 
+      times = times.sort((a, b) => a < b ? -1 : a > b ? 1 : 0);
       
       return res.status(200).send({
         instaces: times.length,

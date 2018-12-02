@@ -27,6 +27,7 @@ exports.getDateOfMovie = (req, res) => {
       cache_date.dates = dates;
       date_of_movies.push(cache_date);
 
+      dates = dates.sort((a, b) => a < b ? -1 : a > b ? 1 : 0);
       res.status(200).send({
         instaces: dates.length,
         dates: dates
