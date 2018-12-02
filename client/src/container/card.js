@@ -39,7 +39,9 @@ const Movie = ({ image, title, director, length, id }) => {
           <CardText>Length: {length}</CardText>
           {isLoged !== null ? (
             <button className="btn btn-info">
-              <Link to={`/order/${id}`}>Book now!</Link>
+              <Link className="btn-order" to={`/order/${id}`}>
+                Book now!
+              </Link>
             </button>
           ) : (
             <button className="btn btn-info" onClick={onToggle}>

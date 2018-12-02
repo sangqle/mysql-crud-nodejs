@@ -8,11 +8,11 @@
   height: auto;
 }
 
-.link-btn {
+.btn-order {
   color: white;
 }
 
-.link-btn:hover {
+.btn-order:hover {
   text-decoration: none;
   color: yellow;
 }

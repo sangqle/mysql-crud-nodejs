@@ -9,7 +9,7 @@ import {
   Input,
   Button
 } from "reactstrap";
-import "./signUp.css";
+import "./login.css";
 import { Link, navigate } from "@reach/router";
 import { apiLocalhost } from "../env/api";
 
@@ -62,7 +62,7 @@ class LoginForm extends Component {
     return (
       <div className="container">
         <button className="btn btn-primary">
-          <Link to="/">
+          <Link className="btn-back" to="/">
             <i class="fe fe-arrow-left mr-2" />
             Back
           </Link>

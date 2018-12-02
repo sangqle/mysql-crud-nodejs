@@ -78,7 +78,7 @@ class LoginForm extends Component {
     return (
       <div className="container">
         <button className="btn btn-primary">
-          <Link to="/">
+          <Link className="btn-back" to="/">
             <i class="fe fe-arrow-left mr-2" />
             Back
           </Link>

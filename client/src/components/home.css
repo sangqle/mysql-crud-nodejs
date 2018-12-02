@@ -1,26 +1,16 @@
-/* input {
-  margin-top: 1em;
-  border-color: blueviolet;
+.btn-home {
+  color: white;
 }
 
-nav {
-  font-size: 1rem;
+.btn-home:hover {
+  text-decoration: none;
+  color: white;
 }
 
-.sign_in {
-  color: brown;
-  background-color: lightgoldenrodyellow;
+.user {
+  color: white;
 }
 
-.sign_in:hover {
-  color: red;
+.user:hover {
+  color: white;
 }
-
-.sign_up {
-  color: brown;
-  background-color: lightgoldenrodyellow;
-}
-
-.sign_up:hover {
-  color: red;
-} */

@@ -57,7 +57,9 @@ export default class Home extends Component {
             {isAuth ? (
               <>
                 <span style={{ marginRight: 10 }}>
-                  {localStorage.getItem("userName")}
+                  <Link className="user" to="/user">
+                    {localStorage.getItem("userName")}
+                  </Link>
                 </span>
                 <Button size="sm" onClick={this.handleLogout}>
                   Logout
@@ -66,10 +68,14 @@ export default class Home extends Component {
             ) : (
               <>
                 <button className="btn btn-pill btn-success">
-                  <Link to="signUp">Sign up</Link>
+                  <Link className="btn-home" to="signUp">
+                    Sign up
+                  </Link>
                 </button>{" "}
                 <button className="btn btn-pill btn-danger">
-                  <Link to="login">Log in</Link>
+                  <Link className="btn-home" to="login">
+                    Log in
+                  </Link>
                 </button>
               </>
             )}
