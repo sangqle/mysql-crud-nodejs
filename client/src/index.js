@@ -1,7 +1,8 @@
 // eslint-disable-next-line
 import React from "react";
 import ReactDOM from "react-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
+import "./css/tabler.css";
 import { Router } from "@reach/router";
 import App from "./App";
 import Login from "../src/components/Login";
@@ -19,22 +20,20 @@ import EditPage from "./components/editMovie";
 import "./styles.css";
 //import "./Styles/tabler.scss";
 
-const Page = () => {
-  return (
-    <Router>
-      <App path="/" />
-      <Login path="login" />
-      <SignUp path="signUp" />
-      <Admin path="admin" />
-      <Order path="order/:id_movie" />
-      <VerifyOrder path="order/success/:id_order" />
-      <AddMovie path="admin/add_movie" />
-      <EditPage path="admin/edit_movie/:id_movie" />
-      <ViewOrder path="admin/view_ordered" />
-      <PageNotFound path="*" />
-    </Router>
-  );
-};
+const Page = () => (
+  <Router>
+    <App path="/" />
+    <Login path="login" />
+    <SignUp path="signUp" />
+    <Admin path="admin" />
+    <Order path="order/:id_movie" />
+    <VerifyOrder path="order/success/:id_order" />
+    <AddMovie path="admin/add_movie" />
+    <EditPage path="admin/edit_movie/:id_movie" />
+    <ViewOrder path="admin/view_ordered" />
+    <PageNotFound path="*" />
+  </Router>
+);
 
 const rootElement = document.getElementById("root");
 //ReactDOM.render(<User/>, rootElement)

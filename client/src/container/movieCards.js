@@ -10,9 +10,9 @@ const movieCard = ({ movies, search }) => {
         return movie.title.toLowerCase().indexOf(search.toLowerCase()) !== -1;
       })
       .map((movie, i) => {
-        console.table(movie);
+        // console.table(movie);
         return (
-          <Col sm="4">
+          <Col key={i} sm="4">
             <Card
               index={i}
               image={movie.image}

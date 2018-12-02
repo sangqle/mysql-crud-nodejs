@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 import "./signUp.css";
 import { Link } from "@reach/router";
-import {apiLocalhost} from "../env/api";
+import { apiLocalhost } from "../env/api";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -54,67 +54,78 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <Container>
-        <Button className="btn-outline-info">
-          <Link to="/">{"<<--"}</Link>
-        </Button>
+      <div className="container">
+        <button className="btn btn-primary">
+          <Link to="/">
+            <i class="fe fe-arrow-left mr-2" />
+            Back
+          </Link>
+        </button>
+        <div>
+          <Form onSubmit={this.onClick}>
+            <div class="container">
+              <div class="row">
+                <div class="col col-login mx-auto">
+                  <form class="card" action="" method="post">
+                    <div class="card-body p-6">
+                      <div class="card-title">Sign Up</div>
+                      <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="name"
+                          placeholder="Enter name"
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="sdt"
+                          aria-describedby="emailHelp"
+                          placeholder="Enter phone"
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">Email address</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          name="email"
+                          aria-describedby="emailHelp"
+                          placeholder="Enter email"
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          onChange={this.handleInputChange}
+                          type="password"
+                          name="password"
+                          placeholder="password"
+                        />
+                      </div>
 
-        <div className="App">
-          <h2>Sign In</h2>
-          <Form className="form">
-            <Col>
-              <FormGroup>
-                <Label>Name</Label>
-                <Input
-                  onChange={this.handleInputChange}
-                  type="email"
-                  name="name"
-                  placeholder="Your name ..."
-                />
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label>Phone Number</Label>
-                <Input
-                  onChange={this.handleInputChange}
-                  type="text"
-                  name="sdt"
-                  placeholder="........."
-                />
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label>Email</Label>
-                <Input
-                  onChange={this.handleInputChange}
-                  type="email"
-                  name="email"
-                  placeholder="myemail@email.com"
-                />
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label for="examplePassword">Password</Label>
-                <Input
-                  onChange={this.handleInputChange}
-                  type="password"
-                  name="password"
-                  placeholder="********"
-                />
-              </FormGroup>
-            </Col>
-            <Button
-              onClick={this.onClick}
-              className="btn btn-block btn-outline-danger"
-            >
-              Sign up
-            </Button>
+                      <div class="form-footer">
+                        <button type="submit" class="btn btn-primary btn-block">
+                          Sign up
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
           </Form>
         </div>
-      </Container>
+      </div>
     );
   }
 }
