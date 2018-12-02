@@ -15,6 +15,9 @@ import AddMovie from "../src/container/addmovie";
 import ViewOrder from "./container/adminViewOrders";
 import User from "../src/components/user";
 import EditPage from "./components/editMovie";
+
+import Checkin from "./components/Checkin";
+import CheckInId from "./components/CheckInId";
 //import App from "../src/components/OrderPage/App";
 
 import "./styles.css";
@@ -32,6 +35,9 @@ const Page = () => (
     <EditPage path="admin/edit_movie/:id_movie" />
     <ViewOrder path="admin/view_ordered" />
     <PageNotFound path="*" />
+
+    <Checkin path="checkin" />
+    <CheckInId path="checkin/:id" />
   </Router>
 );
 
