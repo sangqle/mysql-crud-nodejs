@@ -33,22 +33,19 @@ class LoginForm extends Component {
 
   onClick = e => {
     e.preventDefault();
-    fetch(
-      `https://us-central1-liuliu-d7864.cloudfunctions.net/app/user/create/account`,
-      {
-        method: "post",
-        body: JSON.stringify({
-          email: this.state.email,
-          password: this.state.password,
-          name: this.state.name,
-          sdt: this.state.sdt
-        }),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
+    fetch(`http://localhost:8080/user/create/account`, {
+      method: "post",
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+        name: this.state.name,
+        sdt: this.state.sdt
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
       }
-    )
+    })
       .then(res => {
         return res.json();
       })

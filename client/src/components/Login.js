@@ -38,7 +38,7 @@ class LoginForm extends Component {
       password: this.state.password
     });
 
-    fetch(`https://us-central1-liuliu-d7864.cloudfunctions.net/app/login`, {
+    fetch(`http://localhost:8080/user/login`, {
       method: "post",
       body: payload,
       headers: {

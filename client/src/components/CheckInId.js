@@ -6,11 +6,7 @@ class CheckInId extends Component {
   };
 
   componentDidMount() {
-    fetch(
-      `https://us-central1-liuliu-d7864.cloudfunctions.net/app/checkOrder/${
-        this.props.id
-      }`
-    )
+    fetch(`http://localhost:8080/checkorder/${this.props.id}`)
       .then(res => res.json())
       .then(data => {
         this.setState({

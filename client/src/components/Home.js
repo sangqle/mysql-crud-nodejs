@@ -15,8 +15,8 @@ export default class Home extends Component {
   };
 
   componentDidMount() {
-    //fetch(`${apiLocalhost}/user/get/all/movie`)\
-    fetch(`https://us-central1-liuliu-d7864.cloudfunctions.net/app/movies`)
+    fetch(`${apiLocalhost}/user/get/all/movie`)
+      //fetch(`https://us-central1-liuliu-d7864.cloudfunctions.net/app/movies`)
       .then(data => data.json())
       .then(result => {
         // console.log(result);
