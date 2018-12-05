@@ -16,7 +16,7 @@ class Order extends Component {
 
   componentDidMount() {
     fetch(
-      `https://us-central1-liuliu-d7864.cloudfunctions.net/app/movies/${
+      `http://localhost:8080/admin/get/movie/${
         this.props.id_movie
       }`,
       {
@@ -32,7 +32,7 @@ class Order extends Component {
       .then(data => this.setState({ movie: data.movie }));
 
     fetch(
-      `https://us-central1-liuliu-d7864.cloudfunctions.net/app/user/get/date/${
+      `http://localhost:8080/user/get/date/${
         this.props.id_movie
       }`,
       {
@@ -75,7 +75,7 @@ class Order extends Component {
   handleSelectDay = e => {
     this.setState({ id_day: e.target.value });
     fetch(
-      `https://us-central1-liuliu-d7864.cloudfunctions.net/app/user/get/time/${
+      `http://localhost:8080/user/get/time/${
         this.props.id_movie
       }/${e.target.value}`,
       {
@@ -94,7 +94,7 @@ class Order extends Component {
     this.setState({ id_time: e.target.value });
     const { id_day } = this.state;
     fetch(
-      `https://us-central1-liuliu-d7864.cloudfunctions.net/app/user/get/seated/${
+      `http://localhost:8080/user/get/seated/${
         this.props.id_movie
       }/${id_day}/${e.target.value}`,
       {
@@ -122,7 +122,7 @@ class Order extends Component {
       .flat()
       .map(v => parseInt(v) + 1); /* Really powerful features */
 
-    fetch(`https://us-central1-liuliu-d7864.cloudfunctions.net/app/booking`, {
+    fetch(`http://localhost:8080/user/booking`, {
       method: "post",
       body: JSON.stringify({
         id_movie: this.props.id_movie,
