@@ -51,7 +51,7 @@ const {
 } = require("./src/controller/admin/adminGetAllOrderByTime");
 
 const { adminEditMovie } = require("./src/controller/admin/adminEditMovie");
-const {getOneMovie} = require("./src/controller/getOneMovie")
+const { getOneMovie } = require("./src/controller/getOneMovie");
 const App = express();
 //App.use(cors());
 
@@ -149,9 +149,26 @@ App.post("/admin/edit/movie/:idMovie", authentication, adminEditMovie);
 
 App.get("/checkOrder/:id_order", adminCheckOrderUser);
 
-App.get('/', (req, res) => {
-  res.json({message: "Welcome To APIs"});
-})
+
+const client = require("./redis-database");
+
+const limiter = require("express-limit-api")(App, client);
+App.get(
+  "/",
+  limiter({
+    path: "/users",
+    method: "get",
+    lookup: ["connection.remoteAddress"],
+    total: 1000,
+    expire: 1000 * 60 * 60,
+    onRateLimited: function(request, response, next) {
+      return response
+        .status(429)
+        .json("You are not welcome here, Rate limit exceeded");
+    }
+  }),
+  (req, res) => res.json({ message: "Welcome To APIs" })
+);
 
 module.exports = {
   App
